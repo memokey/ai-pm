@@ -1,5 +1,6 @@
-import { CloudArrowUpIcon, MicIcon, PaperAirplaneIcon } from "@/components/Icons";
 import React from "react";
+import { SendButton } from "../Buttons";
+import { CloudArrowUpIcon, MicIcon } from "@/components/Icons";
 
 const MessageInput = () => {
     return (
@@ -11,9 +12,7 @@ const MessageInput = () => {
             <div className="cursor-pointer hover:text-primary opacity-70">
                 <MicIcon />
             </div>
-            <div className="cursor-pointer hover:text-primary opacity-70">
-                <PaperAirplaneIcon />
-            </div>
+            <SendButton />
         </label>
     );
 }

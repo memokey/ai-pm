@@ -1,14 +1,12 @@
-import type { Metadata } from "next";
+'use client'
+
+import { Provider } from "react-redux";
 import { Inter } from "next/font/google";
-import "@/styles/globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import store from "@/redux/store";
+import "@/styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "AI PM",
-  description: "AI Project Management Tool",
-};
 
 export default function RootLayout({
   children,
@@ -18,9 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider>
-          <main className="h-[100vh] bg-base-100">{children}</main>
-        </ThemeProvider>
+        <Provider store={store}>
+          <ThemeProvider>
+            <main className="h-[100vh] bg-base-100">{children}</main>
+          </ThemeProvider>
+        </Provider>
       </body>
     </html>
   );
