@@ -1,24 +1,28 @@
 import React, { ReactNode } from "react";
-import Header from "./Header";
-import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
+import Header from "./Header";
+import LeftSidebar from "./LeftSideBar";
 
 type LayoutType = {
+    rightSidebar?: ReactNode;
     children: ReactNode;
 }
 
 const Layout = (props: LayoutType) => {
+
     return (
-        <>
-            <Header />
-            <div className="flex h-[calc(100vh-120px)]">
-                <LeftSidebar />
-                <div className="w-[calc(100vw-820px)]">
+        <div className="flex">
+            <LeftSidebar />
+            <div className={`w-[calc(100vw-240px)] h-[100vh]`}>
+                <Header />
+                <div className="flex h-[calc(100vh-56px)]">
                     {props.children}
+                    {props.rightSidebar && (
+                        props.rightSidebar
+                    )}
                 </div>
-                <RightSidebar />
             </div>
-        </>
+        </div>
     );
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import MessageInput from "../Common/Inputs/MessageInput";
+import MessageInput from "../Common/Inputs/ChatInput";
 import MessageList from "../Chat/MessageList";
 
 const RightSidebar = () => {

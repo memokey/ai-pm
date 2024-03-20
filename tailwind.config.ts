@@ -6,11 +6,29 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  theme: {
-  },
-  plugins: [require("daisyui")],
   daisyui: {
     themes: [
+      {
+        darkTheme: {
+          'primary': '#3670FF',
+          'secondary': '#DD5587',
+          'base-100': '#191919',
+          'base-200': '#424242',
+          'base-300': '#BFBFBF',
+          'base-400': '#999999',
+          'base-500': '',
+          'base-content': '#E8E8E8',
+          'neutral': '#2a323c',
+          'neutral-content': '#FFFFFF',
+          'success': '#62d993',
+          'warning': '#ff993a',
+          'error': '#fc3c3b',
+          // Custom colors
+          'left-panel-bg1': 'rgba(192, 192, 192, 0.04)',
+          'left-panel-bg2': 'rgba(201, 180, 180, 0.04)',
+          'left-panel-bg3': 'rgba(0, 0, 0, 0.04)',
+        },
+      },
       {
         lightTheme: {
           'primary': '#757575',
@@ -22,21 +40,25 @@ const config: Config = {
           'warning': '#ffcc99',
           'error': '#ff9999',
         }
-      },
-      {
-        darkTheme: {
-          'primary': '#3b81ff',
-          'base-100': '#15161a',
-          'secondary': '#dc8fff',
-          'base-content': '#a6a7a7',
-          'base-200': '#292b30',
-          'success': '#62d993',
-          'warning': '#ff993a',
-          'error': '#fc3c3b',
-          'neutral': '#2a323c'
-        }
       }
     ],
-  }
+  },
+  theme: {
+    letterSpacing: {
+      tightest: '-.075em',
+      tighter: '-.05em',
+      tight: '-.025em',
+      normal: '0',
+      wide: '.025em',
+      wider: '.05em',
+      widest: '.1em',
+    },
+    extend: {
+      backgroundImage: (theme) =>({
+        'custom-gradient': "linear-gradient(180deg, ${theme('primary')} 0%, ${theme('left-panel-bg2')}) 54.5%, ${theme('left-panel-bg3')} 100%)",
+      }),
+    }
+  },
+  plugins: [require("daisyui")],
 };
 export default config;

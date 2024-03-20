@@ -1,6 +1,6 @@
 import React from "react";
 import Message from "../Message";
-import { MESSAGES } from "@/data/Chat";
+import { MESSAGES } from "@/data/chat";
 
 const MessageList = () => {
     return (
