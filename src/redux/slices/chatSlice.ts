@@ -1,13 +1,16 @@
 'use client'
 
+import { MessageType } from '@/components/Chat/Message';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface ChatState {
     loading: Boolean;
+    messages: MessageType[];
 }
 
 const initialState: ChatState = {
     loading: false,
+    messages: []
 }
 
 export const chatSlice = createSlice({

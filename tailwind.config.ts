@@ -10,18 +10,16 @@ const config: Config = {
     themes: [
       {
         darkTheme: {
-          'primary': '#3670FF',
+          'primary': '#5988FC',
           'secondary': '#DD5587',
           'base-100': '#191919',
           'base-200': '#424242',
           'base-300': '#BFBFBF',
-          'base-400': '#999999',
-          'base-500': '',
           'base-content': '#E8E8E8',
           'neutral': '#2a323c',
           'neutral-content': '#FFFFFF',
-          'success': '#62d993',
-          'warning': '#ff993a',
+          'success': '#04CD76',
+          'warning': '#FE3300',
           'error': '#fc3c3b',
           // Custom colors
           'left-panel-bg1': 'rgba(192, 192, 192, 0.04)',

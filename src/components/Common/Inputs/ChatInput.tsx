@@ -7,7 +7,7 @@ import { CloudArrowUpIcon, MicIcon } from "@/components/Icons";
 
 const ChatInput = () => {
     return (
-        <label className="chatinput-linear border-base-200 py-4 px-5 flex items-end gap-2 rounded-[30px] w-[calc(100vw-740px)]">
+        <label className="chatinput-linear border-base-200 py-4 px-5 flex items-end gap-2 rounded-[30px] w-full">
             <TextareaAutosize 
                 minRows={1}
                 maxRows={10}
