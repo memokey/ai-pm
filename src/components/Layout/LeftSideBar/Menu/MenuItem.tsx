@@ -19,7 +19,7 @@ const MenuItem = (props: MenuItemType) => {
 
     return (
         <div 
-            className={`h-[28px] flex bg-transparent gap-[5px] items-center text-[14px] w-full py-1 px-[5px] cursor-pointer hover:bg-[#323232] ${props.state ? "bg-[#323232]": ""}`}
+            className={`h-[28px] flex bg-transparent gap-[5px] rounded-[4px] items-center text-[14px] w-full py-1 px-[5px] cursor-pointer hover:bg-[#323232] ${props.state ? "bg-[#323232]": ""}`}
             onClick={linkToPage}
         >
             {props.icon}
