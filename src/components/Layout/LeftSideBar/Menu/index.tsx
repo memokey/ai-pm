@@ -1,11 +1,16 @@
 import React from "react";
-import MenuItem from "./MenuItem";
-import { MENULIST } from "@/data/global";
+import MenuItem, { MenuItemType } from "./MenuItem";
 
-const Menu = () => {
+export type MenuType = {
+    title?: string;
+    menus: MenuItemType[];
+};
+
+const Menu = (props: MenuType) => {
     return (
         <div className="grid gap-3">
-            {MENULIST.map((menuItem, index) => (
+            <div className="text-[10px] text-[#838383] font-600 spacing-[1px]">{props.title}</div>
+            {props.menus.map((menuItem, index) => (
                 <div key={index}>
                     <MenuItem 
                         {...menuItem}

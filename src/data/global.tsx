@@ -1,33 +1,22 @@
 import { MenuItemType } from "@/components/Layout/LeftSideBar/Menu/MenuItem";
-import { InboxIcon, SquaresIcon, SunIcon, CogEIcon } from "@/components/Icons";
+import { InboxIcon, SquaresIcon, SunIcon, CogEIcon, VAIcon } from "@/components/Icons";
 
-export const MENULIST: MenuItemType[] = [
+export const MENU_LIST: MenuItemType[] = [
     {
         icon: <InboxIcon />,
-        state: true,
-        title: "Chat",
-        link: "chat",
-        line: true
-    },
-    {
-        icon: <SquaresIcon />,
         state: false,
-        title: "Dashboard",
-        link: "dashboard",
+        title: "Inbox",
+        link: "inbox",
         line: false
-    },
+    }
+];
+
+export const MENU_LIST_SPACE: MenuItemType[] = [
     {
-        icon: <SunIcon />,
+        icon: <VAIcon />,
         state: false,
-        title: "Tasks",
-        link: "tasks",
-        line: true
-    },
-    {
-        icon: <CogEIcon />,
-        state: false,
-        title: "Settings",
-        link: "settings",
+        title: "Virtual Assistance",
+        link: "virtualassistance",
         line: false
     }
 ];
