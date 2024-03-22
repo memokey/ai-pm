@@ -2,22 +2,45 @@ import React from "react";
 import ProfileCard from "./ProfileCard";
 import Menu from "./Menu";
 import BaseButton from "@/components/Common/Buttons/BaseButton";
-import { PlusIcon } from "@/components/Icons";
+import { CogSIcon, PlusIcon, QuestionMarkCircleIcon } from "@/components/Icons";
 import { MENU_LIST, MENU_LIST_SPACE } from "@/data/global";
+import MenuItem from "./Menu/MenuItem";
 
 const LeftSidebar = () => {
     return (
         <div className="bg-[#202020] border-[#090909] w-[240px] h-[100vh] z-20 py-[30px] px-[20px] border-r border-r-[1px]">
-            <ProfileCard />
-            <div className="grid gap-4">
-                <BaseButton 
-                    type={true}
-                    caption="Create New Task"
-                    icon={<PlusIcon />}
-                    styles="w-full"
+            <div className="h-[calc(100vh-124px)]">
+                <ProfileCard />
+                <div className="grid gap-4">
+                    <BaseButton 
+                        type={true}
+                        caption="Create New Task"
+                        icon={<PlusIcon />}
+                        styles="w-full"
+                    />
+                    <Menu menus={MENU_LIST} />
+                    <Menu menus={MENU_LIST_SPACE} title="Space" />
+                </div>
+            </div>
+            <div className="grid gap-1">
+                <MenuItem 
+                    icon={<CogSIcon />}
+                    title="Settings"
+                    link={'noLink'}
+                    state={false}
+                    line={false}
                 />
-                <Menu menus={MENU_LIST} />
-                <Menu menus={MENU_LIST_SPACE} title="Space" />
+                <MenuItem 
+                    icon={<QuestionMarkCircleIcon />}
+                    title="Resources"
+                    link={'noLink'}
+                    state={false}
+                    line={false}
+                />
+                {/* <div className="flex gap-2 p-2 items-center text-base-300 hover:text-base-content cursor-pointer">
+                    <CogSIcon />
+                    <div className="text-[14px] font-40">Settings</div>
+                </div> */}
             </div>
         </div>
     );

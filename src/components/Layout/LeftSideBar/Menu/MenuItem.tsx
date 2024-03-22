@@ -14,6 +14,9 @@ export type MenuItemType = {
 const MenuItem = (props: MenuItemType) => {
     const router = useRouter();
     const linkToPage = () => {
+        if(props.link === "noLink") {
+            return;
+        }
         router.push('/' + props.title.toLowerCase())
     }
 
