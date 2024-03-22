@@ -33,15 +33,6 @@ const Chatbox = () => {
             />
             <Message 
                 type={CONSTANTS.BOT_MESSAGE_TYPE}
-                message={`Ok, estimated time:`}
-                action={CONSTANTS.METRIX_ACTION}
-            />
-            <Message
-                type={CONSTANTS.USER_MESSAGE_TYPE}
-                message={`Yes`}
-            />
-            <Message 
-                type={CONSTANTS.BOT_MESSAGE_TYPE}
                 message={`Ok, starting decomposition and assignment`}
                 action={CONSTANTS.TASKS_ACTION}
             />
