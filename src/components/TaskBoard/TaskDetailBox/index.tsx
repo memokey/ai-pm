@@ -141,7 +141,7 @@ const TaskDetailBox = (props: TaskDetailBoxType) => {
                             <div className="font-400 text-[11px] text-base-300">{props.task.lastUpdated}</div>
                         </div>
                         <div className="text-[12px] text-base-300 font-400">
-                            I can definitely write a document about Familiarizing yourself with FormsWise.AI and its features for creating detailed and functional assessments. I'll get working on that now!
+                            I can definitely write a document about Familiarizing yourself with FormsWise.AI and its features for creating detailed and functional assessments. I will get working on that now!
                             just wanted to let you know that I have completed the task you assigned me. Check out the new doc I created on using FormsWise.AI for creating assessments: Exploring FormsWise.AI. Hope it helps!
                         </div>
                     </div>
