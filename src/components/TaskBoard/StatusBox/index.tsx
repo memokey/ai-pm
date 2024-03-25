@@ -5,6 +5,7 @@ import TaskBox from "./TaskBox";
 import { ColumnType, TaskType } from "@/data/types/type";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import TaskCard from "./TaskBox/TaskCard";
+import { DEFAULT_TASKS } from "@/data/global";
 
 export type StatusBoxType = {
     column: ColumnType;
@@ -43,6 +44,32 @@ const StatusBox = (props: StatusBoxType) => {
         transform: CSS.Transform.toString(transform),
     };
 
+    const fetchTasks = (tasks: TaskType[]): ReactNode => {
+        return tasks.map((task: TaskType) => {
+            const parentTaskIndex = tasks.findIndex(t => t.id == task.parentId);
+            if(parentTaskIndex == -1) {
+                let tasksContent = (<TaskCard
+                    key={task.id}
+                    task={task}
+                    deleteTask={props.deleteTask}
+                    updateTask={props.updateTask}
+                />);
+                const subTasks = tasks.filter(t => t.parentId == task.id);
+                if(!!subTasks && subTasks.length != 0) {
+                    tasksContent = (
+                        <>
+                            {tasksContent}
+                            <div className="ml-[20px]">
+                                {fetchTasks(subTasks)}
+                            </div>
+                        </>
+                    );
+                }
+                return tasksContent;
+            }
+        })
+    }
+
     return (
         <div 
             ref={setNodeRef}
@@ -55,14 +82,7 @@ const StatusBox = (props: StatusBoxType) => {
             />
             <div className="bg-[#1C1C1C] rounded-[12px] p-2 h-[calc(100vh-150px)] overflow-y-auto">
                 <SortableContext items={tasksIds}>
-                    {props.tasks.map((task: TaskType) => (
-                        <TaskCard
-                            key={task.id}
-                            task={task}
-                            deleteTask={props.deleteTask}
-                            updateTask={props.updateTask}
-                        />
-                    ))}
+                    {fetchTasks(props.tasks)}
                 </SortableContext>
             </div>
         </div>

@@ -15,6 +15,7 @@ export type IconType = {
 export type TaskType = {
     id: Id;
     columnId: Id;
+    parentId: Id | null;
     title: string;
     properties: PropertyType;
     description: string;

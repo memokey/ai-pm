@@ -81,6 +81,7 @@ export const DEFAULT_TASKS: TaskType[] = [
     {
       id: "1",
       columnId: "todo",
+      parentId: null,
       title: "List admin APIs for dashboard",
       properties: {
         status: 'To do',
@@ -116,95 +117,99 @@ export const DEFAULT_TASKS: TaskType[] = [
     {
       id: "2",
       columnId: "todo",
+      parentId: null,
       title:
         "Develop user registration functionality with OTP delivered on SMS after email confirmation and phone number confirmation",
-        properties: {
-            status: 'To do',
-            assignees: [{
-                name: "John Doe",
-                img: '/tmp/avatars/john.png'
-            }],
-            priority: 2,
-            dueDate: 'Yesterday',
-            agents: [{
-                name: 'Claude',
-                avatar: '/images/utils/Ada.png'
-            }],
-            humans: [{
-                name: 'Claude',
-                avatar: '/images/utils/Ada.png'
-            }],
-            messages: 12,
-            shares: 1,          
-        },
-        description: 'Add a description for AI',
-        taskProgress: 0.75,
-        subTasks: [
-            {
-                id: "3",
-                columnId: "doing",
-                title: "Conduct security testing",
-                properties: {
-                  status: 'In Progress',
-                  assignees: [{
-                      name: "John Doe",
-                      img: '/tmp/avatars/john.png'
-                  }],
-                  priority: 0,
-                  dueDate: 'Yesterday',
-                  agents: [{
-                      name: 'Claude',
-                      avatar: '/images/utils/Ada.png'
-                  }],
-                  humans: [{
-                      name: 'Claude',
-                      avatar: '/images/utils/Ada.png'
-                  }],
-                  messages: 12,
-                  shares: 1
-                },
-                description: 'Add a description for AI',
-                taskProgress: 0.75,
-                subTasks: [],
-                created: 'Yesterday',
-                lastUpdated: 'Just Now'
-              },
-              {
-                id: "4",
-                columnId: "doing",
-                title: "Analyze competitors",
-                properties: {
-                  status: 'In Progress',
-                  assignees: [{
-                      name: "John Doe",
-                      img: '/tmp/avatars/john.png'
-                  }],
-                  priority: 2,
-                  dueDate: 'Yesterday',
-                  agents: [{
-                      name: 'Claude',
-                      avatar: '/images/utils/Ada.png'
-                  }],
-                  humans: [{
-                      name: 'Claude',
-                      avatar: '/images/utils/Ada.png'
-                  }],
-                  messages: 12,
-                  shares: 1
-                },
-                description: 'Add a description for AI',
-                taskProgress: 0.75,
-                subTasks: [],
-                created: 'Yesterday',
-                lastUpdated: 'Just Now'
-              },
-        ],
-        created: 'Yesterday',
-        lastUpdated: 'Just Now'
+      properties: {
+          status: 'To do',
+          assignees: [{
+              name: "John Doe",
+              img: '/tmp/avatars/john.png'
+          }],
+          priority: 2,
+          dueDate: 'Yesterday',
+          agents: [{
+              name: 'Claude',
+              avatar: '/images/utils/Ada.png'
+          }],
+          humans: [{
+              name: 'Claude',
+              avatar: '/images/utils/Ada.png'
+          }],
+          messages: 12,
+          shares: 1,          
+      },
+      description: 'Add a description for AI',
+      taskProgress: 0.75,
+      subTasks: [
+      ],
+      created: 'Yesterday',
+      lastUpdated: 'Just Now'
+    },
+    {
+      id: "3",
+      columnId: "doing",
+      parentId: "2",
+      title: "Conduct security testing",
+      properties: {
+        status: 'In Progress',
+        assignees: [{
+            name: "John Doe",
+            img: '/tmp/avatars/john.png'
+        }],
+        priority: 0,
+        dueDate: 'Yesterday',
+        agents: [{
+            name: 'Claude',
+            avatar: '/images/utils/Ada.png'
+        }],
+        humans: [{
+            name: 'Claude',
+            avatar: '/images/utils/Ada.png'
+        }],
+        messages: 12,
+        shares: 1
+      },
+      description: 'Add a description for AI',
+      taskProgress: 0.75,
+      subTasks: [],
+      created: 'Yesterday',
+      lastUpdated: 'Just Now'
+    },
+    {
+      id: "4",
+      columnId: "todo",
+      parentId: "2",
+      title: "Analyze competitors",
+      properties: {
+        status: 'To do',
+        assignees: [{
+            name: "John Doe",
+            img: '/tmp/avatars/john.png'
+        }],
+        priority: 2,
+        dueDate: 'Yesterday',
+        agents: [{
+            name: 'Claude',
+            avatar: '/images/utils/Ada.png'
+        }],
+        humans: [{
+            name: 'Claude',
+            avatar: '/images/utils/Ada.png'
+        }],
+        messages: 12,
+        shares: 1
+      },
+      description: 'Add a description for AI',
+      taskProgress: 0.75,
+      subTasks: [],
+      created: 'Yesterday',
+      lastUpdated: 'Just Now'
     },
     {
       id: "5",
       columnId: "done",
+      parentId: null,
       title: "Create UI kit documentation",
       properties: {
         status: 'Done',
@@ -234,6 +239,7 @@ export const DEFAULT_TASKS: TaskType[] = [
     {
       id: "6",
       columnId: "review",
+      parentId: null,
       title: "Dev meeting",
       properties: {
         status: 'In Review',
@@ -263,6 +269,7 @@ export const DEFAULT_TASKS: TaskType[] = [
     {
       id: "7",
       columnId: "done",
+      parentId: null,
       title: "Deliver dashboard prototype",
       properties: {
         status: 'Done',
@@ -292,6 +299,7 @@ export const DEFAULT_TASKS: TaskType[] = [
     {
       id: "8",
       columnId: "review",
+      parentId: null,
       title: "Optimize application performance",
       properties: {
         status: 'In Review',
@@ -321,6 +329,7 @@ export const DEFAULT_TASKS: TaskType[] = [
     {
       id: "9",
       columnId: "review",
+      parentId: null,
       title: "Implement data validation",
       properties: {
         status: 'In Review',
@@ -350,6 +359,7 @@ export const DEFAULT_TASKS: TaskType[] = [
     {
       id: "10",
       columnId: "todo",
+      parentId: null,
       title: "Design database schema",
       properties: {
         status: 'To do',
@@ -379,6 +389,7 @@ export const DEFAULT_TASKS: TaskType[] = [
     {
       id: "11",
       columnId: "todo",
+      parentId: null,
       title: "Integrate SSL web certificates into workflow",
       properties: {
         status: 'To do',
@@ -408,6 +419,7 @@ export const DEFAULT_TASKS: TaskType[] = [
     {
       id: "12",
       columnId: "doing",
+      parentId: null,
       title: "Implement error logging and monitoring",
       properties: {
         status: 'In Progress',
@@ -437,6 +449,7 @@ export const DEFAULT_TASKS: TaskType[] = [
     {
       id: "13",
       columnId: "doing",
+      parentId: null,
       title: "Design and implement responsive UI",
       properties: {
         status: 'In Progress',
