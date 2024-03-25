@@ -1,3 +1,5 @@
+'use client'
+
 import React from "react";
 import ProfileCard from "./ProfileCard";
 import Menu from "./Menu";
@@ -5,8 +7,10 @@ import BaseButton from "@/components/Common/Buttons/BaseButton";
 import { CogSIcon, PlusIcon, QuestionMarkCircleIcon } from "@/components/Icons";
 import { MENU_LIST, MENU_LIST_SPACE } from "@/data/global";
 import MenuItem from "./Menu/MenuItem";
+import { useRouter } from "next/navigation";
 
 const LeftSidebar = () => {
+    const router = useRouter();
     return (
         <div className="bg-[#202020] border-[#090909] w-[240px] h-[100vh] z-20 py-[30px] px-[20px] border-r border-r-[1px]">
             <div className="h-[calc(100vh-124px)]">
@@ -17,6 +21,7 @@ const LeftSidebar = () => {
                         caption="Create New Task"
                         icon={<PlusIcon />}
                         styles="w-full"
+                        onClick={() => router.push('/chat')}
                     />
                     <Menu menus={MENU_LIST} />
                     <Menu menus={MENU_LIST_SPACE} title="Space" />
@@ -37,10 +42,6 @@ const LeftSidebar = () => {
                     state={false}
                     line={false}
                 />
-                {/* <div className="flex gap-2 p-2 items-center text-base-300 hover:text-base-content cursor-pointer">
-                    <CogSIcon />
-                    <div className="text-[14px] font-40">Settings</div>
-                </div> */}
             </div>
         </div>
     );

@@ -1,8 +1,9 @@
+import { IconType } from "@/data/types/type";
 import React from "react";
 
-export const MangoIcon = () => {
+export const MangoIcon = (props:IconType) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 16} height={props.size || 16} viewBox="0 0 16 16" fill="currentColor">
             <path d="M15.3366 8.00182V9.33515C15.3366 11.5444 12.0533 13.3352 8.00327 13.3352C4.0255 13.3352 0.787429 11.6077 0.673049 9.45315L0.669922 9.33515V8.00182C0.669922 10.211 3.95317 12.0018 8.00327 12.0018C12.0533 12.0018 15.3366 10.211 15.3366 8.00182ZM8.00327 2.66852C12.0533 2.66852 15.3366 4.45938 15.3366 6.66848C15.3366 8.87768 12.0533 10.6685 8.00327 10.6685C3.95317 10.6685 0.669922 8.87768 0.669922 6.66848C0.669922 4.45938 3.95317 2.66852 8.00327 2.66852Z"/>
         </svg>
     );

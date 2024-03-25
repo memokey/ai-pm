@@ -1,6 +1,6 @@
 'use client'
 
-import { MessageType } from '@/components/Chat/Message';
+import { MessageType } from '@/components/ChatContainer/Chatbox/UserMessage';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface ChatState {

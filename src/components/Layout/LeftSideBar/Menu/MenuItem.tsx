@@ -17,7 +17,7 @@ const MenuItem = (props: MenuItemType) => {
         if(props.link === "noLink") {
             return;
         }
-        router.push('/' + props.title.toLowerCase())
+        router.push('/' + props.link)
     }
 
     return (

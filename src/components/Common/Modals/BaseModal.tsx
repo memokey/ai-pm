@@ -33,7 +33,7 @@ const BaseModal = (props:ModalType) => {
                         onClick={() => dispatch(setBaseModoal(false))}
                     ><BigXIcon /></span>
                 </div>
-                <div className="text-[13px] text-base-300 font-400 leading-[20px]">
+                <div className="text-[13px] text-base-300 font-400 leading-[20px] h-[50vh] overflow-auto">
                     {props.description}
                 </div>
             </div>

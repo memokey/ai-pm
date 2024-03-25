@@ -3,11 +3,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 
 import chatReducer from './slices/chatSlice'
+import taskReducer from './slices/taskSlice'
 
 export function makeStore() {
     return configureStore({
         reducer: {
             chat: chatReducer,
+            task: taskReducer,
         },
     })
 }
