@@ -5,7 +5,7 @@ import Message from "./UserMessage";
 const Chatbox = () => {
     return (
         <div className="grid gap-6 w-full">
-            <div className="grid gap-4 w-full">
+            {/* <div className="grid gap-4 w-full">
                 <h1 className="text-[48px] font-[400] traking-tighter">
                     Hello, 
                     <span className="name-linear font-[700]">Thomas</span>
@@ -14,7 +14,7 @@ const Chatbox = () => {
                 </h1>
                 <p className="text-[20px] font-[400] leading-[30px] text-base-300">Please Write down task along with description for AI so we can
     generate detail report for you</p>
-            </div>
+            </div> */}
             <Message
                 type={CONSTANTS.USER_MESSAGE_TYPE}
                 message={`I need Virtual Assistant for Company Assessment FormCreation:\nCreate comprehensive assessments using FormsWise.AI tailored to BEF’s requirements.\nIntegrate assessment forms with n8n to automate workflows, including data capture and processing.

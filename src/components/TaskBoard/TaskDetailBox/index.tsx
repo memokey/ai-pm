@@ -1,28 +1,35 @@
 import { Avatar } from "@/components/Common/Avatars";
 import { Badge } from "@/components/Common/Badges";
 import { ChatInputSm } from "@/components/Common/Inputs";
-import { AttachIcon, CalendarIcon, CircleIcon, ColoredSparkleIcon, FileShareIcon, FlagIcon, PlusIcon, PlussmIcon, ShareIcon, SlashIcon, SparklesIcon, ThreeDotIcon, TwoCircleIcon } from "@/components/Icons";
+import { AttachIcon, CalendarIcon, CircleIcon, CloseIcon, ColoredSparkleIcon, FileShareIcon, FlagIcon, PlusIcon, PlussmIcon, ShareIcon, SlashIcon, SparklesIcon, ThreeDotIcon, TwoCircleIcon } from "@/components/Icons";
 import { CONSTANTS } from "@/config/constants";
 import { STATUS_ICONS } from "@/data/global";
 import { TaskType } from "@/data/types/type";
+import { setActiveDetail } from "@/redux/slices/taskSlice";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 type TaskDetailBoxType = {
     task: TaskType;
 }
 
 const TaskDetailBox = (props: TaskDetailBoxType) => {
-
+    const dispatch = useDispatch();
     return (
         <div className="relative h-full">
             <div className="h-[calc(100vh-106px)] overflow-y-auto">
                 <div className="border-b border-base-200 flex justify-between px-5 py-2">
                     <div className="text-[12px] font-600 text-base-300">Description</div>
-                    <div className="flex gap-3 items-center">
-                        <ShareIcon size={14}/>
-                        <AttachIcon />
-                        <FileShareIcon />
-                        <ThreeDotIcon />
+                    <div className="flex gap-2">
+                        <div className="flex gap-3 items-center border-r border-base-200 pr-2">
+                            <ShareIcon size={14}/>
+                            <AttachIcon />
+                            <FileShareIcon />
+                            <ThreeDotIcon />
+                        </div>
+                        <div className="flex items-center cursor-pointer" onClick={() => dispatch(setActiveDetail(false))}>
+                            <CloseIcon />
+                        </div>
                     </div>
                 </div>
                 <div className="border-b border-base-200">
@@ -99,19 +106,21 @@ const TaskDetailBox = (props: TaskDetailBoxType) => {
                         </div>
                     </div>
                     <div className="font-400 text-base-content flex gap-2 items-center">
-                        <div className="rounded-[8px] border border-base-200 overflow-hidden w-full">
-                            {props.task.subTasks.map((subtask, index) => (
-                                <div className="px-3 py-2 flex items-center gap-6 justify-between border-b border-base-200" key={index}>
-                                    <div className="flex gap-2 items-center">
-                                        {STATUS_ICONS[subtask.properties.status]}
-                                        <div className="font-400 text-base-content">{subtask.title}</div>
+                        {props.task.subTasks.length != 0 && (
+                            <div className="rounded-[8px] border border-base-200 overflow-hidden w-full">
+                                {props.task.subTasks.map((subtask, index) => (
+                                    <div className="px-3 py-2 flex items-center gap-6 justify-between border-b border-base-200" key={index}>
+                                        <div className="flex gap-2 items-center">
+                                            {STATUS_ICONS[subtask.properties.status]}
+                                            <div className="font-400 text-base-content">{subtask.title}</div>
+                                        </div>
+                                        <div>
+                                            <Avatar img={subtask.properties.assignees[0].img || ''} size={16} />
+                                        </div>
                                     </div>
-                                    <div>
-                                        <Avatar img={subtask.properties.assignees[0].img || ''} size={16} />
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="grid gap-3 p-3 text-[12px]">

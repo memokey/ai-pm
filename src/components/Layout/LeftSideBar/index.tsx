@@ -8,6 +8,7 @@ import { CogSIcon, PlusIcon, QuestionMarkCircleIcon } from "@/components/Icons";
 import { MENU_LIST, MENU_LIST_SPACE } from "@/data/global";
 import MenuItem from "./Menu/MenuItem";
 import { useRouter } from "next/navigation";
+import TaskMenu from "./TaskMenu";
 
 const LeftSidebar = () => {
     const router = useRouter();
@@ -23,8 +24,8 @@ const LeftSidebar = () => {
                         styles="w-full"
                         onClick={() => router.push('/chat')}
                     />
-                    <Menu menus={MENU_LIST} />
-                    <Menu menus={MENU_LIST_SPACE} title="Space" />
+                    {/* <Menu menus={MENU_LIST} /> */}
+                    <TaskMenu menus={MENU_LIST_SPACE} title="Spaces" />
                 </div>
             </div>
             <div className="grid gap-1">

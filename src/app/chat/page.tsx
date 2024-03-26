@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 import ChatContainer from "@/components/ChatContainer";
 import { ChatRightSidebar } from "@/components/Layout/RightSidebars";
 
-const ChatPage = () => {
+const DefaultChatPage = () => {
     return (
         <Layout
             rightSidebar={<ChatRightSidebar />}
@@ -13,4 +13,4 @@ const ChatPage = () => {
     );
 }
 
-export default ChatPage;
+export default DefaultChatPage;

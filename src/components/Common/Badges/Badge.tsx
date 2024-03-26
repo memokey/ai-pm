@@ -9,10 +9,10 @@ export type BadgeType = {
 
 const Badge = (props: BadgeType) => {
     return (
-        <div className={`flex gap-1 items-center text-base-300 border border-base-200 text-[14px] font-[700] px-[9px] py-[6px] rounded-[4px] ${props.styles}`}>
+        <div className={`flex gap-1 items-center text-base-300 border border-base-200 text-[14px] font-500 px-[9px] py-[6px] rounded-[4px] ${props.styles}`}>
             {!!props.icon && (<div>{props.icon}</div>)}
             {!!props.title && (<div>{props.title} :</div>)}
-            <div className="font-700 text-base-300">{props.data}</div>
+            <div className="font-500 text-base-300">{props.data}</div>
         </div>
     );
 }

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { CONSTANTS } from "@/config/constants";
 import { STATE_LINKS } from "@/data/chatData";
 import Badge, { BadgeType } from "@/components/Common/Badges/Badge";
+import { EditIcon } from "@/components/Icons";
 
 export type TaskType = {
     title: string;
@@ -14,7 +15,7 @@ export type TaskType = {
 
 const Task = (props: TaskType) => {
     return (
-        <li className="w-full py-[12px] px-[20px] border border-base-200 border-b flex items-center justify-between cursor-pointer">
+        <li className="w-full py-[12px] px-[20px] border border-base-200 border-b flex items-center justify-between cursor-pointer gap-6">
             <div className="flex items-center gap-2">
                 <Image src={STATE_LINKS[props.status]} className="rounded-full" alt="Avatar" width={13} height={13} />
                 <span>{props.title}</span>
@@ -34,7 +35,10 @@ const Task = (props: TaskType) => {
                     />
                 )}
             </div>
-            <Image src={props.assignee} className="rounded-full" alt="Avatar" width={24} height={24} />
+            <div className="flex gap-6 text-base-300 hover:text-base-content">
+                <Image src={props.assignee} className="rounded-full" alt="Avatar" width={24} height={24} />
+                <EditIcon />
+            </div>
         </li>
     );
 }

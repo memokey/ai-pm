@@ -154,8 +154,7 @@ const TaskBoard = () => {
             </div>
             {/* Task Detail in Right Sidebar */}
             {!!activeDetail && (
-                <div className="absolute w-[calc(100vw-240px)] h-[calc(100vh-56px)] top-0 right-0 flex">
-                    <div className="w-[calc(100vw-690px)]" onClick={() => dispatch(setActiveDetail(false))}></div>
+                <div className="absolute w-[450px] h-[calc(100vh-56px)] top-0 right-0 flex">
                     <div className="w-[450px] h-[calc(100vh-56px)] bg-[#191919] border-[#343434] border-l">
                         {!!taskDetail && (
                             <TaskDetailBox task={taskDetail} />

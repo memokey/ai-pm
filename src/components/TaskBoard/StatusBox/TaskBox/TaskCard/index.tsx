@@ -58,7 +58,7 @@ const TaskCard = (props: TaskCardType) => {
             style={style}
             {...attributes}
             {...listeners}
-            className="grid gap-4 rounded-[8px] py-[6px] px-2 bg-[#2A2A2A] mb-4 cursor-grab"
+            className="grid gap-4 rounded-[8px] py-[6px] px-2 bg-[#2A2A2A] mb-4 cursor-grab shadow-b shadow-[#141414] shadow-sm"
             onClick={() => {
                 dispatch(setActiveDetail(true));
                 dispatch(setTaskId(props.task.id));
@@ -79,14 +79,14 @@ const TaskCard = (props: TaskCardType) => {
                         styles="!p-[4px] !text-[10px] !leading-[10px] !font-500 h-fit"
                     />
                     <Badge 
-                        key={0}
+                        key={1}
                         icon={<TwoCircleIcon size={12} />}
                         data={props.task.properties.humans.length}
                         styles="!p-[4px] !text-[10px] !leading-[10px] !font-500 h-fit"
                     />
                 </div>
-                <div className="flex justify-between">
-                    <div className="text-[14px] font-500">{props.task.title}</div>
+                <div className="flex justify-between gap-1">
+                    <div className="text-[13px] font-500">{props.task.title}</div>
                     <div className="flex h-fit">
                         {props.task.properties.assignees.map((assignee, index) => (
                             <div key={index} className="w-[26px] ml-[-13px]">

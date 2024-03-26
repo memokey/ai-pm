@@ -57,12 +57,12 @@ const StatusBox = (props: StatusBoxType) => {
                 const subTasks = tasks.filter(t => t.parentId == task.id);
                 if(!!subTasks && subTasks.length != 0) {
                     tasksContent = (
-                        <>
+                        <div key={task.id}>
                             {tasksContent}
                             <div className="ml-[20px]">
                                 {fetchTasks(subTasks)}
                             </div>
-                        </>
+                        </div>
                     );
                 }
                 return tasksContent;

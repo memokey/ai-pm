@@ -19,7 +19,7 @@ const AgentListItem = (props: AgentListItemType) => {
                 <h2 className="text-[14px] font-500 text-base-300">{props.name}</h2>
             </div>
             <div 
-                className="cursor-pointer"
+                className="cursor-pointer text-base-300 hover:text-base-content"
                 onClick={props.onEdit}
             >
                 <EditIcon />

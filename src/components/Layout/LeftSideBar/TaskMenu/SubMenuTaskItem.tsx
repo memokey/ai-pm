@@ -1,0 +1,41 @@
+import React, { ReactNode, useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+
+export type SubMenuType = {
+    icon: ReactNode;
+    title: string;
+    link?: string;
+    active?: boolean;
+}
+const SubMenuTaskItem = (props: SubMenuType) => {
+    const router = useRouter();
+    const pathname = usePathname();
+
+    const [menu, setMenu] = useState('tasks');
+    
+    useEffect(() => {
+        if(pathname) {
+            setMenu(pathname.split('/')[2]);
+        }
+    }, [pathname])
+
+    const linkToPage = () => {
+        if(props.link === "noLink") {
+            return;
+        }
+        router.push('/' + props.link + '/' + props.title.toLowerCase())
+    }
+
+    return (
+        <div 
+            className="flex gap-1 items-center px-[6px] py-1 border-l cursor-pointer hover:text-base-content" 
+            style={{borderColor: menu == props.title.toLowerCase() ? '#F2F2F2': '#424242', color: menu == props.title.toLowerCase() ? '#F2F2F2': '#BFBFBF'}}
+            onClick={linkToPage}
+        >
+            {props.icon}
+            <div className="text-[12px] font-400">{props.title}</div>
+        </div>
+    );
+}
+
+export default SubMenuTaskItem;

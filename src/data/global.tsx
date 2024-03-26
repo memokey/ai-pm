@@ -1,8 +1,9 @@
 import { MenuItemType } from "@/components/Layout/LeftSideBar/Menu/MenuItem";
-import { InboxIcon, SquaresIcon, SunIcon, CogEIcon, VAIcon, ClockIcon, SparklesIcon, TwoCircleIcon, CircleIcon, ProgressIcon, ReviewIcon, DoneIcon } from "@/components/Icons";
+import { InboxIcon, SquaresIcon, SunIcon, CogEIcon, VAIcon, ClockIcon, SparklesIcon, TwoCircleIcon, CircleIcon, ProgressIcon, ReviewIcon, DoneIcon, ChatIcon, CalendarIcon, QueueListIcon, FlowIcon } from "@/components/Icons";
 import { BadgeType } from "@/components/Common/Badges/Badge";
 import { MangoIcon } from "@/components/Icons/MangoIcon";
 import { ColumnType, StatusIcons, TaskType } from "./types/type";
+import { SubMenuType } from "@/components/Layout/LeftSideBar/TaskMenu/SubMenuTaskItem";
 
 export const MENU_LIST: MenuItemType[] = [
     {
@@ -75,6 +76,25 @@ export const DEFAULT_COLS: ColumnType[] = [
         title: "Done",
         icon: <DoneIcon />
       },
+]
+
+export const TASK_SUB_MENUS: SubMenuType[] = [
+  {
+    icon: <ChatIcon />,
+    title: 'Chat'
+  },
+  {
+    icon: <CalendarIcon />,
+    title: 'Dashboard'
+  },
+  {
+    icon: <QueueListIcon />,
+    title: 'Tasks'
+  },
+  {
+    icon: <FlowIcon />,
+    title: 'Flow'
+  },
 ]
 
 export const DEFAULT_TASKS: TaskType[] = [
