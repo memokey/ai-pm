@@ -1,20 +1,27 @@
 import React from "react";
 import { CONSTANTS } from "@/config/constants";
 import Message from "./UserMessage";
+import { CARD_PROMPTS } from "@/data/global";
+import { PromptCard } from "@/components/Common/Cards";
 
 const Chatbox = () => {
     return (
         <div className="grid gap-6 w-full">
-            {/* <div className="grid gap-4 w-full">
-                <h1 className="text-[48px] font-[400] traking-tighter">
+            <div className="grid gap-4 w-full">
+                <h1 className="text-[36px] font-[400] traking-tighter">
                     Hello, 
-                    <span className="name-linear font-[700]">Thomas</span>
-                    <br />
-                    Write down any task?
+                    <span className="name-linear font-[700]">Thomas</span>&nbsp;what do you want to create?
                 </h1>
-                <p className="text-[20px] font-[400] leading-[30px] text-base-300">Please Write down task along with description for AI so we can
-    generate detail report for you</p>
-            </div> */}
+                <p className="text-[16px] font-[400] leading-[30px] text-base-300">Please Write down task along with description for AI so we can generate detail report for you.</p>
+                <div className="flex gap-4">
+                    {CARD_PROMPTS.map((prompt, index) => (
+                        <PromptCard
+                            key={index}
+                            {...prompt}
+                         />
+                    ))}
+                </div>
+            </div>
             <Message
                 type={CONSTANTS.USER_MESSAGE_TYPE}
                 message={`I need Virtual Assistant for Company Assessment FormCreation:\nCreate comprehensive assessments using FormsWise.AI tailored to BEF’s requirements.\nIntegrate assessment forms with n8n to automate workflows, including data capture and processing.

@@ -1,13 +1,13 @@
 'use client'
 
-import React from "react";
+import React, { useEffect } from "react";
 import { ChatInput } from "../Common/Inputs";
 import Chatbox from "./Chatbox";
 import { useAppSelector } from "@/redux/hooks";
-import { BaseModal } from "../Common/Modals";
+import { AgentsModal, BaseModal, ReviewersModal } from "../Common/Modals";
 
 const ChatContainer = () => {
-    const { baseModal } = useAppSelector((state) => state.chat);
+    const { baseModal, reviewerModal, agentModal } = useAppSelector((state) => state.chat);
     return (
         <div className="w-[calc(100vw-540px)] relative h-[calc(100vh-56px)] mx-auto pt-[20px]">
             <div className="w-full h-[calc(100vh-156px)] overflow-y-auto pb-10 px-[95px]">
@@ -35,6 +35,16 @@ const ChatContainer = () => {
                         <b>1. Customizable Themes and Templates</b>
                         <br/><br/>
                         FormsWise.AI offers a range of customizable themes and templates that users can choose from while creating their assessments. These themes and templates not only make the assessment look more professional but also save a lot of time and effort.</p>}
+                />
+            )}
+            {!!reviewerModal && (
+                <ReviewersModal
+                    title="Human Reviewers"
+                />
+            )}
+            {!!agentModal && (
+                <AgentsModal 
+                    title="AI Agents"
                 />
             )}
         </div>

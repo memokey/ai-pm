@@ -6,13 +6,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 export interface ChatState {
     loading: Boolean;
     messages: MessageType[];
+    modal:Boolean;
     baseModal: Boolean;
+    reviewerModal: Boolean;
+    agentModal: Boolean;
 }
 
 const initialState: ChatState = {
     loading: false,
     messages: [],
+    modal: false,
     baseModal: false,
+    reviewerModal: false,
+    agentModal: false,
 }
 
 export const chatSlice = createSlice({
@@ -23,15 +29,27 @@ export const chatSlice = createSlice({
         setLoading: (state, action: PayloadAction<Boolean>) => {
             state.loading = action.payload
         },
+        setModal: (state, action: PayloadAction<Boolean>) => {
+            state.modal = action.payload
+        },
         setBaseModoal: (state, action: PayloadAction<Boolean>) => {
             state.baseModal = action.payload
+        },
+        setReviewerModal: (state, action: PayloadAction<Boolean>) => {
+            state.reviewerModal = action.payload
+        },
+        setAgentModal: (state, action: PayloadAction<Boolean>) => {
+            state.agentModal = action.payload
         },
     },
 })
 
 export const {
     setLoading,
-    setBaseModoal
+    setModal,
+    setBaseModoal,
+    setReviewerModal,
+    setAgentModal,
 } = chatSlice.actions
 
 export default chatSlice.reducer

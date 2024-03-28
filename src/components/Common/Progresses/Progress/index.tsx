@@ -21,7 +21,7 @@ const ProgressBar = () => {
                     <Image 
                         src={'/images/utils/line.png'} 
                         className="absolute left-[144px]" 
-                        width={12} 
+                        width={12}
                         height={37} 
                         alt="Line" 
                     />

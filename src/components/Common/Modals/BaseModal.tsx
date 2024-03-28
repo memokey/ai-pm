@@ -5,24 +5,23 @@ import { setBaseModoal } from "@/redux/slices/chatSlice";
 import React, { ReactNode } from "react";
 import { useDispatch } from "react-redux";
 
-export type ModalType = {
+export type BaseModalType = {
     title: string;
     description: ReactNode;
     button?: ReactNode;
 }
 
-const BaseModal = (props:ModalType) => {
+const BaseModal = (props:BaseModalType) => {
     const dispatch = useDispatch()
     const closeDlg = (e: any) => {
-        if (e.target.id == 'room_setting_dlg') {
+        if (!!e.target.className.includes && e.target.className.includes("room_setting_dlg")) {
             dispatch(setBaseModoal(false));
         }
     }
 
     return (
         <div 
-            className="fixed top-[0px] left-[0px] right-[0px] bottom-[0px] backdrop-blur-[20px] z-[1002] justify-center items-center"
-            id="room_setting_dlg"
+            className="fixed top-[0px] left-[0px] right-[0px] bottom-[0px] backdrop-blur-[20px] z-[1002] justify-center items-center room_setting_dlg"
             onClick={(e) => closeDlg(e)}
         >
             <div className="w-[40%] mt-[10vh] p-6 rounded-[6px] top-10 bg-[#212121] grid gap-2 shadow-[#2a2a2a] shadow-md mx-auto">

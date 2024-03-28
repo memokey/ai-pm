@@ -4,6 +4,9 @@ import { BadgeType } from "@/components/Common/Badges/Badge";
 import { MangoIcon } from "@/components/Icons/MangoIcon";
 import { ColumnType, StatusIcons, TaskType } from "./types/type";
 import { SubMenuType } from "@/components/Layout/LeftSideBar/TaskMenu/SubMenuTaskItem";
+import { ReviewerCardType } from "@/components/Common/Cards/ReviewerCard";
+import { AgentCardType } from "@/components/Common/Cards/AgentCard";
+import { PromptCardType } from "@/components/Common/Cards/PromptCard";
 
 export const MENU_LIST: MenuItemType[] = [
     {
@@ -496,4 +499,51 @@ export const DEFAULT_TASKS: TaskType[] = [
       created: 'Yesterday',
       lastUpdated: 'Just Now'
     },
-  ];
+];
+
+export const REVIEWERS: ReviewerCardType[] = [
+  {
+    avatar: '/tmp/avatars/reviewer1.png',
+    name: 'UC Berkely',
+    bio: 'Group of qualified students',
+    percent: 0.85,
+    hourly: 40,
+  },
+  {
+    avatar: '/tmp/avatars/reviewer2.png',
+    name: 'New York State University',
+    bio: 'Group of qualified students',
+    percent: 0.80,
+    hourly: 32,
+  },
+  {
+    avatar: '/tmp/avatars/reviewer3.png',
+    name: 'SF University',
+    bio: 'Group of qualified students',
+    percent: 0.82,
+    hourly: 28,
+  },
+];
+
+export const AGENTS: AgentCardType[] = [
+  {
+    title: "Chatgpt",
+    img: '/images/utils/chatgpt.png'
+  },
+  {
+    title: "Claude",
+    img: '/images/utils/Ada.png'
+  },
+];
+
+export const CARD_PROMPTS: PromptCardType[] = [
+  {
+    title: 'I want to create uber like SAAS product for AI',
+  },
+  {
+    title: 'I want to create wallpaper ios application',
+  },
+  {
+    title: 'I want to create CRM for sales professional',
+  },
+];

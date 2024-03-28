@@ -7,7 +7,7 @@ import { ClipboardIcon, HandThumbDownIcon, HandThumbUpIcon, RightArrowIcon, Roun
 import { CONSTANTS } from "@/config/constants";
 import React from "react";
 import TaskBoard from "../TaskBoard";
-import BaseCard from "@/components/Common/Cards";
+import BaseCard from "@/components/Common/Cards/BaseCard";
 import { METRIX } from "@/data/global";
 import { useAppDispatch } from "@/redux/hooks";
 import { setBaseModoal } from "@/redux/slices/chatSlice";
