@@ -1,4 +1,5 @@
 import React from "react";
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import Title from "./Title";
 import BalanceBox from "./BalanceBox";
 
@@ -10,6 +11,13 @@ const Header = () => {
             />
             <BalanceBox 
                 balance={9669}
+            />
+            <WalletMultiButton
+                style={{
+                    fontSize: '18px',
+                    padding: '15px 20px',
+                    borderRadius: '10px',
+                }}
             />
         </div>
     );

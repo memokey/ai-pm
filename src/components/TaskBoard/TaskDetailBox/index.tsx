@@ -42,7 +42,7 @@ const TaskDetailBox = (props: TaskDetailBoxType) => {
                                 styles="!p-[4px] !text-[10px] !leading-[10px] !font-500 h-fit"
                             />
                             <Badge 
-                                key={0}
+                                key={1}
                                 icon={<TwoCircleIcon size={12} />}
                                 data={props.task.properties.humans.length}
                                 styles="!p-[4px] !text-[10px] !leading-[10px] !font-500 h-fit"
