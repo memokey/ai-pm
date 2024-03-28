@@ -165,6 +165,66 @@ export const DEFAULT_TASKS: TaskType[] = [
       description: 'Add a description for AI',
       taskProgress: 0.75,
       subTasks: [
+        {
+          id: "3",
+          columnId: "doing",
+          parentId: "2",
+          title: "Conduct security testing",
+          properties: {
+            status: 'In Progress',
+            assignees: [{
+                name: "John Doe",
+                img: '/tmp/avatars/john.png'
+            }],
+            priority: 0,
+            dueDate: 'Yesterday',
+            agents: [{
+                name: 'Claude',
+                avatar: '/images/utils/Ada.png'
+            }],
+            humans: [{
+                name: 'Claude',
+                avatar: '/images/utils/Ada.png'
+            }],
+            messages: 12,
+            shares: 1
+          },
+          description: 'Add a description for AI',
+          taskProgress: 0.75,
+          subTasks: [],
+          created: 'Yesterday',
+          lastUpdated: 'Just Now'
+        },
+        {
+          id: "4",
+          columnId: "todo",
+          parentId: "2",
+          title: "Analyze competitors",
+          properties: {
+            status: 'To do',
+            assignees: [{
+                name: "John Doe",
+                img: '/tmp/avatars/john.png'
+            }],
+            priority: 2,
+            dueDate: 'Yesterday',
+            agents: [{
+                name: 'Claude',
+                avatar: '/images/utils/Ada.png'
+            }],
+            humans: [{
+                name: 'Claude',
+                avatar: '/images/utils/Ada.png'
+            }],
+            messages: 12,
+            shares: 1
+          },
+          description: 'Add a description for AI',
+          taskProgress: 0.75,
+          subTasks: [],
+          created: 'Yesterday',
+          lastUpdated: 'Just Now'
+        },
       ],
       created: 'Yesterday',
       lastUpdated: 'Just Now'
