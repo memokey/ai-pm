@@ -1,24 +1,66 @@
-import React from "react";
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+"use client"
+
+import React, { useEffect, useMemo } from "react";
 import Title from "./Title";
 import BalanceBox from "./BalanceBox";
+import dynamic from "next/dynamic";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useAppSelector } from "@/redux/hooks";
+import { apiCaller } from "@/utils/fetcher";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { login } from "@/redux/slices/authSlice";
 
-const Header = () => {
+const DynamicWalletButton = dynamic(() => import('@solana/wallet-adapter-react-ui').then(mod => mod.WalletMultiButton), {
+    ssr: false
+});
+  
+export type HeaderType = {
+    title: string;
+}
+
+const Header = (props: HeaderType) => {
+    const wallet = useWallet()
+    const dispatch = useDispatch();
+    const router = useRouter();
+
+    const { logged } = useAppSelector(state => state.auth);
+
+    const connected = useMemo(() => {
+        return wallet.connected
+    }, [wallet])
+
+    useEffect(() => {
+        if (connected && !logged && !!wallet.publicKey) {
+            let publicKey = wallet.publicKey.toBase58()
+            let type = 'solana'
+
+            loginUser(publicKey, type, wallet)
+        }
+    }, [connected])
+
+    const loginUser = async (address: string, type: string, provider: any) => {
+        localStorage.setItem('publickey', address)
+        localStorage.setItem('type', type)
+
+        await dispatch(
+            login({
+                publicKey: address,
+                walletType: type,
+                provider,
+            })
+        )
+    }
+
     return (
         <div className="h-[56px] flex justify-between border-b border-base-200 py-[16px] px-6">
             <Title 
-                title="PRD Report"
+                title={props.title}
             />
             <BalanceBox 
                 balance={9669}
             />
-            <WalletMultiButton
-                style={{
-                    fontSize: '18px',
-                    padding: '15px 20px',
-                    borderRadius: '10px',
-                }}
-            />
+            <DynamicWalletButton />
         </div>
     );
 }

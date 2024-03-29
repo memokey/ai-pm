@@ -7,7 +7,6 @@ import store from "@/redux/store";
 // Wallet connection
 import {
   ConnectionProvider,
-  useWallet,
   WalletProvider,
 } from '@solana/wallet-adapter-react'
 import {
@@ -19,6 +18,7 @@ import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import "@/styles/globals.css";
 import "@/styles/theme.css";
 import "@/styles/custom.css";
+import "@/styles/wallet.css";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -46,7 +46,7 @@ const Web3Provider = (props: Web3ProviderType) => {
     >
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
-          {props.children}
+            {props.children}
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>

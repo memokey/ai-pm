@@ -1,4 +1,5 @@
 import Title from "@/components/Layout/Header/Title";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import React from "react";
 
 const TaskBoardHeader = () => {
@@ -7,6 +8,7 @@ const TaskBoardHeader = () => {
             <Title
                 title="Board"
             />
+            <WalletMultiButton />
         </div>
     );
 }

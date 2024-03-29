@@ -2,12 +2,14 @@
 
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 
+import authReducer from './slices/authSlice'
 import chatReducer from './slices/chatSlice'
 import taskReducer from './slices/taskSlice'
 
 export function makeStore() {
     return configureStore({
         reducer: {
+            auth: authReducer,
             chat: chatReducer,
             task: taskReducer,
         },

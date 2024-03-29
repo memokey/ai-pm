@@ -6,12 +6,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface TaskState {
     activeDetail: Boolean;
+    taskDetailModal: Boolean;
     // tasks: TaskType[];
     taskId: Id;
 }
 
 const initialState: TaskState = {
     activeDetail: false,
+    taskDetailModal: false,
     // tasks: DEFAULT_TASKS,
     taskId: "0",
 }
@@ -27,15 +29,15 @@ export const taskSlice = createSlice({
         setTaskId: (state, action: PayloadAction<Id>) => {
             state.taskId = action.payload;
         },
-        // setTasks: (state, action: PayloadAction<TaskType[]>) => {
-        //     state.tasks = action.payload;
-        // },
+        setTaskDetailModal: (state, action: PayloadAction<Boolean>) => {
+            state.taskDetailModal = action.payload;
+        },
     },
 })
 
 export const {
     setActiveDetail,
-    // setTasks,
+    setTaskDetailModal,
     setTaskId,
 } = taskSlice.actions
 

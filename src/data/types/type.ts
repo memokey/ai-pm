@@ -55,3 +55,10 @@ export type AssgineeType = {
 export interface StatusIcons {
     [key: string]: JSX.Element; // Allow indexing with any string
 }
+
+export type loginProps = {
+    publicKey: any
+    walletType: string;
+    provider: any
+    next?: any
+}

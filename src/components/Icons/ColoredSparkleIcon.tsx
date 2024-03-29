@@ -9,16 +9,16 @@ export const ColoredSparkleIcon = (props: IconType) => {
             <path d="M9.5933 5.93076L9.44663 5.125L9.35483 5.79745C9.0405 8.09993 7.07383 9.81636 4.75 9.81636C7.09032 9.88403 9.03837 11.6344 9.35506 13.9542L9.44663 14.625L9.59298 13.8209C10.0056 11.5542 11.9471 9.88475 14.25 9.81636C11.9629 9.81636 10.0029 8.18094 9.5933 5.93076Z" fill="url(#paint2_linear_210_617)"/>
             <defs>
                 <linearGradient id="paint0_linear_210_617" x1="3.95833" y1="0.375" x2="3.95833" y2="8.29167" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#31F88D"/>
-                <stop offset="1" stop-color="#F1E045"/>
+                <stop stopColor="#31F88D"/>
+                <stop offset="1" stopColor="#F1E045"/>
                 </linearGradient>
                 <linearGradient id="paint1_linear_210_617" x1="15.0418" y1="0.375" x2="15.0418" y2="8.29167" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#31F88D"/>
-                <stop offset="1" stop-color="#F1E045"/>
+                <stop stopColor="#31F88D"/>
+                <stop offset="1" stopColor="#F1E045"/>
                 </linearGradient>
                 <linearGradient id="paint2_linear_210_617" x1="9.5" y1="5.125" x2="9.5" y2="14.625" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#31F88D"/>
-                <stop offset="1" stop-color="#F1E045"/>
+                <stop stopColor="#31F88D"/>
+                <stop offset="1" stopColor="#F1E045"/>
                 </linearGradient>
             </defs>
         </svg>

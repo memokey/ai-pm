@@ -1,13 +1,32 @@
 'use client'
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ChatInput } from "../Common/Inputs";
 import Chatbox from "./Chatbox";
 import { useAppSelector } from "@/redux/hooks";
 import { AgentsModal, BaseModal, ReviewersModal } from "../Common/Modals";
+import TaskDetailModal from "../Common/Modals/TaskDetailModal";
+import { TaskType } from "@/data/types/type";
+import { DEFAULT_TASKS } from "@/data/global";
 
 const ChatContainer = () => {
-    const { baseModal, reviewerModal, agentModal } = useAppSelector((state) => state.chat);
+    const { baseModal, reviewerModal, agentModal, taskDetailModal, taskId } = useAppSelector((state) => ({
+        baseModal: state.chat.baseModal,
+        reviewerModal: state.chat.reviewerModal,
+        agentModal: state.chat.agentModal,
+        taskDetailModal: state.task.taskDetailModal,
+        taskId: state.task.taskId,
+    }));
+
+    const [taskDetail, setTaskDetail] = useState<TaskType | null>(null);
+
+    useEffect(() => {
+        // const detailIndex = DEFAULT_TASKS.findIndex((t) => t.id == taskId);
+        // if(detailIndex != -1) {
+            setTaskDetail(DEFAULT_TASKS[1])
+        // }
+    }, [])
+
     return (
         <div className="w-[calc(100vw-540px)] relative h-[calc(100vh-56px)] mx-auto pt-[20px]">
             <div className="w-full h-[calc(100vh-156px)] overflow-y-auto pb-10 px-[95px]">
@@ -45,6 +64,11 @@ const ChatContainer = () => {
             {!!agentModal && (
                 <AgentsModal 
                     title="AI Agents"
+                />
+            )}
+            {!!taskDetailModal && taskDetail && (
+                <TaskDetailModal
+                    task={taskDetail} 
                 />
             )}
         </div>

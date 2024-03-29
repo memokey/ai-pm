@@ -4,6 +4,8 @@ import { CONSTANTS } from "@/config/constants";
 import { STATE_LINKS } from "@/data/chatData";
 import Badge, { BadgeType } from "@/components/Common/Badges/Badge";
 import { EditIcon } from "@/components/Icons";
+import { useDispatch } from "react-redux";
+import { setTaskDetailModal } from "@/redux/slices/taskSlice";
 
 export type TaskType = {
     title: string;
@@ -14,6 +16,7 @@ export type TaskType = {
 }
 
 const Task = (props: TaskType) => {
+    const dispatch = useDispatch();
     return (
         <li className="w-full py-[12px] px-[20px] border border-base-200 border-b flex items-center justify-between cursor-pointer gap-6">
             <div className="flex items-center gap-2">
@@ -37,7 +40,9 @@ const Task = (props: TaskType) => {
             </div>
             <div className="flex gap-6 text-base-300 hover:text-base-content">
                 <Image src={props.assignee} className="rounded-full" alt="Avatar" width={24} height={24} />
-                <EditIcon />
+                <div className="" onClick={() => dispatch(setTaskDetailModal(true))}>
+                    <EditIcon />
+                </div>
             </div>
         </li>
     );
