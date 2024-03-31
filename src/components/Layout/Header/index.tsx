@@ -5,11 +5,10 @@ import Title from "./Title";
 import BalanceBox from "./BalanceBox";
 import dynamic from "next/dynamic";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useAppSelector } from "@/redux/hooks";
-import { apiCaller } from "@/utils/fetcher";
-import { useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import { login } from "@/redux/slices/authSlice";
+import { loginProps } from "@/data/types/type";
 
 const DynamicWalletButton = dynamic(() => import('@solana/wallet-adapter-react-ui').then(mod => mod.WalletMultiButton), {
     ssr: false
@@ -21,7 +20,7 @@ export type HeaderType = {
 
 const Header = (props: HeaderType) => {
     const wallet = useWallet()
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const router = useRouter();
 
     const { logged } = useAppSelector(state => state.auth);
@@ -32,24 +31,27 @@ const Header = (props: HeaderType) => {
 
     useEffect(() => {
         if (connected && !logged && !!wallet.publicKey) {
-            let publicKey = wallet.publicKey.toBase58()
-            let type = 'solana'
+            let publicKey = wallet.publicKey.toBase58();
+            let type = 'solana';
 
-            loginUser(publicKey, type, wallet)
+            loginUser(publicKey, type, wallet);
         }
     }, [connected])
 
     const loginUser = async (address: string, type: string, provider: any) => {
         localStorage.setItem('publickey', address)
         localStorage.setItem('type', type)
+        let data: loginProps = {
+            publicKey: address,
+            walletType: type,
+            provider,
+        }
 
-        await dispatch(
-            login({
-                publicKey: address,
-                walletType: type,
-                provider,
-            })
-        )
+        await dispatch(login({ 
+            publicKey: address, 
+            walletType: type, 
+            provider 
+        }))
     }
 
     return (

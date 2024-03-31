@@ -57,7 +57,7 @@ export interface StatusIcons {
 }
 
 export type loginProps = {
-    publicKey: any
+    publicKey: string;
     walletType: string;
     provider: any
     next?: any

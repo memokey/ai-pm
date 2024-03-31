@@ -14,7 +14,7 @@ const initialState: AuthState = {
     logged: false,
 }
 
-export const login = createAsyncThunk(
+export const login = createAsyncThunk<boolean, loginProps>(
     'auth/login',
     async (
         { publicKey, walletType, provider, next }: loginProps,
