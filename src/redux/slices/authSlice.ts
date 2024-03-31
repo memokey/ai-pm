@@ -20,12 +20,11 @@ export const login = createAsyncThunk(
         { publicKey, walletType, provider, next }: loginProps,
         { dispatch }
     ) => {
-        console.log('adfasdf');
         let response = false
         try {
             const {
                 data: { nonce },
-            } = await apiCaller.post('/auth/login', {
+            } = await apiCaller.post('/auth/login/', {
                 requestNonce: true,
                 walletType,
                 publicKey,
@@ -39,7 +38,7 @@ export const login = createAsyncThunk(
 
             const {
                 data: { profile },
-            } = await apiCaller.post('/auth/login', {
+            } = await apiCaller.post('/auth/login/', {
                 publicKey,
                 walletType,
                 requestNonce: false,
