@@ -13,6 +13,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { setBaseModoal } from "@/redux/slices/chatSlice";
 
 export type MessageType = {
+    id?: string;
     message?: string;
     title?: string;
     type: boolean;
@@ -28,8 +29,10 @@ const Message = (props:MessageType) => {
                     img={`/tmp/avatars/user.png`}
                     size={24}
                 />
-                <div className="text-[16px] font-[400] text-base-300 leading-[24px]">
-                    {props.message}
+                <div className="text-[16px] font-[400] leading-[24px] group">
+                    <pre className="text-base-300">
+                        {props.message}
+                    </pre>
                 </div>
             </div>
         );
@@ -47,8 +50,10 @@ const Message = (props:MessageType) => {
                         </div>
                     )}
                     {!!props.message && (
-                        <div className="text-[16px] font-[400] text-base-300 leading-[24px]">
-                            {props.message}
+                        <div className="text-[16px] font-[400] text-base-300 leading-[24px] max-w-[calc(100vw-356px)] overflow-auto bg-[#212121] p-4 rounded-[8px]">
+                            <pre>
+                                {props.message}
+                            </pre>
                         </div>
                     )}
                     {props.action === CONSTANTS.DETAIL_ACTION && (

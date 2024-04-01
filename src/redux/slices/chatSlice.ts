@@ -1,7 +1,7 @@
 'use client'
 
 import { MessageType } from '@/components/ChatContainer/Chatbox/UserMessage';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit'
 
 export interface ChatState {
     loading: Boolean;
@@ -10,6 +10,8 @@ export interface ChatState {
     baseModal: Boolean;
     reviewerModal: Boolean;
     agentModal: Boolean;
+    streamingMessage: string;
+    streamingFlag: Boolean;
 }
 
 const initialState: ChatState = {
@@ -19,6 +21,8 @@ const initialState: ChatState = {
     baseModal: false,
     reviewerModal: false,
     agentModal: false,
+    streamingMessage: '',
+    streamingFlag: false,
 }
 
 export const chatSlice = createSlice({
@@ -41,6 +45,18 @@ export const chatSlice = createSlice({
         setAgentModal: (state, action: PayloadAction<Boolean>) => {
             state.agentModal = action.payload
         },
+        setMessages: (state, action: PayloadAction<MessageType[]>) => {
+            state.messages = action.payload
+        },
+        addMessage: (state, action: PayloadAction<MessageType>) => {
+            state.messages = [...current(state).messages, action.payload];
+        },
+        addStreamingMessage: (state, action: PayloadAction<String>) => {
+            state.streamingMessage = current(state).streamingMessage + action.payload;
+        },
+        setStreamingFlag: (state, action: PayloadAction<Boolean>) => {
+            state.streamingFlag = action.payload
+        },
     },
 })
 
@@ -50,6 +66,10 @@ export const {
     setBaseModoal,
     setReviewerModal,
     setAgentModal,
+    setMessages,
+    addMessage,
+    addStreamingMessage,
+    setStreamingFlag,
 } = chatSlice.actions
 
 export default chatSlice.reducer

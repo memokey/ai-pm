@@ -1,28 +1,47 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CONSTANTS } from "@/config/constants";
 import Message from "./UserMessage";
 import { CARD_PROMPTS } from "@/data/global";
 import { PromptCard } from "@/components/Common/Cards";
+import { useAppSelector } from "@/redux/hooks";
 
 const Chatbox = () => {
+    const { messages, streamingFlag, streamingMessage } = useAppSelector(state => state.chat);
+
     return (
         <div className="grid gap-6 w-full">
-            <div className="grid gap-4 w-full">
-                <h1 className="text-[36px] font-[400] traking-tighter">
-                    Hello, 
-                    <span className="name-linear font-[700]">Thomas</span>&nbsp;what do you want to create?
-                </h1>
-                <p className="text-[16px] font-[400] leading-[30px] text-base-300">Please Write down task along with description for AI so we can generate detail report for you.</p>
-                <div className="flex gap-4">
-                    {CARD_PROMPTS.map((prompt, index) => (
-                        <PromptCard
-                            key={index}
-                            {...prompt}
-                         />
-                    ))}
+            {messages.length === 0 && (
+                <div className="grid gap-4 w-full">
+                    <h1 className="text-[36px] font-[400] traking-tighter">
+                        Hello, 
+                        <span className="name-linear font-[700]">Thomas</span>&nbsp;what do you want to create?
+                    </h1>
+                    <p className="text-[16px] font-[400] leading-[30px] text-base-300">Please Write down task along with description for AI so we can generate detail report for you.</p>
+                    <div className="flex gap-4">
+                        {CARD_PROMPTS.map((prompt, index) => (
+                            <PromptCard
+                                key={index}
+                                {...prompt}
+                            />
+                        ))}
+                    </div>
                 </div>
-            </div>
-            <Message
+            )}
+            {messages.map((msg) => (
+                <Message
+                    key={msg.id}
+                    type={msg.type}
+                    message={msg.message}
+                />
+            ))}
+            {streamingFlag && (
+                <Message
+                    key={"bot111"}
+                    type={CONSTANTS.BOT_MESSAGE_TYPE}
+                    message={streamingMessage}
+                />
+            )}
+            {/* <Message
                 type={CONSTANTS.USER_MESSAGE_TYPE}
                 message={`I need Virtual Assistant for Company Assessment FormCreation:\nCreate comprehensive assessments using FormsWise.AI tailored to BEF’s requirements.\nIntegrate assessment forms with n8n to automate workflows, including data capture and processing.
                 Set up and maintain integrations between FormsWise.AI, Google Sheets, and Google Docs to ensure seamless data flow and accessibility.\nManage and configure API keys securely and efficiently.
@@ -42,7 +61,7 @@ const Chatbox = () => {
                 type={CONSTANTS.BOT_MESSAGE_TYPE}
                 message={`Ok, starting decomposition and assignment`}
                 action={CONSTANTS.TASKS_ACTION}
-            />
+            /> */}
         </div>
     );
 }
