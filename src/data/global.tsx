@@ -607,3 +607,4 @@ export const CARD_PROMPTS: PromptCardType[] = [
     title: 'I want to create CRM for sales professional',
   },
 ];
+

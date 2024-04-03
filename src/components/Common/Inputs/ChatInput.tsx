@@ -70,8 +70,8 @@ const ChatInput = () => {
             <TextareaAutosize 
                 minRows={1}
                 maxRows={10}
-                className="bg-[#2a2a2a] hover:border-transparent focus-visible:outline-none hover:outline-none text-[#f3f3f3] border-transparent resize-none box-border
-                mt-[-5px] w-full text-[16px] overflow-visible font-[400]" 
+                className="bg-[#2a2a2a] hover:border-transparent outline-none focus-visible:outline-none hover:outline-none text-[#f3f3f3] border-transparent resize-none box-border
+                mt-[-5px] w-full text-[12px] overflow-visible font-[400]" 
                 placeholder="Enter a prompt here"
                 value={prompt}
                 onChange={(e) => {
