@@ -68,11 +68,11 @@ const TaskBoard = () => {
         console.log("DRAG END");
 
         setColumns((columns) => {
-        const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
+            const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
 
-        const overColumnIndex = columns.findIndex((col) => col.id === overId);
+            const overColumnIndex = columns.findIndex((col) => col.id === overId);
 
-        return arrayMove(columns, activeColumnIndex, overColumnIndex);
+            return arrayMove(columns, activeColumnIndex, overColumnIndex);
         });
     }
     
@@ -110,13 +110,13 @@ const TaskBoard = () => {
 
         // Im dropping a Task over a column
         if (isActiveATask && isOverAColumn) {
-        setTasks((tasks) => {
-            const activeIndex = tasks.findIndex((t) => t.id === activeId);
+            setTasks((tasks) => {
+                const activeIndex = tasks.findIndex((t) => t.id === activeId);
 
-            tasks[activeIndex].columnId = overId;
-            console.log("DROPPING TASK OVER COLUMN", { activeIndex });
-            return arrayMove(tasks, activeIndex, activeIndex);
-        });
+                tasks[activeIndex].columnId = overId;
+                console.log("DROPPING TASK OVER COLUMN", { activeIndex });
+                return arrayMove(tasks, activeIndex, activeIndex);
+            });
         }
     }
 

@@ -74,7 +74,7 @@ const StatusBox = (props: StatusBoxType) => {
         <div 
             ref={setNodeRef}
             style={style}
-            className="grid w-[290px]"
+            className="grid w-[340px]"
         >
             <StatusTitle 
                 stateIcon={props.column.icon}

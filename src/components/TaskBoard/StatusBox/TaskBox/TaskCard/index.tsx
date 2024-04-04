@@ -58,7 +58,7 @@ const TaskCard = (props: TaskCardType) => {
             style={style}
             {...attributes}
             {...listeners}
-            className="grid gap-4 rounded-[8px] py-[6px] px-2 bg-[#2A2A2A] mb-4 cursor-grab shadow-b shadow-[#141414] shadow-sm"
+            className="grid gap-4 h-[100px] min-h-[100px] rounded-[8px] py-[6px] px-2 bg-[#2A2A2A] mb-4 cursor-grab shadow-b shadow-[#141414] shadow-sm"
             onClick={() => {
                 dispatch(setActiveDetail(true));
                 dispatch(setTaskId(props.task.id));
@@ -86,7 +86,7 @@ const TaskCard = (props: TaskCardType) => {
                     />
                 </div>
                 <div className="flex justify-between gap-1">
-                    <div className="text-[13px] font-500">{props.task.title}</div>
+                    <div className="text-[13px] font-500">{props.task.title.length > 30 ? props.task.title.slice(0, 30) + "...": props.task.title}</div>
                     <div className="flex h-fit">
                         {props.task.properties.assignees.map((assignee, index) => (
                             <div key={index} className="w-[26px] ml-[-13px]">
