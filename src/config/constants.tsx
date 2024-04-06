@@ -10,6 +10,11 @@ export const CONSTANTS = {
     METRIX_ACTION: 1,
     TASKS_ACTION: 2,
 
+    // User State
+    USER_ACTIVE: 0,
+    USER_IDLE: 1,
+    USER_INACTIVE: 2,
+
     //Task Progress
     TASK_CONFIRMED: 0,
     TASK_IN_PROGRESS: 1,
@@ -17,4 +22,6 @@ export const CONSTANTS = {
 
     PRIORITY_COLORS: ['#DCC32A', '#04CD76', '#E54C26'],
     PRIORITY_TEXTS: ['Easy', 'Medium', 'High'],
+
+    USER_STATES: ['#069F5D', '#FE3300', '#929292'],
 };
