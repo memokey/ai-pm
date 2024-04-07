@@ -7,6 +7,7 @@ type RegisterBoxType = {
     title: String;
     description: String;
     active: Boolean;
+    onClick: any;
 }
 
 const RegisterBox = (props: RegisterBoxType) => {
@@ -17,6 +18,7 @@ const RegisterBox = (props: RegisterBoxType) => {
             style={{background: props.active || hover ? 'linear-gradient(90deg, #191919 0%, #252525 48.5%, #191919 100%)': '' }}
             onMouseOver={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
+            onClick={props.onClick}
         >
             {props.icon}
             <div className="grid gap-2">
