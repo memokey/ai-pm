@@ -7,10 +7,15 @@ import LinkCard from "@/components/Common/Cards/LinkCard";
 import { CrossIcon, LeftArrowIcon, PlusIcon } from "@/components/Icons";
 import Image from "next/image";
 import { AI_TOOLS, SKILLS } from "@/data/global";
+import { apiCaller } from "@/utils/fetcher";
 
 const StepFive = () => {
     const dispatch = useAppDispatch();
-    const nextStep = () => {
+    const nextStep = async () => {
+        await apiCaller.post('/auth/register/', {
+            wallet_address: localStorage.getItem('publickey'),
+            step: "5"
+        });
         dispatch(setRegisterStep(6));
     }
 

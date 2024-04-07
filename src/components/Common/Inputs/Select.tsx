@@ -15,14 +15,12 @@ export type SelectType = {
 const Select = (props: SelectType) => {
 
     return (
-        <select className="select select-bordered">
+        <select className="select select-bordered" value={props.value} onChange={(e) => props.setValue(e.target.value)}>
             {props.options.map((option, index) => (
                 <option 
                     key={index}
-                    selected = {option.value == props.value}
                     disabled = {props.disabled}
                     value={option.value}
-                    onClick={() => props.setValue(option.value)}
                 >{option.title}</option>
             ))}
         </select>

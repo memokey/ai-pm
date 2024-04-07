@@ -2,8 +2,10 @@ import Image from "next/image";
 import React from "react";
 import RegisterTitle from "../RegisterTitle";
 import { PrimaryButton } from "@/components/Common/Buttons";
+import { useRouter } from "next/navigation";
 
 const OnboardingFinal = () => {
+    const router = useRouter();
     return (
         <div className="">
             <div className="flex justify-center mb-[32px]">
@@ -20,7 +22,9 @@ const OnboardingFinal = () => {
                     caption="Explore Task Dashboard"
                     type={false}
                     styles="!px-[24px] !py-[8px] !text-[16px]"
-                    onClick={() => {}}
+                    onClick={() => {
+                        router.push('/tasker/taskRequests');
+                    }}
                 />
             </div>
         </div>

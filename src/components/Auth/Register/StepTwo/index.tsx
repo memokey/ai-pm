@@ -8,13 +8,26 @@ import { Input, Select } from "@/components/Common/Inputs";
 import { LOCATIONS_OPTION } from "@/data/global";
 import LinkCard from "@/components/Common/Cards/LinkCard";
 import { DiscordIcon, GitHubIcon, LeftArrowIcon, TwitterIcon } from "@/components/Icons";
+import { apiCaller } from "@/utils/fetcher";
 
 const StepTwo = () => {
     const [name, setName] = useState("");
-    const [location, setLocation] = useState("");
+    const [nation, setNation] = useState("US");
+    const [imageUrl, setImageUrl] = useState('');
     
     const dispatch = useAppDispatch();
-    const nextStep = () => {
+    const nextStep = async () => {
+        try {
+            await apiCaller.post('/auth/register/', {
+                wallet_address: localStorage.getItem('publickey'),
+                name,
+                avatar: imageUrl,
+                nation,
+                step: "2"
+            });
+        } catch (error) {
+            
+        }
         dispatch(setRegisterStep(3));
     }
 
@@ -27,7 +40,10 @@ const StepTwo = () => {
             <RegisterTitle title="Profile Info" styles="mb-[16px]" />
             <div className="grid mb-[24px] gap-[24px]">
                 <div className="">
-                    <UploadAvatar />
+                    <UploadAvatar 
+                        imageUrl={imageUrl}
+                        setImageUrl={setImageUrl}
+                    />
                 </div>
                 <div className="grid gap-[12px] w-full">
                     <div className="text-base-300 text-[14px] font-500">
@@ -45,8 +61,8 @@ const StepTwo = () => {
                         Where are you from 
                     </div>
                     <Select 
-                        value={location}
-                        setValue={setLocation}
+                        value={nation}
+                        setValue={setNation}
                         disabled={false}
                         options={LOCATIONS_OPTION}
                     />

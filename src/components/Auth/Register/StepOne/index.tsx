@@ -5,12 +5,23 @@ import { LargeChatIcon, TVIcon } from "@/components/Icons";
 import { PrimaryButton } from "@/components/Common/Buttons";
 import { useAppDispatch } from "@/redux/hooks";
 import { setRegisterStep } from "@/redux/slices/authSlice";
+import { apiCaller } from "@/utils/fetcher";
 
 const StepOne = () => {
-    const [role, setRole] = useState('tasker')
+    const [role, setRole] = useState('tasker');
     const dispatch = useAppDispatch();
-    const nextStep = () => {
-        dispatch(setRegisterStep(2));
+    const nextStep = async () => {
+        try {
+            await apiCaller.post('/auth/register/', {
+                wallet_address: localStorage.getItem('publickey'),
+                wallet_type: localStorage.getItem('type'),
+                role,
+                step: "1"
+            });
+            dispatch(setRegisterStep(2));
+        } catch (error) {
+            
+        }
     }
 
     return (

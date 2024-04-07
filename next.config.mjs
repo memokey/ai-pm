@@ -2,6 +2,10 @@
 
 const nextConfig = {
     webpack: (config) => {
+        if (!config.resolve.fallback) {
+            config.resolve.fallback = {};
+        }
+        config.resolve.fallback.fs = false;
         config.externals.push("pino-pretty", "lokijs", "encoding");
         return config;
     },

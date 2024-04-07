@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import { login } from "@/redux/slices/authSlice";
 import { loginProps } from "@/data/types/type";
+import { apiCaller } from "@/utils/fetcher";
 
 const DynamicWalletButton = dynamic(() => import('@solana/wallet-adapter-react-ui').then(mod => mod.WalletMultiButton), {
     ssr: false
@@ -41,16 +42,24 @@ const Header = (props: HeaderType) => {
     const loginUser = async (address: string, type: string, provider: any) => {
         localStorage.setItem('publickey', address)
         localStorage.setItem('type', type)
-        let data: loginProps = {
+
+        const {
+            data: { exist, user },
+        } = await apiCaller.post('/auth/userExist/', {
             publicKey: address,
             walletType: type,
-            provider,
+        })
+
+        let url : any;
+        if (!exist || user.registerFlag == false) {
+            url = '/auth/register';
         }
 
         await dispatch(login({ 
             publicKey: address, 
             walletType: type, 
-            provider 
+            provider,
+            next: () => router.push(url),
         }))
     }
 
