@@ -12,7 +12,7 @@ const WorkHistory = (props: any) => {
                     </div>
                     <div className="text-base-300 pl-2">{props.done_at}</div>
                 </div>
-                <div className="text-[12px] font-400 text-base-300">"{props.feedback}"</div>
+                <div className="text-[12px] font-400 text-base-300">&quot{props.feedback}&quot</div>
             </div>
         </div>
     );
