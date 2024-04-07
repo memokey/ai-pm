@@ -8,10 +8,12 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface AuthState {
     logged: Boolean;
+    registerStep: Number;
 }
 
 const initialState: AuthState = {
     logged: false,
+    registerStep: 1,
 }
 
 export const login = createAsyncThunk<boolean, loginProps>(
@@ -62,12 +64,16 @@ export const authSlice = createSlice({
     reducers: {
         setProfile(state, action: PayloadAction<any>) {
 
+        },
+        setRegisterStep(state, action: PayloadAction<Number>) {
+            state.registerStep = action.payload;
         }
     },
 })
 
 export const {
-    setProfile
+    setProfile,
+    setRegisterStep
 } = authSlice.actions
 
 export default authSlice.reducer

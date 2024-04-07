@@ -8,6 +8,8 @@ import { ReviewerCardType } from "@/components/Common/Cards/ReviewerCard";
 import { AgentCardType } from "@/components/Common/Cards/AgentCard";
 import { PromptCardType } from "@/components/Common/Cards/PromptCard";
 import { CONSTANTS } from "@/config/constants";
+import { OptionType } from "@/components/Common/Inputs/Select";
+import Image from "next/image";
 
 export const MENU_LIST: MenuItemType[] = [
     {
@@ -656,3 +658,58 @@ export const PROFILE: any[] = [
   }
 ];
 
+export const LOCATIONS_OPTION: OptionType[] = [
+  { value: "US", title: "United States" },
+  { value: "CA", title: "Canada" },
+  { value: "GB", title: "United Kingdom" },
+  { value: "AF", title: "Afghanistan" },
+  { value: "AX", title: "Åland Islands" },
+  { value: "AL", title: "Albania" },
+  { value: "DZ", title: "Algeria" },
+  { value: "YE", title: "Yemen" },
+  { value: "ZM", title: "Zambia" },
+  { value: "ZW", title: "Zimbabwe" }
+];
+
+export const SKILLS: any[] = [
+  { title: "Coding", selected: true, },
+  { title: "Design", selected: true, },
+  { title: "AI Prompt", selected: true, },
+  { title: "UI Design", selected: false, },
+  { title: "Figma", selected: false, },
+  { title: "Java", selected: false, },
+  { title: "CSS", selected: false, },
+  { title: "HTML", selected: false, },
+  { title: "AI", selected: false, },
+  { title: "ML", selected: false, },
+  { title: "Python", selected: false, },
+  { title: "Write Here", selected: false, },
+];
+
+export const AI_TOOLS: any[] = [
+  {
+    title: "Chatgpt",
+    icon: <Image src="/images/utils/chatgpt.png" width={16} height={16} alt="AI avatar" />,
+    selected: true,
+  },
+  {
+    title: "Stable Diffusion",
+    icon: <Image src="/images/utils/st.png" width={16} height={16} alt="AI avatar" />,
+    selected: false,
+  },
+  {
+    title: "Claude",
+    icon: <Image src="/images/utils/Ada.png" width={16} height={16} alt="AI avatar" />,
+    selected: false,
+  },
+  {
+    title: "Midjourney",
+    icon: <Image src="/images/utils/md.png" width={16} height={16} alt="AI avatar" />,
+    selected: false,
+  },
+  {
+    title: "Devin",
+    icon: <Image src="/images/utils/devin.png" width={16} height={16} alt="AI avatar" />,
+    selected: false,
+  },
+]
