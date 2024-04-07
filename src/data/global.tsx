@@ -622,10 +622,10 @@ export const PROFILE: any[] = [
     rating: 4.5,
     description: <div>With a master's degree from Brown University and many years of experience in technology, I specialize in making complex scripts and web/mobile apps. Whether you're an individual or a business, I strive to understand your needs and deliver the right solutions.  
     <br/><br/>My expertise includes but is not limited to:  Generative AI: GPT, Gemini/Bard, Llama, Dalle, Mistral, Claude, Stable Diffusion Front-End: HTML, CSS, JavaScript, React, Bootstrap Back-End: Node.js, Express, Laravel, Django, Python, Java, PHP Cloud Computing: AWS, Google Cloud, Azure, Heroku Database Management: MySQL, MongoDB, PostgreSQL Mobile App: 
-    <br/><br/>React Native and Flutter  I'm committed to crafting customized solutions, from user-friendly websites to powerful apps and innovative AI applications. Your satisfaction is my priority, and I aim to exceed your expectations.  Interested? Let's connect and bring your vision to life.`</div>,
+    <br/><br/>React Native and Flutter  I'm committed to crafting customized solutions, from user-friendly websites to powerful apps and innovative AI applications. Your satisfaction is my priority, and I aim to exceed your expectations.  Interested? Let's connect and bring your vision to life.</div>,
     histories: [
       {
-        title: "Image design for a generative AI mobile application.",
+        title: "Image design for a generative AI mobile application.",
         rating: 4.5,
         done_at: "5 Minutes ago",
         feedback: "Gunjan has deep AI knowledge and excellent writing skills. He is patient and receptive to feedback!"
