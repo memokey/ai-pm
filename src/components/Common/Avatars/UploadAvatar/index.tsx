@@ -18,7 +18,7 @@ cloudinary.config({
 })
 
 const UploadAvatar = (props: UploadAvatarType) => {
-    const avatarImage = useRef();
+    const avatarImage = useRef<HTMLInputElement>(null);
 
     const edit = () => {
         let file_dlg = document.getElementById('file_dlg');
