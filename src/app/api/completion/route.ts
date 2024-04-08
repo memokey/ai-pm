@@ -12,19 +12,26 @@ export const runtime = 'edge';
 
 export async function POST(req: Request) {
     try {
-        const { messages } = await req.json();
+        const { message, history } = await req.json();
 
-        // Ask OpenAI for a streaming chat completion given the prompt
-        const response = await openai.chat.completions.create({
-            model: 'gpt-3.5-turbo',
-            stream: true,
-            messages,
+        const fastAPIResponse = await fetch('http://127.0.0.1:8080/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message: message, history }),
         });
 
-        // Convert the response into a friendly text-stream
-        const stream = OpenAIStream(response);
-        // Respond with the stream
-        return new StreamingTextResponse(stream);
+        // Check if the FastAPI call was successful
+        if (!fastAPIResponse.ok) {
+            throw new Error(`Failed to call FastAPI. Status: ${fastAPIResponse.status}`);
+        }
+
+        // Get the response from FastAPI
+        const fastAPIResponseBody = await fastAPIResponse.json()
+
+        // Respond with the response from FastAPI
+        return NextResponse.json(fastAPIResponseBody);
     } catch (error) {
         if (error instanceof OpenAI.APIError) {
             const { name, status, headers, message } = error;

@@ -6,7 +6,7 @@ import { PromptCard } from "@/components/Common/Cards";
 import { useAppSelector } from "@/redux/hooks";
 
 const Chatbox = () => {
-    const { messages, streamingFlag, streamingMessage } = useAppSelector(state => state.chat);
+    const { messages, streamingFlag, streamingMessage, isGeneratedTasks } = useAppSelector(state => state.chat);
 
     return (
         <div className="grid gap-6 w-full">
@@ -32,6 +32,8 @@ const Chatbox = () => {
                     key={msg.id}
                     type={msg.type}
                     message={msg.message}
+                    action={!!msg.tasks && msg.tasks.length != 0 ? CONSTANTS.TASKS_ACTION : -1}
+                    tasks={msg.tasks}
                 />
             ))}
             {streamingFlag && (

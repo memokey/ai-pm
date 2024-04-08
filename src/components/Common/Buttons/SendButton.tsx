@@ -14,7 +14,7 @@ const SendButton = (props: SendButtonType) => {
     const { loading } = useAppSelector((state) => state.chat);
 
     const changeState = () => {
-        dispatch(setLoading(!loading));
+        dispatch(setLoading(true));
     }
 
     return (

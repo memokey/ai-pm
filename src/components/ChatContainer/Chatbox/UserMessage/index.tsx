@@ -18,6 +18,7 @@ export type MessageType = {
     title?: string;
     type: boolean;
     action?: number;
+    tasks?: any[];
 }
 
 const Message = (props:MessageType) => {
@@ -43,7 +44,7 @@ const Message = (props:MessageType) => {
                     img={`/images/avatars/bot.png`}
                     size={24}
                 />
-                <div className="grid gap-4 w-full">
+                <div className="grid gap-4 w-[calc(100vw-800px)]">
                     {!!props.title && (
                         <div className="text-[16px] font-[400] text-base-300 leading-[24px]">
                             {props.title}
@@ -86,25 +87,23 @@ const Message = (props:MessageType) => {
                                     />
                                 ))}
                             </div>
-                            <TaskBoard />
-                        </div>
-                    )}
-                    {props.action !== CONSTANTS.TASKS_ACTION && (
-                        <div className="grid gap-2">
-                            <div className="text-[16px] font-[400] text-base-content leading-[24px]">
-                                Will this plan work for you?
-                            </div>
-                            <div className="flex gap-[10px]">
-                                <BaseButton 
-                                    type={true}
-                                    caption="Yes"
-                                    icon={<div className="text-success"><HandThumbUpIcon /></div>}
-                                />
-                                <BaseButton 
-                                    type={true}
-                                    caption="No"
-                                    icon={<div className="text-error"><HandThumbDownIcon /></div>}
-                                />
+                            <TaskBoard tasks={props.tasks}/>
+                            <div className="grid gap-2">
+                                <div className="text-[16px] font-[400] text-base-content leading-[24px]">
+                                    Will this plan work for you?
+                                </div>
+                                <div className="flex gap-[10px]">
+                                    <BaseButton 
+                                        type={true}
+                                        caption="Yes"
+                                        icon={<div className="text-success"><HandThumbUpIcon /></div>}
+                                    />
+                                    <BaseButton 
+                                        type={true}
+                                        caption="No"
+                                        icon={<div className="text-error"><HandThumbDownIcon /></div>}
+                                    />
+                                </div>
                             </div>
                         </div>
                     )}

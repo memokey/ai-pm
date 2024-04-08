@@ -5,13 +5,14 @@ import TextareaAutosize from 'react-textarea-autosize'
 import { SendButton } from "../Buttons";
 import { CloudArrowUpIcon, MicIcon } from "@/components/Icons";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { addMessage, addStreamingMessage, setLoading, setMessages, setStreamingFlag } from "@/redux/slices/chatSlice";
+import { addMessage, addStreamingMessage, setGeneratedTasks, setIsGeneratedTasks, setLoading, setMessages, setStreamingFlag } from "@/redux/slices/chatSlice";
 import { CONSTANTS } from "@/config/constants";
 
 const ChatInput = () => {
     const dispatch = useAppDispatch();
     const [prompt, setPrompt] = useState("");
     const { messages } = useAppSelector(state => state.chat);
+    const [history, setHistory] = useState([]);
 
     const handleSubmit = async () => {
         try {
@@ -30,7 +31,7 @@ const ChatInput = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ messages: [{ role: 'user', content: prompt.trim() }] })
+                body: JSON.stringify({ message: prompt.trim(), history })
             });
             setPrompt("");
 
@@ -38,28 +39,25 @@ const ChatInput = () => {
                 throw new Error('Network response was not ok');
             }
 
-            // Parse the streaming response as text
-            const reader = response.body?.getReader();
-            let messageStream = '';
-            dispatch(setStreamingFlag(true));
-
-            while (true && !!reader) {
-                const { done, value } = await reader.read();
-
-                if (done) {
-                    dispatch(addMessage({
-                        message: messageStream,
-                        id: new Date().toISOString(),
-                        type: CONSTANTS.BOT_MESSAGE_TYPE,
-                    }));
-                    dispatch(setStreamingFlag(false));
-                    dispatch(setLoading(false));
-                    break;
-                }
-                messageStream += new TextDecoder().decode(value);
-                dispatch(addStreamingMessage(new TextDecoder().decode(value)));
-                // Here you can update your UI with each message received from the server
+            const responseData = await response.json();
+            setHistory(responseData.history);
+            dispatch(setLoading(false));
+            if(responseData.is_final_outline == true) {
+                dispatch(setIsGeneratedTasks(true));
+                dispatch(setGeneratedTasks(responseData.final_outline.main_tasks[0].sub_tasks));
+                dispatch(addMessage({
+                    message: responseData.response,
+                    id: new Date().toISOString(),
+                    type: CONSTANTS.BOT_MESSAGE_TYPE,
+                    tasks: responseData.final_outline.main_tasks[0].sub_tasks,
+                }));
+                return;
             }
+            dispatch(addMessage({
+                message: responseData.response,
+                id: new Date().toISOString(),
+                type: CONSTANTS.BOT_MESSAGE_TYPE,
+            }));
         } catch (error) {
             console.error('Error:', error);
         }

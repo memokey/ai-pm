@@ -12,6 +12,8 @@ export interface ChatState {
     agentModal: Boolean;
     streamingMessage: string;
     streamingFlag: Boolean;
+    generatedTasks: any[];
+    isGeneratedTasks: Boolean;
 }
 
 const initialState: ChatState = {
@@ -23,6 +25,8 @@ const initialState: ChatState = {
     agentModal: false,
     streamingMessage: '',
     streamingFlag: false,
+    generatedTasks: [],
+    isGeneratedTasks: false,
 }
 
 export const chatSlice = createSlice({
@@ -57,6 +61,12 @@ export const chatSlice = createSlice({
         setStreamingFlag: (state, action: PayloadAction<Boolean>) => {
             state.streamingFlag = action.payload
         },
+        setGeneratedTasks: (state, action: PayloadAction<any[]>) => {
+            state.generatedTasks = action.payload
+        },
+        setIsGeneratedTasks: (state, action: PayloadAction<Boolean>) => {
+            state.isGeneratedTasks = action.payload
+        },
     },
 })
 
@@ -70,6 +80,8 @@ export const {
     addMessage,
     addStreamingMessage,
     setStreamingFlag,
+    setGeneratedTasks,
+    setIsGeneratedTasks,
 } = chatSlice.actions
 
 export default chatSlice.reducer

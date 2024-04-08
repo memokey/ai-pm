@@ -8,11 +8,11 @@ import { useDispatch } from "react-redux";
 import { setTaskDetailModal } from "@/redux/slices/taskSlice";
 
 export type TaskType = {
+    cost: number;
+    descriptoin: string;
     title: string;
-    description: string;
+    worker: string;
     status: number;
-    assignee: string;
-    price?: BadgeType;
 }
 
 const Task = (props: TaskType) => {
@@ -31,16 +31,16 @@ const Task = (props: TaskType) => {
                 {props.status === CONSTANTS.TASK_WAITING && (
                     <span className="rounded-[6px] bg-[#272727] px-[9px] py-[6px]">Waiting...</span>
                 )}
-                {!!props.price && (props.status === CONSTANTS.TASK_CONFIRMED || props.status === CONSTANTS.TASK_IN_PROGRESS) && (
+                {!!props.cost && (props.status === CONSTANTS.TASK_CONFIRMED || props.status === CONSTANTS.TASK_IN_PROGRESS) && (
                     <Badge 
-                      {...props.price}  
+                      data={props.cost}  
                       styles="border-none"
                     />
                 )}
             </div>
             <div className="flex gap-6 text-base-300 hover:text-base-content">
-                <Image src={props.assignee} className="rounded-full" alt="Avatar" width={24} height={24} />
-                <div className="" onClick={() => dispatch(setTaskDetailModal(true))}>
+                {/* <Image src={props.assignee} className="rounded-full" alt="Avatar" width={24} height={24} /> */}
+                <div className="" onClick={() => {}}>
                     <EditIcon />
                 </div>
             </div>
