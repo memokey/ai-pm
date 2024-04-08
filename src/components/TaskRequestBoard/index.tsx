@@ -5,6 +5,8 @@ import StatusBoxRequest from "./StatusBoxRequest";
 import { useAppSelector } from "@/redux/hooks";
 import { DndContext, DragEndEvent, DragOverEvent, DragStartEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
+import { TaskerInterfaceModal } from "../Common/Modals";
+import { setTaskerModal } from "@/redux/slices/taskerSlice";
 
 const TaskRequestBoard = () => {
 
@@ -12,7 +14,12 @@ const TaskRequestBoard = () => {
     const [tasks, setTasks] = useState<TaskType[]>(DEFAULT_TASKS);
     const [activeTask, setActiveTask] = useState<TaskType | null>(null);
     const [activeColumn, setActiveColumn] = useState<ColumnType | null>(null);
-    const { activeDetail, taskId } = useAppSelector(state => state.task);
+    const [taskDetail, setTaskDetail] = useState<TaskType | null>(null);
+    const { taskId, taskerModal } = useAppSelector(state => ({
+        activeDetail: state.task.activeDetail,
+        taskId: state.task.taskId,
+        taskerModal: state.tasker.taskerModal,
+    }));
 
     const columnsId = useMemo(() => columns.map((col: ColumnType) => col.id), [columns]);
 
@@ -106,12 +113,13 @@ const TaskRequestBoard = () => {
         }
     }
 
-    // useEffect(() => {
-    //     const detailIndex = tasks.findIndex((t) => t.id == taskId);
-    //     if(detailIndex != -1) {
-    //         setTaskDetail(tasks[detailIndex])
-    //     }
-    // }, [taskId])
+    useEffect(() => {
+        const detailIndex = DEFAULT_TASKS.findIndex((t) => t.id == taskId);
+        if(detailIndex != -1) {
+            setTaskDetail(tasks[detailIndex])
+        }
+        setTaskerModal(true);
+    }, [taskId])
 
     return (
         <div className="relative pt-6 px-4 w-[calc(100vw-240px)] h-[calc(100vh-120px)]">
@@ -138,6 +146,12 @@ const TaskRequestBoard = () => {
                 </SortableContext>
             </DndContext>
             </div>
+            {!!(taskerModal ) && taskDetail && (
+                <TaskerInterfaceModal 
+                    title={taskDetail.title}
+                    task={taskDetail}
+                />
+            )}
         </div>
     );
 }

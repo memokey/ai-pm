@@ -6,6 +6,7 @@ import LeftSidebar from "./LeftSideBar";
 type LayoutType = {
     header?: ReactNode;
     rightSidebar?: ReactNode;
+    leftSidebar?: ReactNode;
     children: ReactNode;
 }
 
@@ -13,7 +14,7 @@ const Layout = (props: LayoutType) => {
 
     return (
         <div className="flex">
-            <LeftSidebar />
+            {props.leftSidebar ? props.leftSidebar : <LeftSidebar />}
             <div className={`w-[calc(100vw-240px)] h-[100vh]`}>
                 {props.header ? props.header: (
                     <Header 

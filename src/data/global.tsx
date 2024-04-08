@@ -87,19 +87,41 @@ export const DEFAULT_COLS: ColumnType[] = [
 export const TASK_SUB_MENUS: SubMenuType[] = [
   {
     icon: <ChatIcon />,
-    title: 'Chat'
+    title: 'Chat',
+    link: '/taskboard/chat',
   },
   {
     icon: <CalendarIcon />,
-    title: 'Dashboard'
+    title: 'Dashboard',
+    link: '/taskboard/dashboard',
   },
   {
     icon: <QueueListIcon />,
-    title: 'Tasks'
+    title: 'Tasks',
+    link: '/taskboard/tasks',
   },
   {
     icon: <FlowIcon />,
-    title: 'Flow'
+    title: 'Flow',
+    link: '/taskboard/flow',
+  },
+]
+
+export const TASKER_SUB_MENUS: any[] = [
+  {
+    icon: <ChatIcon />,
+    title: 'Task Requests',
+    link: '/tasker/taskRequests',
+  },
+  {
+    icon: <CalendarIcon />,
+    title: 'Task Board',
+    link: '/tasker/requestBoard',
+  },
+  {
+    icon: <FlowIcon />,
+    title: 'Earnings',
+    link: '/tasker/taskRequests',
   },
 ]
 

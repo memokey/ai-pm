@@ -15,7 +15,7 @@ export type ModalType = {
 }
 
 const ReviewersModal = (props:ModalType) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const closeDlg = (e: any) => {
         if (!!e.target.className.includes && e.target.className.includes("room_setting_dlg")) {
             dispatch(setReviewerModal(false));

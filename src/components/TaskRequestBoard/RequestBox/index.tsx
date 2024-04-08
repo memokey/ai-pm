@@ -6,6 +6,9 @@ import { TaskType } from "@/data/types/type";
 import React, { useState } from "react";
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
+import { setTaskId } from "@/redux/slices/taskSlice";
+import { setTaskerModal } from "@/redux/slices/taskerSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 export type RequestBoxType = {
     task: TaskType;
@@ -14,7 +17,7 @@ export type RequestBoxType = {
 }
 
 const RequestBox = (props: RequestBoxType) => {
-
+    const dispatch = useAppDispatch();
     const [mouseIsOver, setMouseIsOver] = useState(false);
     const {
         setNodeRef,
@@ -62,6 +65,10 @@ const RequestBox = (props: RequestBoxType) => {
             }}
             onMouseLeave={() => {
                 setMouseIsOver(false);
+            }}
+            onClick={() => {
+                dispatch(setTaskerModal(true));
+                dispatch(setTaskId(props.task.id));
             }}
             className="flex justify-between
         bg-[#2A2A2A] p-2 min-h-[80px] h-[80px] border border-[#343434] items-end flex text-left rounded-[8px] shadow-sm shadow-[#141414] cursor-grab relative mb-2"

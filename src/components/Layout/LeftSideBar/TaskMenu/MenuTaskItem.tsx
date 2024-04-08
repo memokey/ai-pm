@@ -30,7 +30,7 @@ const MenuItem = (props: MenuItemType) => {
             <SubMenuTaskItem 
                 key={index}
                 {...submenu}
-                link={props.link}
+                link={submenu.link}
                 active={submenu.title == "Tasks"}
             />
         ))

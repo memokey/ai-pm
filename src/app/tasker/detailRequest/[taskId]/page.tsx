@@ -9,6 +9,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { DEFAULT_TASKS } from "@/data/global";
 import { TaskType } from "@/data/types/type";
 import { useRouter } from "next/navigation";
+import TaskerLeftSidebar from "@/components/Layout/TaskerLeftSidebar";
 
 const TaskBoardPage = ({params}: any) => {
     const [detailTask, setDetailTask] = useState<TaskType>(DEFAULT_TASKS[0]);
@@ -24,7 +25,11 @@ const TaskBoardPage = ({params}: any) => {
     }, [params.taskId])
 
     return (
-        <Layout>
+        <Layout 
+            leftSidebar={
+                <TaskerLeftSidebar />
+            }
+        >
             <DetailRequest 
                 {...detailTask}
             />
