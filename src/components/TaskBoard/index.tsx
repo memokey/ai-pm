@@ -22,13 +22,18 @@ const TaskBoard = () => {
     const dispatch = useAppDispatch();
     const [columns, setColumns] = useState<ColumnType[]>(DEFAULT_COLS);
     const columnsId = useMemo(() => columns.map((col: ColumnType) => col.id), [columns]);
-    const [tasks, setTasks] = useState<TaskType[]>(DEFAULT_TASKS);
+    const [tasks, setTasks] = useState<any[]>([]);
     const [activeColumn, setActiveColumn] = useState<ColumnType | null>(null);
     const [activeTask, setActiveTask] = useState<TaskType | null>(null);
     const [taskDetail, setTaskDetail] = useState<TaskType | null>(null);
 
     const { activeDetail, taskId } = useAppSelector(state => state.task);
 
+    const { generatedTasks } = useAppSelector(state => state.chat);
+
+    useEffect(() => {
+        setTasks(JSON.parse(JSON.stringify(generatedTasks)));
+    }, [generatedTasks])
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -112,8 +117,10 @@ const TaskBoard = () => {
         if (isActiveATask && isOverAColumn) {
             setTasks((tasks) => {
                 const activeIndex = tasks.findIndex((t) => t.id === activeId);
-
-                tasks[activeIndex].columnId = overId;
+                if(activeIndex != -1) {
+                    console.log(tasks, activeIndex, overId, activeId);
+                    tasks[activeIndex].columnId = overId;
+                }
                 console.log("DROPPING TASK OVER COLUMN", { activeIndex });
                 return arrayMove(tasks, activeIndex, activeIndex);
             });

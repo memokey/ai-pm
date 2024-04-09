@@ -93,7 +93,7 @@ const Message = (props:MessageType) => {
                             <TaskBoard tasks={props.tasks}/>
                             <div className="grid gap-2">
                                 <div className="text-[16px] font-[400] text-base-content leading-[24px]">
-                                    Will this plan work for you?
+                                    Will this plan work for you? 
                                 </div>
                                 <div className="flex gap-[10px]">
                                 <div className="grid gap-2">

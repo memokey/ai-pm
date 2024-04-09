@@ -62,7 +62,18 @@ export const chatSlice = createSlice({
             state.streamingFlag = action.payload
         },
         setGeneratedTasks: (state, action: PayloadAction<any[]>) => {
-            state.generatedTasks = action.payload
+            let tasks = action.payload;
+            let renderedTasks = tasks && tasks.map((task: any, index) => {
+                return {
+                    id: index + "",
+                    columnId: "todo",
+                    title: task.title,
+                    description: task.description,
+                    price: task.cost,
+
+                }
+            })
+            state.generatedTasks = renderedTasks;
         },
         setIsGeneratedTasks: (state, action: PayloadAction<Boolean>) => {
             state.isGeneratedTasks = action.payload
