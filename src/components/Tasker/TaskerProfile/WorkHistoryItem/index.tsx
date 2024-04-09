@@ -19,6 +19,7 @@ const WorkHistory = (props: any) => {
                     <div className="flex gap-2">
                         {props.agents.map((agent: string, index: number) => (
                             <Badge 
+                                key={index}
                                 data={agent}
                                 styles="!rounded-full !py-1 !px-2"
                             />
