@@ -11,6 +11,7 @@ import BaseCard from "@/components/Common/Cards/BaseCard";
 import { METRIX } from "@/data/global";
 import { useAppDispatch } from "@/redux/hooks";
 import { setBaseModoal } from "@/redux/slices/chatSlice";
+import { DepositButton } from "@/components/Escrow/DepositButton";
 
 export type MessageType = {
     id?: string;
@@ -22,6 +23,10 @@ export type MessageType = {
 }
 
 const Message = (props:MessageType) => {
+    const convertToFormattedText = (text: string) => {
+        return text.replaceAll("**", '')
+    }
+    
     const dispatch = useAppDispatch();
     if(props.type === CONSTANTS.USER_MESSAGE_TYPE) {
         return (
@@ -30,10 +35,8 @@ const Message = (props:MessageType) => {
                     img={`/tmp/avatars/user.png`}
                     size={24}
                 />
-                <div className="text-[16px] font-[400] leading-[24px] group">
-                    <pre className="text-base-300">
+                <div className="text-[16px] font-[400] text-base-300 leading-[24px] group w-[calc(100vw-800px)] break-words">
                         {props.message}
-                    </pre>
                 </div>
             </div>
         );
@@ -44,7 +47,7 @@ const Message = (props:MessageType) => {
                     img={`/images/avatars/bot.png`}
                     size={24}
                 />
-                <div className="grid gap-4 w-[calc(100vw-800px)]">
+                <div className="grid gap-4 w-[calc(100vw-800px)] overflow-x-auto">
                     {!!props.title && (
                         <div className="text-[16px] font-[400] text-base-300 leading-[24px]">
                             {props.title}
@@ -53,7 +56,7 @@ const Message = (props:MessageType) => {
                     {!!props.message && (
                         <div className="text-[16px] font-[400] text-base-300 leading-[24px] max-w-[calc(100vw-356px)] overflow-auto bg-[#212121] p-4 rounded-[8px]">
                             <pre>
-                                {props.message}
+                                {convertToFormattedText(props.message)}
                             </pre>
                         </div>
                     )}
@@ -93,7 +96,13 @@ const Message = (props:MessageType) => {
                                     Will this plan work for you?
                                 </div>
                                 <div className="flex gap-[10px]">
-                                    <BaseButton 
+                                <div className="grid gap-2">
+                                    <div className="text-[16px] font-[400] text-green-300 leading-[24px]">
+                                        Estimated total cost: $1,000 USDC
+                                    </div>
+                                    <DepositButton />
+                                </div>
+                                    {/* <BaseButton 
                                         type={true}
                                         caption="Yes"
                                         icon={<div className="text-success"><HandThumbUpIcon /></div>}
@@ -102,7 +111,7 @@ const Message = (props:MessageType) => {
                                         type={true}
                                         caption="No"
                                         icon={<div className="text-error"><HandThumbDownIcon /></div>}
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                         </div>
