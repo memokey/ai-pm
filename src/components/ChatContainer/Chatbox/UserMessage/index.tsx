@@ -80,38 +80,51 @@ const Message = (props:MessageType) => {
                         />     
                     )}
                     {props.action === CONSTANTS.TASKS_ACTION && (
-                        <div className="w-full grid gap-4">
-                            <TaskBoard tasks={props.tasks}/>
-                            <div className="grid gap-2">
-                                <div className="relative w-[30vw] h-[37vh] rounded-[8px]">
-                                    <div className=""></div>
-                                    <img src="/tmp/utils/taskerVideo.png" alt="video" className="w-full h-full rounded-[8px]" />
-                                    <div className="absolute top-[16vh] left-[calc(30vh-10px)]">
-                                        <div className="flex w-[42px] h-[42px] items-center justify-center border border-base-content rounded-full">
-                                            <PlayIcon />
-                                        </div>
+                        <div>
+                            <div className="w-full grid gap-4 mb-4">
+                                <TaskBoard tasks={props.tasks}/>
+                            </div>
+                            <div className="w-full grid gap-4">
+                                <div className="flex gap-6 items-start">
+                                    <Avatar 
+                                        img={`/images/avatars/bot.png`}
+                                        size={24}
+                                    />
+                                    <div className="text-[16px] font-[400] text-base-300 leading-[24px] group w-[calc(100vw-800px)] break-words">
+                                        Could you provide more details regarding the features you like to add? Additionally, it would be helpful to know the backend language you are considering, among other requirements.
                                     </div>
                                 </div>
-                                <div className="flex gap-[10px]">
-                                    {METRIX.map((badge, index) => (
-                                        <Badge 
-                                            key={index}
-                                            icon={badge.icon}
-                                            title={badge.title}
-                                            data={badge.data}
-                                        />
-                                    ))}
-                                </div>
-                                <div className="text-[16px] font-[400] text-base-content leading-[24px]">
-                                    Will this plan work for you? 
-                                </div>
-                                <div className="flex gap-[10px]">
-                                    <div className="flex gap-2">
-                                        <DepositButton />
-                                        <PrimaryBorderButton 
-                                            caption="Reject"
-                                            type={false}
-                                        />
+                                <div className="grid gap-2">
+                                    <div className="relative w-[30vw] h-[37vh] rounded-[8px]">
+                                        <div className=""></div>
+                                        <img src="/tmp/utils/taskerVideo.png" alt="video" className="w-full h-full rounded-[8px]" />
+                                        <div className="absolute top-[16vh] left-[calc(30vh-10px)]">
+                                            <div className="flex w-[42px] h-[42px] items-center justify-center border border-base-content rounded-full">
+                                                <PlayIcon />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-[10px]">
+                                        {METRIX.map((badge, index) => (
+                                            <Badge 
+                                                key={index}
+                                                icon={badge.icon}
+                                                title={badge.title}
+                                                data={badge.data}
+                                            />
+                                        ))}
+                                    </div>
+                                    <div className="text-[16px] font-[400] text-base-content leading-[24px]">
+                                        Will this plan work for you? 
+                                    </div>
+                                    <div className="flex gap-[10px]">
+                                        <div className="flex gap-2">
+                                            <DepositButton />
+                                            <PrimaryBorderButton 
+                                                caption="Reject"
+                                                type={false}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
