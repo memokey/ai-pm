@@ -34,11 +34,13 @@ const ReviewerCard = (props: ReviewerCardType) => {
                 </div>
                 <div className="flex gap-2">
                     <Badge 
+                        key={0}
                         icon={<CircleChartIcon />}
                         data={props.percent * 100 + "%"} 
                         styles="!p-1 !text-base-content" 
                     />
                     <Badge 
+                        key={1}
                         icon={<DollarIcon />}
                         data={props.percent * 100 + "%"}  
                         styles="!p-1 !text-base-content"

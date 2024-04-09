@@ -639,7 +639,8 @@ export const PROFILE: any[] = [
     state: CONSTANTS.USER_ACTIVE,
     name: "Darrell Steward",
     title: "AI Specialist",
-    hourly: 120,
+    totalEarnings: 120000,
+    hourly: 125,
     totalJobs: 1204,
     rating: 4.5,
     description: <div>With a master&apos;s degree from Brown University and many years of experience in technology, I specialize in making complex scripts and web/mobile apps. Whether you&apos;re an individual or a business, I strive to understand your needs and deliver the right solutions.  
@@ -647,32 +648,42 @@ export const PROFILE: any[] = [
     <br/><br/>React Native and Flutter  I&apos;m committed to crafting customized solutions, from user-friendly websites to powerful apps and innovative AI applications. Your satisfaction is my priority, and I aim to exceed your expectations.  Interested? Let&apos;s connect and bring your vision to life.</div>,
     histories: [
       {
+        completed: true,
         title: "Image design for a generative AI mobile application.",
         rating: 4.5,
+        agents: ["Chatgpt", "Claude"],
         done_at: "5 Minutes ago",
         feedback: "Gunjan has deep AI knowledge and excellent writing skills. He is patient and receptive to feedback!"
       },
       {
+        completed: true,
         title: "Experienced AI Developer with Azure AI Expertise for HR PaaS - Conversational AI CV Maker Bot",
         rating: 4.5,
+        agents: ["Midjourney"],
         done_at: "Feb 8, 2024",
         feedback: "He is knowledgeable and collaborative. It was a pleasure working with him. I highly recommend his freelance services to other clients."
       },
       {
+        completed: false,
         title: "Generative AI Expert familiar with LLM libraries",
         rating: 4.5,
+        agents: ["Chatgpt", "Claude"],
         done_at: "Jul 14, 2023",
         feedback: "He was absolutely amazing to work with always on time and worked to help figure out the thing I needed completed and made sure I was happy with it. Absolutely"
       },
       {
+        completed: true,
         title: "Generative AI Expert familiar with LLM libraries",
         rating: 4.5,
+        agents: ["Chatgpt", "Claude"],
         done_at: "Jul 14, 2023",
         feedback: "Expert freelancer with excellent tutorial skills. Very resourceful and goal-driven. I'm very satisfied with the hire!"
       },
       {
+        completed: true,
         title: "AI Data Engineer Needed for Writing on AI Infrastructure and Related Educational Topics",
         rating: 4.5,
+        agents: ["Chatgpt", "Claude"],
         done_at: "Jul 14, 2023",
         feedback: "Gunjan has proved to be an exceptional tutor for learning about Hugging Face and AI model deployments. His vast knowledge and expertise in the field were evident from our very"
       },
