@@ -15,6 +15,7 @@ import { DepositButton } from "@/components/Escrow/DepositButton";
 import { PrimaryBorderButton } from "@/components/Common/Buttons";
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import rehypeHighlight from 'rehype-highlight';
 
 export type MessageType = {
     id?: string;
@@ -58,13 +59,9 @@ const Message = (props:MessageType) => {
                     )}
                     {!!props.message && (
                         <div className="text-[16px] font-[400] text-base-300 leading-[24px] rounded-[8px]">
-                            <Markdown
-                                children={props.message}
-                                remarkPlugins={[remarkGfm]}
-                            />
-                            {/* <pre className="max-w-[calc(100vw-356px)] break-words overflow-auto">
+                            <pre className="font-outer max-w-[calc(100vw-356px)] break-words overflow-auto">
                                 {convertToFormattedText(props.message)}
-                            </pre> */}
+                            </pre>
                         </div>
                     )}
                     {props.action === CONSTANTS.DETAIL_ACTION && (

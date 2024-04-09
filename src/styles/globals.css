@@ -34,3 +34,9 @@ body {
 * {
   transition: 0.1s ease-in;
 }
+
+pre {
+  font-family: '__Inter_aaf875';
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
