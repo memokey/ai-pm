@@ -8,11 +8,13 @@ import { useDispatch } from "react-redux";
 import { setTaskDetailModal } from "@/redux/slices/taskSlice";
 
 export type TaskType = {
-    cost: number;
-    descriptoin: string;
+    cost?: number;
+    description: string;
     title: string;
-    worker: string;
+    worker?: string;
     status: number;
+    assignee?: string;
+    price?: any;
 }
 
 const Task = (props: TaskType) => {
