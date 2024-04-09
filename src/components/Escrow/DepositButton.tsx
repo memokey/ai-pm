@@ -78,10 +78,10 @@ export const DepositButton = () => {
         <button
           disabled={isDepositing}
           onClick={handleDeposit}
-          className="px-10 py-2 rounded bg-[#01F05B] border-y border-[#01F05B] text-black font-bold"
+          className="px-10 py-2 rounded bg-primary text-base-content font-bold"
         >
           {" "}
-          Deposit Escrow{" "}
+          Approve{" "}
         </button>
       </div>
     </div>

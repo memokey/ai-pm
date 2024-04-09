@@ -3,7 +3,7 @@
 import { Avatar } from "@/components/Common/Avatars";
 import { Badge } from "@/components/Common/Badges";
 import BaseButton from "@/components/Common/Buttons/BaseButton";
-import { ClipboardIcon, HandThumbDownIcon, HandThumbUpIcon, RightArrowIcon, RoundedSquareIcon } from "@/components/Icons";
+import { ClipboardIcon, HandThumbDownIcon, HandThumbUpIcon, PlayIcon, RightArrowIcon, RoundedSquareIcon } from "@/components/Icons";
 import { CONSTANTS } from "@/config/constants";
 import React from "react";
 import TaskBoard from "../TaskBoard";
@@ -12,6 +12,7 @@ import { METRIX } from "@/data/global";
 import { useAppDispatch } from "@/redux/hooks";
 import { setBaseModoal } from "@/redux/slices/chatSlice";
 import { DepositButton } from "@/components/Escrow/DepositButton";
+import { PrimaryBorderButton } from "@/components/Common/Buttons";
 
 export type MessageType = {
     id?: string;
@@ -80,38 +81,38 @@ const Message = (props:MessageType) => {
                     )}
                     {props.action === CONSTANTS.TASKS_ACTION && (
                         <div className="w-full grid gap-4">
-                            <div className="flex gap-[10px]">
-                                {METRIX.map((badge, index) => (
-                                    <Badge 
-                                        key={index}
-                                        icon={badge.icon}
-                                        title={badge.title}
-                                        data={badge.data}
-                                    />
-                                ))}
-                            </div>
                             <TaskBoard tasks={props.tasks}/>
                             <div className="grid gap-2">
+                                <div className="relative w-[30vw] h-[37vh] rounded-[8px]">
+                                    <div className=""></div>
+                                    <img src="/tmp/utils/taskerVideo.png" alt="video" className="w-full h-full rounded-[8px]" />
+                                    <div className="absolute top-[16vh] left-[calc(30vh-10px)]">
+                                        <div className="flex w-[42px] h-[42px] items-center justify-center border border-base-content rounded-full">
+                                            <PlayIcon />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex gap-[10px]">
+                                    {METRIX.map((badge, index) => (
+                                        <Badge 
+                                            key={index}
+                                            icon={badge.icon}
+                                            title={badge.title}
+                                            data={badge.data}
+                                        />
+                                    ))}
+                                </div>
                                 <div className="text-[16px] font-[400] text-base-content leading-[24px]">
                                     Will this plan work for you? 
                                 </div>
                                 <div className="flex gap-[10px]">
-                                <div className="grid gap-2">
-                                    <div className="text-[16px] font-[400] text-green-300 leading-[24px]">
-                                        Estimated total cost: $1,000 USDC
+                                    <div className="flex gap-2">
+                                        <DepositButton />
+                                        <PrimaryBorderButton 
+                                            caption="Reject"
+                                            type={false}
+                                        />
                                     </div>
-                                    <DepositButton />
-                                </div>
-                                    {/* <BaseButton 
-                                        type={true}
-                                        caption="Yes"
-                                        icon={<div className="text-success"><HandThumbUpIcon /></div>}
-                                    />
-                                    <BaseButton 
-                                        type={true}
-                                        caption="No"
-                                        icon={<div className="text-error"><HandThumbDownIcon /></div>}
-                                    /> */}
                                 </div>
                             </div>
                         </div>
