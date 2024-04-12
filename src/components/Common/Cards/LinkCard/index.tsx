@@ -5,6 +5,7 @@ export type LinkCardType = {
     title: string;
     icon: ReactNode;
     selected: boolean;
+    onClick?: any;
 }
 
 const LinkCard = (props: LinkCardType) => {
@@ -18,6 +19,7 @@ const LinkCard = (props: LinkCardType) => {
             }}
             onMouseOver={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
+            onClick={props.onClick}
         >
             {props.icon}
             <div className="text-[14px] font-500 text-base-content">

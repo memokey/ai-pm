@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+'use client'
+
+import React, { useEffect, useState } from "react";
 import RegisterTitle from "../RegisterTitle";
 import RegisterBox from "../RegisterBox";
 import { LargeChatIcon, TVIcon } from "@/components/Icons";
@@ -6,9 +8,35 @@ import { PrimaryButton } from "@/components/Common/Buttons";
 import { useAppDispatch } from "@/redux/hooks";
 import { setRegisterStep } from "@/redux/slices/authSlice";
 import { apiCaller } from "@/utils/fetcher";
+import { useRouter } from "next/navigation";
 
 const StepOne = () => {
     const [role, setRole] = useState('tasker');
+    const [userInfo, setUserInfo] = useState<any>({});
+    const router = useRouter();
+
+    // Fetch profile information after rendering the components.
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const response = await apiCaller.get('/auth/userByPublicKey', {
+                    params: {
+                        walletType: localStorage.getItem('type'),
+                        publicKey: localStorage.getItem('publickey'),
+                    }
+                });
+                setUserInfo(response.data);
+            } catch (error) {}
+        }
+        fetchProfile()
+    }, [])
+
+    useEffect(() => {
+        if(!!userInfo.role) {
+            setRole(userInfo.user.role);
+        }
+    }, [userInfo.role])
+
     const dispatch = useAppDispatch();
     const nextStep = async () => {
         try {
@@ -18,6 +46,9 @@ const StepOne = () => {
                 role,
                 step: "1"
             });
+            if(role == "requester") {
+                router.push("/");
+            }
             dispatch(setRegisterStep(2));
         } catch (error) {
             
@@ -39,8 +70,8 @@ const StepOne = () => {
                     icon={<LargeChatIcon />}
                     title="Requestor"
                     description={"Complete tasks, build your onchain resume, build up your skills and earn for your work."}
-                    active={role == "requestor"}
-                    onClick={() => setRole('requestor')}
+                    active={role == "requester"}
+                    onClick={() => setRole('requester')}
                 />
             </div>
             <div className="flex justify-end">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RegisterTitle from "../RegisterTitle";
 import { PrimaryBorderButton, PrimaryButton } from "@/components/Common/Buttons";
 import { useAppDispatch } from "@/redux/hooks";
@@ -11,15 +11,43 @@ import { DiscordIcon, GitHubIcon, LeftArrowIcon, TwitterIcon } from "@/component
 import { apiCaller } from "@/utils/fetcher";
 
 const StepTwo = () => {
+    const dispatch = useAppDispatch();
+
     const [name, setName] = useState("");
     const [nation, setNation] = useState("US");
     const [imageUrl, setImageUrl] = useState('');
-    
-    const dispatch = useAppDispatch();
+    const [userInfo, setUserInfo] = useState<any>({});
+
+    // Fetch profile information after rendering the components.
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const response = await apiCaller.get('/auth/userByPublicKey', {
+                    params: {
+                        walletType: localStorage.getItem('type'),
+                        publicKey: localStorage.getItem('publickey'),
+                    }
+                });
+                await setUserInfo(response.data);
+            } catch (error) {}
+        }
+        fetchProfile()
+    }, [])
+
+    // Init profile information
+    useEffect(() => {
+        if(!!userInfo.role) {
+            !!userInfo.user.name && setName(userInfo.user.name);
+            !!userInfo.user.avatar && setImageUrl(userInfo.user.avatar);
+            !!userInfo.user.nation && setNation(userInfo.user.nation);
+        }
+    }, [userInfo.role])
+
     const nextStep = async () => {
         try {
             await apiCaller.post('/auth/register/', {
                 wallet_address: localStorage.getItem('publickey'),
+                wallet_type: localStorage.getItem('type'),
                 name,
                 avatar: imageUrl,
                 nation,
@@ -34,7 +62,6 @@ const StepTwo = () => {
     const backStep = () => {
         dispatch(setRegisterStep(1));
     }
-
     return (
         <div className="">
             <RegisterTitle title="Profile Info" styles="mb-[16px]" />

@@ -62,3 +62,15 @@ export type loginProps = {
     provider: any
     next?: any
 }
+
+export type DaoType = {
+    _id: string;
+    name: string;
+    img: string;
+    selected?: boolean;
+}
+export type SkillType = {
+    _id: string;
+    name: string;
+    selected?: boolean;
+}

@@ -7,8 +7,7 @@ import dynamic from "next/dynamic";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
-import { login } from "@/redux/slices/authSlice";
-import { loginProps } from "@/data/types/type";
+import { login, setRegisterStep } from "@/redux/slices/authSlice";
 import { apiCaller } from "@/utils/fetcher";
 
 const DynamicWalletButton = dynamic(() => import('@solana/wallet-adapter-react-ui').then(mod => mod.WalletMultiButton), {
@@ -52,7 +51,16 @@ const Header = (props: HeaderType) => {
 
         let url : any;
         if (!exist || user.registerFlag == false) {
-            url = '/auth/register';
+            if(!!user && !!user.step) {
+                await dispatch(setRegisterStep(parseInt(user.step) + 1));
+            }
+            router.push('/auth/register');
+            return;
+        }
+
+        if(user.isAuthenticated) {
+            console.log(user);
+            return;
         }
 
         await dispatch(login({ 
