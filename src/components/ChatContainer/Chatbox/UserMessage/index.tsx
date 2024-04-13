@@ -24,6 +24,8 @@ export type MessageType = {
     type: boolean;
     action?: number;
     tasks?: any[];
+    is_final_outline?: boolean;
+    history?: any[];
 }
 
 const Message = (props:MessageType) => {

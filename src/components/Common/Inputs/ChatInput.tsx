@@ -5,14 +5,18 @@ import TextareaAutosize from 'react-textarea-autosize'
 import { SendButton } from "../Buttons";
 import { CloudArrowUpIcon, MicIcon } from "@/components/Icons";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { addMessage, addStreamingMessage, setGeneratedTasks, setIsGeneratedTasks, setLoading, setMessages, setStreamingFlag } from "@/redux/slices/chatSlice";
+import { addMessage, addStreamingMessage, setGeneratedTasks, setHistory, setIsGeneratedTasks, setLoading, setMessages, setStreamingFlag } from "@/redux/slices/chatSlice";
 import { CONSTANTS } from "@/config/constants";
+import { apiCaller } from "@/utils/fetcher";
 
 const ChatInput = () => {
     const dispatch = useAppDispatch();
+    const { history, taskId } = useAppSelector((state) => ({
+        history: state.chat.history,
+        taskId: state.chat.taskId
+    }))
     const [prompt, setPrompt] = useState("");
     const { messages } = useAppSelector(state => state.chat);
-    const [history, setHistory] = useState([]);
 
     const handleSubmit = async () => {
         try {
@@ -22,42 +26,33 @@ const ChatInput = () => {
 
             dispatch(addMessage({
                 message: prompt.trim(),
-                id: new Date().toISOString(),
                 type: CONSTANTS.USER_MESSAGE_TYPE,
             }));
-
-            const response = await fetch('/api/completion', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ message: prompt.trim(), history })
-            });
-            setPrompt("");
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const responseData = await response.json();
-            setHistory(responseData.history);
-            dispatch(setLoading(false));
-            if(responseData.is_final_outline == true) {
-                dispatch(setIsGeneratedTasks(true));
-                dispatch(setGeneratedTasks(responseData.final_outline.main_tasks[0].sub_tasks));
+            try {
+                const response = await apiCaller.post(`/api/tasks/${taskId}/chat/`, {
+                    message: prompt.trim(), history 
+                });
+                setPrompt("");
+    
+                dispatch(setHistory(response.data.history));
+                dispatch(setLoading(false));
+                if(response.data.is_final_outline == true) {
+                    dispatch(setIsGeneratedTasks(true));
+                    dispatch(setGeneratedTasks(response.data.final_outline.main_tasks[0].sub_tasks));
+                    dispatch(addMessage({
+                        message: response.data.response,
+                        type: CONSTANTS.BOT_MESSAGE_TYPE,
+                    }));
+                    return;
+                }
                 dispatch(addMessage({
-                    message: responseData.response,
+                    message: response.data.response,
                     id: new Date().toISOString(),
                     type: CONSTANTS.BOT_MESSAGE_TYPE,
-                    tasks: responseData.final_outline.main_tasks[0].sub_tasks,
                 }));
-                return;
+            } catch (error) {
+                
             }
-            dispatch(addMessage({
-                message: responseData.response,
-                id: new Date().toISOString(),
-                type: CONSTANTS.BOT_MESSAGE_TYPE,
-            }));
         } catch (error) {
             console.error('Error:', error);
         }

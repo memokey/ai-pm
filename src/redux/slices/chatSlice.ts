@@ -6,6 +6,7 @@ import { createSlice, current, PayloadAction } from '@reduxjs/toolkit'
 export interface ChatState {
     loading: Boolean;
     messages: MessageType[];
+    history: any;
     modal:Boolean;
     baseModal: Boolean;
     reviewerModal: Boolean;
@@ -14,11 +15,14 @@ export interface ChatState {
     streamingFlag: Boolean;
     generatedTasks: any[];
     isGeneratedTasks: Boolean;
+    taskId: String;
+    
 }
 
 const initialState: ChatState = {
     loading: false,
     messages: [],
+    history: [],
     modal: false,
     baseModal: false,
     reviewerModal: false,
@@ -27,6 +31,7 @@ const initialState: ChatState = {
     streamingFlag: false,
     generatedTasks: [],
     isGeneratedTasks: false,
+    taskId: "",
 }
 
 export const chatSlice = createSlice({
@@ -78,6 +83,12 @@ export const chatSlice = createSlice({
         setIsGeneratedTasks: (state, action: PayloadAction<Boolean>) => {
             state.isGeneratedTasks = action.payload
         },
+        setHistory: (state, action: PayloadAction<any>) => {
+            state.history = action.payload
+        },
+        setTaskId: (state, action: PayloadAction<string>) => {
+            state.taskId = action.payload
+        },
     },
 })
 
@@ -88,11 +99,13 @@ export const {
     setReviewerModal,
     setAgentModal,
     setMessages,
+    setHistory,
     addMessage,
     addStreamingMessage,
     setStreamingFlag,
     setGeneratedTasks,
     setIsGeneratedTasks,
+    setTaskId,
 } = chatSlice.actions
 
 export default chatSlice.reducer

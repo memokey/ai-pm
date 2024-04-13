@@ -27,9 +27,9 @@ const Chatbox = () => {
                     </div>
                 </div>
             )}
-            {messages.map((msg) => (
+            {messages.map((msg, index) => (
                 <Message
-                    key={msg.id}
+                    key={index}
                     type={msg.type}
                     message={msg.message}
                     action={!!msg.tasks && msg.tasks.length != 0 ? CONSTANTS.TASKS_ACTION : -1}
