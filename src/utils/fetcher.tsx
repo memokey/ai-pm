@@ -7,5 +7,8 @@ const urlBase =
 
 export const apiCaller = axios.create({
     baseURL: `${urlBase}`,
+    headers: {
+        'Content-Type': 'application/json',
+    },
     withCredentials: true,
 })
