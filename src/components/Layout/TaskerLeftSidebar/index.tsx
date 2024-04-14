@@ -6,8 +6,12 @@ import MenuItem from "../LeftSideBar/Menu/MenuItem";
 import ProfileCard from "../LeftSideBar/ProfileCard";
 import SubMenuTaskItem from "../LeftSideBar/TaskMenu/SubMenuTaskItem";
 import { TASKER_SUB_MENUS } from "@/data/global";
+import { useAppSelector } from "@/redux/hooks";
 
 const TaskerLeftSidebar = () => {
+
+    const { profile } = useAppSelector(state => state.auth);
+
     return (
         <div className="bg-[#202020] border-[#090909] w-[240px] h-[100vh] z-20 py-[16px] px-[20px] border-r border-r-[1px]">
             <div className="h-[calc(100vh-110px)]">
@@ -27,8 +31,8 @@ const TaskerLeftSidebar = () => {
             <div className="grid gap-1">
                 <MenuItem 
                     icon={<CogSIcon />}
-                    title="Settings"
-                    link={'noLink'}
+                    title="Profile"
+                    link={`${!!profile._id && profile._id}/profile`}
                     state={false}
                     line={false}
                 />

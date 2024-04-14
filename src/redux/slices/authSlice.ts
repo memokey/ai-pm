@@ -9,11 +9,13 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 export interface AuthState {
     logged: Boolean;
     registerStep: Number;
+    profile: any;
 }
 
 const initialState: AuthState = {
     logged: false,
     registerStep: 1,
+    profile: {},
 }
 
 export const login = createAsyncThunk<boolean, loginProps>(
@@ -39,7 +41,7 @@ export const login = createAsyncThunk<boolean, loginProps>(
             )
 
             const {
-                data: { profile },
+                data: { user },
             } = await apiCaller.post('/auth/login/', {
                 publicKey,
                 walletType,
@@ -47,7 +49,7 @@ export const login = createAsyncThunk<boolean, loginProps>(
                 signature,
             })
 
-            dispatch(setProfile(profile))
+            dispatch(setProfile(user))
             response = true
             if (next) next()
         } catch (err) {
@@ -63,7 +65,7 @@ export const authSlice = createSlice({
     // The `reducers` field lets us define reducers and generate associated actions
     reducers: {
         setProfile(state, action: PayloadAction<any>) {
-
+            state.profile = action.payload;
         },
         setRegisterStep(state, action: PayloadAction<Number>) {
             state.registerStep = action.payload;

@@ -3,6 +3,7 @@ import { PrimaryBorderButton, PrimaryButton } from "@/components/Common/Buttons"
 import { RatingIcon } from "@/components/Icons";
 import React from "react";
 import WorkHistory from "./WorkHistoryItem";
+import { PROFILE } from "@/data/global";
 
 const TaskerProfile = (props: any) => {
     return (
@@ -12,25 +13,25 @@ const TaskerProfile = (props: any) => {
                     <Avatar img={props.avatar} size={70} styles="!rounded-[8px]" />
                     <div className="grid gap2">
                         <h1 className="text-[24px] font-500 text-base-content">{props.name}</h1>
-                        <p className="text-[14px] font-400 text-neutral">{props.title}</p>
+                        <p className="text-[14px] font-400 text-neutral">{PROFILE[0].title}</p>
                     </div>
                 </div>
                 <div className="flex py-2">
                     <div className="px-[20px] border-r border-base-200">
                         <div className="text-base-content text-[18px] font-600 spacing-[0.18px] grid gap-2">
-                            {"$" + props.totalEarnings}
+                            {"$" + PROFILE[0].totalEarnings}
                         </div>
                         <div className="text-[14px] leading-[20px] font-400 text-neutral">Total Earnings</div>
                     </div>
                     <div className="px-[20px] border-r border-base-200">
                         <div className="text-base-content text-[18px] font-600 spacing-[0.18px] grid gap-2">
-                            {"$" + props.hourly + "/hr"}
+                            {"$" + PROFILE[0].hourly + "/hr"}
                         </div>
                         <div className="text-[14px] leading-[20px] font-400 text-neutral">Hourly Rate</div>
                     </div>
                     <div className="px-[20px] border-r border-base-200">
                         <div className="text-base-content text-[18px] font-600 spacing-[0.18px] grid gap-2">
-                            {props.totalJobs}
+                            {PROFILE[0].totalJobs}
                         </div>
                         <div className="text-[14px] leading-[20px] font-400 text-neutral">Total Jobs</div>
                     </div>
@@ -50,7 +51,7 @@ const TaskerProfile = (props: any) => {
                 <div className="col-span-7 h-[20px]">
                     <div className="text-[16px] font-500 leading-[20px] text-neutral mb-4">Work History</div>
                     <div className="grid gap-4 pr-1 h-[calc(100vh-268px)] overflow-y-auto">
-                        {props.histories.map((history: any, index: Number) => (
+                        {PROFILE[0].histories.map((history: any, index: Number) => (
                             <WorkHistory 
                                 key={index}
                                 {...history}
