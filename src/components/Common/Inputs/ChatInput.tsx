@@ -5,56 +5,55 @@ import TextareaAutosize from 'react-textarea-autosize'
 import { SendButton } from "../Buttons";
 import { CloudArrowUpIcon, MicIcon } from "@/components/Icons";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { addMessage, addStreamingMessage, setGeneratedTasks, setHistory, setIsGeneratedTasks, setLoading, setMessages, setStreamingFlag } from "@/redux/slices/chatSlice";
-import { CONSTANTS } from "@/config/constants";
+import { sendMessage} from "@/redux/slices/chatSlice";
 import { apiCaller } from "@/utils/fetcher";
+import { useRouter } from "next/navigation";
 
-const ChatInput = () => {
+export type ChatInputType = {
+    type: Boolean;
+}
+
+const ChatInput = (props: ChatInputType) => {
     const dispatch = useAppDispatch();
-    const { history, taskId } = useAppSelector((state) => ({
+    const router = useRouter();
+    const { history, taskId, loading } = useAppSelector((state) => ({
         history: state.chat.history,
-        taskId: state.chat.taskId
+        taskId: state.chat.taskId,
+        loading: state.chat.loading
     }))
     const [prompt, setPrompt] = useState("");
-    const { messages } = useAppSelector(state => state.chat);
 
     const handleSubmit = async () => {
-        try {
-            if (prompt.trim().length === 0) {
-                return;
-            }
-
-            dispatch(addMessage({
-                message: prompt.trim(),
-                type: CONSTANTS.USER_MESSAGE_TYPE,
-            }));
+        if(!!loading) {
+            return;
+        }
+        // If the type is default.
+        if(props.type) {
             try {
-                const response = await apiCaller.post(`/api/tasks/${taskId}/chat/`, {
-                    message: prompt.trim(), history 
-                });
-                setPrompt("");
-    
-                dispatch(setHistory(response.data.history));
-                dispatch(setLoading(false));
-                if(response.data.is_final_outline == true) {
-                    dispatch(setIsGeneratedTasks(true));
-                    dispatch(setGeneratedTasks(response.data.final_outline.main_tasks[0].sub_tasks));
-                    dispatch(addMessage({
-                        message: response.data.response,
-                        type: CONSTANTS.BOT_MESSAGE_TYPE,
-                    }));
-                    return;
+                const response = await apiCaller.post('/api/tasks/');
+                if(!!response.data.taskId) {
+                    await dispatch(sendMessage({
+                        prompt,
+                        taskId: response.data.taskId,
+                        history,
+                        next: () => {
+                            setPrompt("");
+                        }
+                    }))
+                    router.push(`/taskboard/${response.data.taskId}/chat`);
                 }
-                dispatch(addMessage({
-                    message: response.data.response,
-                    id: new Date().toISOString(),
-                    type: CONSTANTS.BOT_MESSAGE_TYPE,
-                }));
-            } catch (error) {
-                
+            } catch (error: any) {
+                console.log(error.message);
             }
-        } catch (error) {
-            console.error('Error:', error);
+        } else {
+            dispatch(sendMessage({
+                prompt,
+                taskId,
+                history,
+                next: () => {
+                    setPrompt("");
+                }
+            }))
         }
     }
 
@@ -67,7 +66,16 @@ const ChatInput = () => {
                 mt-[-5px] w-full text-[12px] overflow-visible font-[400]" 
                 placeholder="Enter a prompt here"
                 value={prompt}
+                onKeyDown={(e) => {
+                    if(e.keyCode == 13) {
+                        handleSubmit();
+                        e.preventDefault();
+                    }
+                }}
                 onChange={(e) => {
+                    if(!!loading) {
+                        return;
+                    }
                     setPrompt(e.target.value);
                 }}  
             />

@@ -1,12 +1,15 @@
 'use client'
 
 import { MessageType } from '@/components/ChatContainer/Chatbox/UserMessage';
-import { createSlice, current, PayloadAction } from '@reduxjs/toolkit'
+import { CONSTANTS } from '@/config/constants';
+import { SendMessageTpye } from '@/data/types/type';
+import { apiCaller } from '@/utils/fetcher';
+import { createAsyncThunk, createSlice, current, PayloadAction } from '@reduxjs/toolkit'
 
 export interface ChatState {
     loading: Boolean;
     messages: MessageType[];
-    history: any;
+    history: any[];
     modal:Boolean;
     baseModal: Boolean;
     reviewerModal: Boolean;
@@ -33,6 +36,51 @@ const initialState: ChatState = {
     isGeneratedTasks: false,
     taskId: "",
 }
+
+export const sendMessage = createAsyncThunk<any, SendMessageTpye>(
+    'chat/sendMessage',
+    async (
+        { prompt, taskId, history, next }: SendMessageTpye,
+        { dispatch }
+    ) => {
+        let response = false;
+        if (prompt.trim().length === 0) {
+            return;
+        }
+
+        dispatch(addMessage({
+            message: prompt.trim(),
+            type: CONSTANTS.USER_MESSAGE_TYPE,
+        }));
+        try {
+            dispatch(setLoading(true));
+            const res = await apiCaller.post(`/api/tasks/${taskId}/chat/`, {
+                message: prompt.trim(), history 
+            });
+
+            dispatch(setHistory(res.data.history));
+            dispatch(setLoading(false));
+            if(res.data.is_final_outline == true) {
+                dispatch(setIsGeneratedTasks(true));
+                dispatch(setGeneratedTasks(res.data.final_outline.main_tasks[0].sub_tasks));
+                dispatch(addMessage({
+                    message: res.data.response,
+                    type: CONSTANTS.BOT_MESSAGE_TYPE,
+                }));
+                return;
+            }
+            dispatch(addMessage({
+                message: res.data.response,
+                id: new Date().toISOString(),
+                type: CONSTANTS.BOT_MESSAGE_TYPE,
+            }));
+            response = true;
+            if (next) next()
+        } catch (error: any) {
+            console.error(error.message);
+        }
+        return response;
+    })
 
 export const chatSlice = createSlice({
     name: 'chat',

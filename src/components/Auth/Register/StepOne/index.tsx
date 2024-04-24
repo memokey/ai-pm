@@ -48,6 +48,7 @@ const StepOne = () => {
             });
             if(role == "requester") {
                 router.push("/");
+                return;
             }
             dispatch(setRegisterStep(2));
         } catch (error) {

@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
-import { login, setRegisterStep } from "@/redux/slices/authSlice";
+import { login, setProfile, setRegisterStep } from "@/redux/slices/authSlice";
 import { apiCaller } from "@/utils/fetcher";
 
 const DynamicWalletButton = dynamic(() => import('@solana/wallet-adapter-react-ui').then(mod => mod.WalletMultiButton), {
@@ -43,31 +43,22 @@ const Header = (props: HeaderType) => {
         localStorage.setItem('type', type)
 
         const {
-            data: { exist, user },
+            data: { exist, isAuthenticated, profile },
         } = await apiCaller.post('/auth/userExist/', {
-            publicKey: address,
-            walletType: type,
+            public_key: address,
+            wallet_type: type,
         })
 
-        let url : any;
-        if (!exist || user.registerFlag == false) {
-            if(!!user && !!user.step) {
-                await dispatch(setRegisterStep(parseInt(user.step) + 1));
-            }
-            router.push('/auth/register');
+        if(exist && isAuthenticated) {
+            dispatch(setProfile(profile));
             return;
         }
 
-        if(user.isAuthenticated) {
-            console.log(user);
-            return;
-        }
-
-        await dispatch(login({ 
-            publicKey: address, 
-            walletType: type, 
+        await dispatch(login({
+            publicKey: address,
+            walletType: type,
             provider,
-            next: () => router.push(url),
+            next: () => {},
         }))
     }
 
@@ -75,9 +66,6 @@ const Header = (props: HeaderType) => {
         <div className="h-[56px] flex justify-between border-b border-base-200 py-[16px] px-6">
             <Title 
                 title={props.title}
-            />
-            <BalanceBox 
-                balance={9669}
             />
             <DynamicWalletButton />
         </div>

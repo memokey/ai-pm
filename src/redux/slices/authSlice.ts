@@ -29,9 +29,9 @@ export const login = createAsyncThunk<boolean, loginProps>(
             const {
                 data: { nonce },
             } = await apiCaller.post('/auth/login/', {
-                requestNonce: true,
-                walletType,
-                publicKey,
+                request_nonce: true,
+                wallet_type: walletType,
+                public_key: publicKey,
             })
             const signature = await signMessage(
                 walletType,
@@ -43,9 +43,9 @@ export const login = createAsyncThunk<boolean, loginProps>(
             const {
                 data: { user },
             } = await apiCaller.post('/auth/login/', {
-                publicKey,
-                walletType,
-                requestNonce: false,
+                public_key: publicKey,
+                wallet_type: walletType,
+                request_nonce: false,
                 signature,
             })
 

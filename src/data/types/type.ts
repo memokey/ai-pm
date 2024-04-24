@@ -63,6 +63,13 @@ export type loginProps = {
     next?: any
 }
 
+export type SendMessageTpye = {
+    prompt: String;
+    taskId: String;
+    history: any[];
+    next?: any;
+}
+
 export type DaoType = {
     _id: string;
     name: string;

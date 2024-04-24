@@ -10,18 +10,17 @@ import MenuItem from "./Menu/MenuItem";
 import { useRouter } from "next/navigation";
 import TaskMenu from "./TaskMenu";
 import { apiCaller } from "@/utils/fetcher";
+import { useAppDispatch } from "@/redux/hooks";
+import { setHistory, setMessages } from "@/redux/slices/chatSlice";
 
 const LeftSidebar = () => {
+    const dispatch = useAppDispatch();
     const router = useRouter();
 
     const createTask = async () => {
-        try {
-            const response = await apiCaller.post('/api/tasks/');
-            if(!!response.data.taskId) {
-                router.push(`/taskboard/${response.data.taskId}/chat`);
-            }
-            console.log(response.data);
-        } catch (error) {}
+        dispatch(setMessages([]));
+        dispatch(setHistory([]));
+        router.push(`/chat`);
     }
 
     return (

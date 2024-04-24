@@ -24,10 +24,7 @@ const ChatContainer = () => {
     const [taskDetail, setTaskDetail] = useState<TaskType | null>(null);
 
     useEffect(() => {
-        // const detailIndex = DEFAULT_TASKS.findIndex((t) => t.id == taskId);
-        // if(detailIndex != -1) {
-            setTaskDetail(DEFAULT_TASKS[1])
-        // }
+        setTaskDetail(DEFAULT_TASKS[1])
     }, [])
 
     useEffect(() => {
@@ -46,7 +43,7 @@ const ChatContainer = () => {
                 <Chatbox />
             </div>
             <div className="w-full absolute bottom-[23px] px-[95px]">
-                <ChatInput />
+                <ChatInput type={false} />
             </div>
             {!!baseModal && (
                 <BaseModal

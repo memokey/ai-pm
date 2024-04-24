@@ -3,9 +3,9 @@
 import { Avatar } from "@/components/Common/Avatars";
 import { Badge } from "@/components/Common/Badges";
 import BaseButton from "@/components/Common/Buttons/BaseButton";
-import { ClipboardIcon, HandThumbDownIcon, HandThumbUpIcon, PlayIcon, RightArrowIcon, RoundedSquareIcon } from "@/components/Icons";
+import { CheckClipboardIcon, ClipboardIcon, HandThumbDownIcon, HandThumbUpIcon, PlayIcon, RightArrowIcon, RoundedSquareIcon } from "@/components/Icons";
 import { CONSTANTS } from "@/config/constants";
-import React from "react";
+import React, { useState } from "react";
 import TaskBoard from "../TaskBoard";
 import BaseCard from "@/components/Common/Cards/BaseCard";
 import { METRIX } from "@/data/global";
@@ -29,11 +29,16 @@ export type MessageType = {
 }
 
 const Message = (props:MessageType) => {
+    const dispatch = useAppDispatch();
+    const [isClipboard, setIsClipboard] = useState(false);
     const convertToFormattedText = (text: string) => {
         return text.replaceAll("**", '')
     }
+
+    const copyClipboard = (text: string) => {
+        navigator.clipboard.writeText(text);
+    }
     
-    const dispatch = useAppDispatch();
     if(props.type === CONSTANTS.USER_MESSAGE_TYPE) {
         return (
             <div className="flex gap-6 items-start">
@@ -136,11 +141,24 @@ const Message = (props:MessageType) => {
                         </div>
                     )}
                     <div className="flex gap-2">
-                        <div className="cursor-pointer hover:text-primary">
+                        {/* <div className="cursor-pointer hover:text-primary">
                             <RoundedSquareIcon />
-                        </div>
-                        <div className="cursor-pointer hover:text-primary">
-                            <ClipboardIcon />
+                        </div> */}
+                        <div 
+                            className="cursor-pointer hover:text-primary" 
+                            onClick={() => {
+                                copyClipboard(convertToFormattedText(props.message || ''));
+                                setIsClipboard(true);
+                                setTimeout(() => {
+                                    setIsClipboard(false);
+                                }, 1000)
+                            }}
+                        >
+                            {isClipboard ? (
+                                <CheckClipboardIcon />
+                            ): (
+                                <ClipboardIcon />
+                            )}
                         </div>
                     </div>
                 </div>
