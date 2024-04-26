@@ -5,20 +5,11 @@ export type SubMenuType = {
     icon: ReactNode;
     title: string;
     link?: string;
-    active?: boolean;
+    active?: Boolean;
     styles?: string;
 }
 const SubMenuTaskItem = (props: SubMenuType) => {
     const router = useRouter();
-    const pathname = usePathname();
-
-    const [menu, setMenu] = useState('tasks');
-    
-    useEffect(() => {
-        if(pathname) {
-            setMenu(pathname.split('/')[2]);
-        }
-    }, [pathname])
 
     const linkToPage = () => {
         if(props.link === "noLink") {
@@ -30,7 +21,7 @@ const SubMenuTaskItem = (props: SubMenuType) => {
     return (
         <div 
             className={`flex gap-1 items-center px-[6px] py-1 border-l cursor-pointer hover:text-base-content ${props.styles ? props.styles: ""}`}
-            style={{borderColor: menu == props.title.toLowerCase() ? '#F2F2F2': '#424242', color: menu == props.title.toLowerCase() ? '#F2F2F2': '#BFBFBF'}}
+            style={{borderColor: !!props.active ? '#F2F2F2': '#424242', color: props.active ? '#F2F2F2': '#BFBFBF'}}
             onClick={linkToPage}
         >
             {props.icon}

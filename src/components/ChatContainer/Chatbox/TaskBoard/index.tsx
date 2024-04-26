@@ -4,13 +4,12 @@ import React from "react";
 import Task from "./Task";
 
 type TaskBoardType = {
-    tasks: any;
+    tasks: any[];
 }
 
 const TaskBoard = (props: TaskBoardType) => {
     return (
         <ul className="w-full border border-base-200 rounded-[8px] overflow-hidden">
-            {console.log(props.tasks)}
             {props.tasks && props.tasks.map((task: any, index: number) => (
                 <Task 
                     key={index}

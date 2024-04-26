@@ -19,7 +19,8 @@ export interface ChatState {
     generatedTasks: any[];
     isGeneratedTasks: Boolean;
     taskId: String;
-    
+    taskMenuItems: any[];
+    currentTaskId: String;
 }
 
 const initialState: ChatState = {
@@ -35,6 +36,8 @@ const initialState: ChatState = {
     generatedTasks: [],
     isGeneratedTasks: false,
     taskId: "",
+    taskMenuItems: [],
+    currentTaskId: "",
 }
 
 export const sendMessage = createAsyncThunk<any, SendMessageTpye>(
@@ -62,9 +65,10 @@ export const sendMessage = createAsyncThunk<any, SendMessageTpye>(
             dispatch(setLoading(false));
             if(res.data.is_final_outline == true) {
                 dispatch(setIsGeneratedTasks(true));
-                dispatch(setGeneratedTasks(res.data.final_outline.main_tasks[0].sub_tasks));
+                dispatch(setGeneratedTasks(res.data.tasks));
                 dispatch(addMessage({
                     message: res.data.response,
+                    tasks: res.data.response.tasks,
                     type: CONSTANTS.BOT_MESSAGE_TYPE,
                 }));
                 return;
@@ -114,16 +118,19 @@ export const chatSlice = createSlice({
         setStreamingFlag: (state, action: PayloadAction<Boolean>) => {
             state.streamingFlag = action.payload
         },
+        setTaskMenuItems: (state, action: PayloadAction<any[]>) => {
+            state.taskMenuItems = action.payload
+        },
         setGeneratedTasks: (state, action: PayloadAction<any[]>) => {
             let tasks = action.payload;
             let renderedTasks = tasks && tasks.map((task: any, index) => {
                 return {
-                    id: index + "",
+                    id: task._id,
                     columnId: "todo",
                     title: task.title,
-                    description: task.description,
-                    price: task.cost,
-
+                    description: task.description || "",
+                    price: task.cost || 0,
+                    status: task.status || CONSTANTS.TASK_WAITING,
                 }
             })
             state.generatedTasks = renderedTasks;
@@ -136,6 +143,21 @@ export const chatSlice = createSlice({
         },
         setTaskId: (state, action: PayloadAction<string>) => {
             state.taskId = action.payload
+        },
+        setCurrentTaskId: (state, action: PayloadAction<string>) => {
+            state.currentTaskId = action.payload
+        },
+        setTaskExpand: (state, action: PayloadAction<any>) => {
+            const { _id, expand } = action.payload;
+            state.taskMenuItems = current(state).taskMenuItems.map((item) => {
+                return {
+                    ...item,
+                    expand: item._id == _id ? expand: false,
+                }
+            })
+        },
+        addTaskMenuItem: (state, action: PayloadAction<any>) => {
+            state.taskMenuItems = [...current(state).taskMenuItems, action.payload];
         },
     },
 })
@@ -154,6 +176,10 @@ export const {
     setGeneratedTasks,
     setIsGeneratedTasks,
     setTaskId,
+    setTaskMenuItems,
+    setCurrentTaskId,
+    setTaskExpand,
+    addTaskMenuItem,
 } = chatSlice.actions
 
 export default chatSlice.reducer

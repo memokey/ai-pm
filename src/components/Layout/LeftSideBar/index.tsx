@@ -1,27 +1,76 @@
 'use client'
 
-import React from "react";
+import React, { useEffect } from "react";
 import ProfileCard from "./ProfileCard";
 import Menu from "./Menu";
 import BaseButton from "@/components/Common/Buttons/BaseButton";
-import { CogSIcon, PlusIcon, QuestionMarkCircleIcon } from "@/components/Icons";
-import { MENU_LIST, MENU_LIST_SPACE } from "@/data/global";
+import { CogSIcon, PlusIcon, QuestionMarkCircleIcon, VAIcon } from "@/components/Icons";
 import MenuItem from "./Menu/MenuItem";
 import { useRouter } from "next/navigation";
 import TaskMenu from "./TaskMenu";
 import { apiCaller } from "@/utils/fetcher";
-import { useAppDispatch } from "@/redux/hooks";
-import { setHistory, setMessages } from "@/redux/slices/chatSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setCurrentTaskId, setHistory, setMessages, setTaskExpand, setTaskMenuItems } from "@/redux/slices/chatSlice";
+import { setTaskId } from "@/redux/slices/taskSlice";
 
 const LeftSidebar = () => {
     const dispatch = useAppDispatch();
+    const { currentTaskId, taskMenuItems, taskId } = useAppSelector((state) => ({
+        currentTaskId: state.chat.currentTaskId,
+        taskId: state.chat.taskId,
+        taskMenuItems: state.chat.taskMenuItems,
+    }))
     const router = useRouter();
 
     const createTask = async () => {
         dispatch(setMessages([]));
         dispatch(setHistory([]));
+        if(taskId != "") {
+            dispatch(setTaskId(""));
+        }
         router.push(`/chat`);
     }
+
+    useEffect(() => {
+        if(taskMenuItems.length == 0) {
+            getTasksName()
+        }
+    }, [])
+
+    const getTasksName = async () => {
+        try {
+            const {
+                data: { tasks }
+            } = await apiCaller.post('/api/tasks/getTaskByUser/', {
+                is_all: false,
+                fields: ['_id', "title"]
+            });
+            if(!!tasks) {
+                const taskMenuItems = tasks.map((task: any) => {
+                    return {
+                        _id: task._id,
+                        title: task.title == "" ? "New Task": task.title,
+                        link: `/taskboard/${task._id}/chat`,
+                        expand: taskId != "" && taskId == task._id,
+                        state: false,
+                        line: false,
+                    }
+                })
+                dispatch(setTaskMenuItems(taskMenuItems));
+            }
+        } catch (error) {
+            console.log('fetching task error');
+        }
+    }
+
+    useEffect(() => {
+        if(taskId != "" && taskMenuItems.length != 0) {
+            dispatch(setTaskExpand({
+                _id: taskId,
+                expand: true,
+            }))
+        }
+    }, [taskId, taskMenuItems.length])
 
     return (
         <div className="bg-[#202020] border-[#090909] w-[240px] h-[100vh] z-20 py-[30px] px-[20px] border-r border-r-[1px]">
@@ -35,12 +84,12 @@ const LeftSidebar = () => {
                         styles="w-full"
                         onClick={() => createTask()}
                     />
-                    {/* <Menu menus={MENU_LIST} /> */}
-                    <TaskMenu menus={MENU_LIST_SPACE} title="Spaces" />
+                    <TaskMenu menus={taskMenuItems} title="Spaces" />
                 </div>
             </div>
             <div className="grid gap-1">
                 <MenuItem 
+                    key={0}
                     icon={<CogSIcon />}
                     title="Settings"
                     link={'noLink'}
@@ -48,6 +97,7 @@ const LeftSidebar = () => {
                     line={false}
                 />
                 <MenuItem 
+                    key={1}
                     icon={<QuestionMarkCircleIcon />}
                     title="Resources"
                     link={'noLink'}

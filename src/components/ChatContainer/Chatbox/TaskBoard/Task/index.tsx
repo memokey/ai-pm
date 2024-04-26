@@ -17,7 +17,7 @@ export type TaskType = {
     price?: any;
 }
 
-const Task = (props: TaskType) => {
+const Task = (props: any) => {
     const dispatch = useDispatch();
     return (
         <li className="w-full py-[12px] px-[20px] border border-base-200 border-b flex items-center justify-between cursor-pointer gap-6">

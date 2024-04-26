@@ -7,7 +7,7 @@ import { ChatRightSidebar } from "@/components/Layout/RightSidebars";
 import { apiCaller } from "@/utils/fetcher";
 import { CONSTANTS } from "@/config/constants";
 import { useAppDispatch } from "@/redux/hooks";
-import { setHistory, setMessages } from "@/redux/slices/chatSlice";
+import { setCurrentTaskId, setHistory, setMessages, setTaskExpand } from "@/redux/slices/chatSlice";
 import { setTaskId } from "@/redux/slices/chatSlice";
 
 const ChatPage = ({params}: any) => {
@@ -34,7 +34,6 @@ const ChatPage = ({params}: any) => {
                 dispatch(setMessages(messages));
             }
         }
-        console.log(taskId);
         dispatch(setTaskId(taskId));
         fetchTask();
     }, [])

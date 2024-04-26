@@ -25,6 +25,7 @@ export type MessageType = {
     action?: number;
     tasks?: any[];
     is_final_outline?: boolean;
+    fineal_outline?: any[];
     history?: any[];
 }
 

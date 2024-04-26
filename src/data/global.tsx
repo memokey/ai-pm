@@ -11,26 +11,6 @@ import { CONSTANTS } from "@/config/constants";
 import { OptionType } from "@/components/Common/Inputs/Select";
 import Image from "next/image";
 
-export const MENU_LIST: MenuItemType[] = [
-    {
-        icon: <InboxIcon />,
-        state: false,
-        title: "Inbox",
-        link: "inbox",
-        line: false
-    }
-];
-
-export const MENU_LIST_SPACE: MenuItemType[] = [
-    {
-        icon: <VAIcon />,
-        state: false,
-        title: "Virtual Assistance",
-        link: "taskboard",
-        line: false
-    }
-];
-
 export const METRIX: BadgeType[] = [
     {
         icon: <ClockIcon />,
@@ -88,22 +68,22 @@ export const TASK_SUB_MENUS: SubMenuType[] = [
   {
     icon: <ChatIcon />,
     title: 'Chat',
-    link: '/taskboard/chat',
+    link: '/chat',
   },
   {
     icon: <CalendarIcon />,
     title: 'Dashboard',
-    link: '/taskboard/dashboard',
+    link: '/dashboard',
   },
   {
     icon: <QueueListIcon />,
     title: 'Tasks',
-    link: '/taskboard/tasks',
+    link: '/tasks',
   },
   {
     icon: <FlowIcon />,
     title: 'Flow',
-    link: '/taskboard/flow',
+    link: '/flow',
   },
 ]
 

@@ -5,7 +5,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import { SendButton } from "../Buttons";
 import { CloudArrowUpIcon, MicIcon } from "@/components/Icons";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { sendMessage} from "@/redux/slices/chatSlice";
+import { addTaskMenuItem, sendMessage, setCurrentTaskId} from "@/redux/slices/chatSlice";
 import { apiCaller } from "@/utils/fetcher";
 import { useRouter } from "next/navigation";
 
@@ -39,6 +39,15 @@ const ChatInput = (props: ChatInputType) => {
                         next: () => {
                             setPrompt("");
                         }
+                    }))
+                    dispatch(setCurrentTaskId(response.data.taskId));
+                    dispatch(addTaskMenuItem({
+                        _id: response.data.taskId,
+                        title: "New Task",
+                        link: `/taskboard/${response.data.taskId}/chat`,
+                        expand: true,
+                        state: false,
+                        line: false,
                     }))
                     router.push(`/taskboard/${response.data.taskId}/chat`);
                 }
