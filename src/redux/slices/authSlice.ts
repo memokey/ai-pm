@@ -78,7 +78,7 @@ export const authSlice = createSlice({
         setIsAuthenticated(state, action: PayloadAction<Boolean>) {
             state.isAuthenticated = action.payload;
         },
-        setIsTasker(state, action: PayloadAction<Boolean>) {
+        setIsTasker(state, action: PayloadAction<boolean>) {
             state.isTasker = action.payload;
         },
     },
