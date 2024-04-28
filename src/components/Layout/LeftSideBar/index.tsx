@@ -11,7 +11,7 @@ import TaskMenu from "./TaskMenu";
 import { apiCaller } from "@/utils/fetcher";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setCurrentTaskId, setHistory, setMessages, setTaskExpand, setTaskMenuItems } from "@/redux/slices/chatSlice";
-import { setTaskId } from "@/redux/slices/taskSlice";
+import { setTaskId, setTasks } from "@/redux/slices/taskSlice";
 
 const LeftSidebar = () => {
     const dispatch = useAppDispatch();
@@ -25,6 +25,7 @@ const LeftSidebar = () => {
     const createTask = async () => {
         dispatch(setMessages([]));
         dispatch(setHistory([]));
+        dispatch(setTasks([]));
         if(taskId != "") {
             dispatch(setTaskId(""));
         }
