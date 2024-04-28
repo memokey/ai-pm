@@ -121,7 +121,7 @@ const DetailRequest = (props: any) => {
                     </div>
                 </div> */}
             </div>
-            {selectedSubTask != null && props.subTasks.length != 0 && !!props.subTasks[selectedSubTask] && (
+            {/* {selectedSubTask != null && props.subTasks.length != 0 && !!props.subTasks[selectedSubTask] && (
                 <div className="w-[420px] bg-[#191919] border-[#343434] border-l relative">
                     <div className="border-b border-base-200 flex justify-between px-5 py-2">
                         <div className="text-[12px] font-600 text-base-300">{props.subTasks[selectedSubTask].title}</div>
@@ -174,7 +174,7 @@ const DetailRequest = (props: any) => {
                         <ChatInputSm />
                     </div>
                 </div>
-            )}
+            )} */}
         </div>
     );
 }
