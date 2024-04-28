@@ -1,5 +1,6 @@
 'use client'
 
+import { CONSTANTS } from '@/config/constants';
 import { DEFAULT_TASKS } from '@/data/global';
 import { Id, TaskType } from '@/data/types/type';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
@@ -7,14 +8,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 export interface TaskState {
     activeDetail: Boolean;
     taskDetailModal: Boolean;
-    // tasks: TaskType[];
+    tasks: any[];
     taskId: Id;
 }
 
 const initialState: TaskState = {
     activeDetail: false,
     taskDetailModal: false,
-    // tasks: DEFAULT_TASKS,
+    tasks: [],
     taskId: "0",
 }
 
@@ -32,6 +33,9 @@ export const taskSlice = createSlice({
         setTaskDetailModal: (state, action: PayloadAction<Boolean>) => {
             state.taskDetailModal = action.payload;
         },
+        setTasks: (state, action: PayloadAction<any[]>) => {
+            state.tasks = action.payload;
+        }
     },
 })
 
@@ -39,6 +43,7 @@ export const {
     setActiveDetail,
     setTaskDetailModal,
     setTaskId,
+    setTasks,
 } = taskSlice.actions
 
 export default taskSlice.reducer

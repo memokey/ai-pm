@@ -43,15 +43,15 @@ const LeftSidebar = () => {
                 data: { tasks }
             } = await apiCaller.post('/api/tasks/getTaskByUser/', {
                 is_all: false,
-                fields: ['_id', "title"]
+                fields: ['id', "title"]
             });
             if(!!tasks) {
                 const taskMenuItems = tasks.map((task: any) => {
                     return {
-                        _id: task._id,
+                        _id: task.id,
                         title: task.title == "" ? "New Task": task.title,
-                        link: `/taskboard/${task._id}/chat`,
-                        expand: taskId != "" && taskId == task._id,
+                        link: `/taskboard/${task.id}/chat`,
+                        expand: taskId != "" && taskId == task.id,
                         state: false,
                         line: false,
                     }

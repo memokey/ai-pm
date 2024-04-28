@@ -1,12 +1,30 @@
 import React, { useEffect } from "react";
 import { CONSTANTS } from "@/config/constants";
 import Message from "./UserMessage";
-import { CARD_PROMPTS } from "@/data/global";
+import { CARD_PROMPTS, METRIX } from "@/data/global";
 import { PromptCard } from "@/components/Common/Cards";
 import { useAppSelector } from "@/redux/hooks";
+import TaskBoard from "./TaskBoard";
+import { Avatar } from "@/components/Common/Avatars";
+import { PlayIcon } from "@/components/Icons";
+import { Badge } from "@/components/Common/Badges";
+import { DepositButton } from "@/components/Escrow/DepositButton";
+import { PrimaryBorderButton } from "@/components/Common/Buttons";
 
 const Chatbox = () => {
-    const { messages, streamingFlag, streamingMessage, isGeneratedTasks } = useAppSelector(state => state.chat);
+    const { 
+        messages, 
+        streamingFlag, 
+        streamingMessage, 
+        loading, 
+        tasks 
+    } = useAppSelector(state => ({
+        messages: state.chat.messages,
+        streamingFlag: state.chat.streamingFlag,
+        streamingMessage: state.chat.streamingMessage,
+        loading: state.chat.loading,
+        tasks: state.task.tasks,
+    }));
 
     return (
         <div className="grid gap-6 w-full">
@@ -36,6 +54,39 @@ const Chatbox = () => {
                     tasks={msg.tasks}
                 />
             ))}
+            {!loading && tasks.length != 0 && (
+                <div>
+                    <div className="w-full grid gap-4 mb-4">
+                        <TaskBoard tasks={tasks}/>
+                    </div>
+                    <div className="w-full grid gap-4">
+                        <div className="grid gap-2">
+                            <div className="flex gap-[10px]">
+                                {METRIX.map((badge, index) => (
+                                    <Badge 
+                                        key={index}
+                                        icon={badge.icon}
+                                        title={badge.title}
+                                        data={badge.data}
+                                    />
+                                ))}
+                            </div>
+                            <div className="text-[16px] font-[400] text-base-content leading-[24px]">
+                                Will this plan work for you? 
+                            </div>
+                            <div className="flex gap-[10px]">
+                                <div className="flex gap-2">
+                                    <DepositButton />
+                                    <PrimaryBorderButton 
+                                        caption="Reject"
+                                        type={false}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
             {streamingFlag && (
                 <Message
                     key={"bot111"}

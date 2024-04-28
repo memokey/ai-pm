@@ -41,27 +41,34 @@ export const STATUS_ICONS: StatusIcons = {
   'Done': <DoneIcon />
 }
 
+export const DEFAULT_COLS_BY_ID: any = {
+  "todo": "To do",
+  "doing": "Work in progress",
+  "review": "Review",
+  "done": "Done",
+};
+
 export const DEFAULT_COLS: ColumnType[] = [
-    {
-        id: "todo",
-        title: "To do",
-        icon: <CircleIcon />
-      },
-      {
-        id: "doing",
-        title: "Work in progress",
-        icon: <ProgressIcon />
-      },
-      {
-        id: "review",
-        title: "Review",
-        icon: <ReviewIcon />
-      },
-      {
-        id: "done",
-        title: "Done",
-        icon: <DoneIcon />
-      },
+  {
+    id: "todo",
+    title: "To do",
+    icon: <CircleIcon />
+  },
+  {
+    id: "doing",
+    title: "Work in progress",
+    icon: <ProgressIcon />
+  },
+  {
+    id: "review",
+    title: "Review",
+    icon: <ReviewIcon />
+  },
+  {
+    id: "done",
+    title: "Done",
+    icon: <DoneIcon />
+  },
 ]
 
 export const TASK_SUB_MENUS: SubMenuType[] = [

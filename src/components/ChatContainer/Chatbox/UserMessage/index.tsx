@@ -92,7 +92,7 @@ const Message = (props:MessageType) => {
                     )}
                     {props.action === CONSTANTS.TASKS_ACTION && (
                         <div>
-                            <div className="w-full grid gap-4 mb-4">
+                            {/* <div className="w-full grid gap-4 mb-4">
                                 <TaskBoard tasks={props.tasks}/>
                             </div>
                             <div className="w-full grid gap-4">
@@ -138,7 +138,7 @@ const Message = (props:MessageType) => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     )}
                     <div className="flex gap-2">

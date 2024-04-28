@@ -1,6 +1,6 @@
 'use client'
 
-import { DownArrowIcon, VAIcon } from "@/components/Icons";
+import { DownArrowIcon, RightArrowIcon, RightIcon, VAIcon } from "@/components/Icons";
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import SubMenuTaskItem from "./SubMenuTaskItem";
 import { TASK_SUB_MENUS } from "@/data/global";
@@ -55,7 +55,7 @@ const MenuItem = (props: MenuItemType) => {
                     props.expand ? (
                         <DownArrowIcon />
                     ) : (
-                        <DownArrowIcon />
+                        <RightIcon />
                     )
                 }
                 {props.icon ? props.icon : <VAIcon />}

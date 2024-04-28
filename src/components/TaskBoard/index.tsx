@@ -22,18 +22,19 @@ const TaskBoard = () => {
     const dispatch = useAppDispatch();
     const [columns, setColumns] = useState<ColumnType[]>(DEFAULT_COLS);
     const columnsId = useMemo(() => columns.map((col: ColumnType) => col.id), [columns]);
-    const [tasks, setTasks] = useState<any[]>([]);
+    const [boardTasks, setBoardTasks] = useState<any[]>([]);
     const [activeColumn, setActiveColumn] = useState<ColumnType | null>(null);
     const [activeTask, setActiveTask] = useState<TaskType | null>(null);
     const [taskDetail, setTaskDetail] = useState<TaskType | null>(null);
 
     const { activeDetail, taskId } = useAppSelector(state => state.task);
 
-    const { generatedTasks } = useAppSelector(state => state.chat);
+    const { tasks } = useAppSelector(state => state.task);
 
     useEffect(() => {
-        setTasks(JSON.parse(JSON.stringify(generatedTasks)));
-    }, [generatedTasks])
+        console.log(tasks);
+        setBoardTasks(JSON.parse(JSON.stringify(tasks)));
+    }, [tasks])
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -97,17 +98,17 @@ const TaskBoard = () => {
 
         // Im dropping a Task over another Task
         if (isActiveATask && isOverATask) {
-        setTasks((tasks) => {
-            const activeIndex = tasks.findIndex((t) => t.id === activeId);
-            const overIndex = tasks.findIndex((t) => t.id === overId);
+            setBoardTasks((boardTasks) => {
+            const activeIndex = boardTasks.findIndex((t) => t.id === activeId);
+            const overIndex = boardTasks.findIndex((t) => t.id === overId);
 
-            if (tasks[activeIndex].columnId != tasks[overIndex].columnId) {
+            if (boardTasks[activeIndex].columnId != boardTasks[overIndex].columnId) {
             // Fix introduced after video recording
-            tasks[activeIndex].columnId = tasks[overIndex].columnId;
-            return arrayMove(tasks, activeIndex, overIndex - 1);
+            boardTasks[activeIndex].columnId = boardTasks[overIndex].columnId;
+            return arrayMove(boardTasks, activeIndex, overIndex - 1);
             }
 
-            return arrayMove(tasks, activeIndex, overIndex);
+            return arrayMove(boardTasks, activeIndex, overIndex);
         });
         }
 
@@ -115,22 +116,21 @@ const TaskBoard = () => {
 
         // Im dropping a Task over a column
         if (isActiveATask && isOverAColumn) {
-            setTasks((tasks) => {
-                const activeIndex = tasks.findIndex((t) => t.id === activeId);
+            setBoardTasks((boardTasks) => {
+                const activeIndex = boardTasks.findIndex((t) => t.id === activeId);
                 if(activeIndex != -1) {
-                    console.log(tasks, activeIndex, overId, activeId);
-                    tasks[activeIndex].columnId = overId;
+                    boardTasks[activeIndex].columnId = overId;
                 }
                 console.log("DROPPING TASK OVER COLUMN", { activeIndex });
-                return arrayMove(tasks, activeIndex, activeIndex);
+                return arrayMove(boardTasks, activeIndex, activeIndex);
             });
         }
     }
 
     useEffect(() => {
-        const detailIndex = tasks.findIndex((t) => t.id == taskId);
+        const detailIndex = boardTasks.findIndex((t) => t.id == taskId);
         if(detailIndex != -1) {
-            setTaskDetail(tasks[detailIndex])
+            setTaskDetail(boardTasks[detailIndex])
         }
     }, [taskId])
 
@@ -153,7 +153,7 @@ const TaskBoard = () => {
                         createTask={() => {}}
                         deleteTask={() => {}}
                         updateTask={() => {}}
-                        tasks={tasks.filter((task) => task.columnId === col.id)}
+                        tasks={boardTasks.filter((task) => task.columnId === col.id)}
                     />
                 ))}
                 </SortableContext>
