@@ -16,9 +16,10 @@ import Header from "@/components/Layout/Header";
 
 const TaskBoardPage = ({params}: any) => {
     const dispatch = useAppDispatch();
-    const { tasks, messages } = useAppSelector(state => ({
+    const { tasks, messages, taskId } = useAppSelector(state => ({
         tasks: state.task.tasks,
-        messages: state.chat.messages
+        messages: state.chat.messages,
+        taskId: state.chat.taskId
     }));
     useEffect(() => {
         const taskId = params.taskId;
@@ -76,7 +77,7 @@ const TaskBoardPage = ({params}: any) => {
                         shares: 1
                     }
                 })
-                if(task.tasks.length != 0) {
+                if(task.tasks.length != 0 || taskId != params.taskId) {
                     convertTasks(task.tasks, currentTasks);
                 }
             }
