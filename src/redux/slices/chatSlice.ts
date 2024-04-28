@@ -2,9 +2,12 @@
 
 import { MessageType } from '@/components/ChatContainer/Chatbox/UserMessage';
 import { CONSTANTS } from '@/config/constants';
+import { DEFAULT_COLS_BY_ID } from '@/data/global';
 import { SendMessageTpye } from '@/data/types/type';
 import { apiCaller } from '@/utils/fetcher';
 import { createAsyncThunk, createSlice, current, PayloadAction } from '@reduxjs/toolkit'
+import { setTasks } from './taskSlice';
+import { convertTasks } from '@/utils/convertTasks';
 
 export interface ChatState {
     loading: Boolean;
@@ -64,14 +67,9 @@ export const sendMessage = createAsyncThunk<any, SendMessageTpye>(
             dispatch(setHistory(res.data.history));
             dispatch(setLoading(false));
             if(res.data.is_final_outline == true) {
-                dispatch(setIsGeneratedTasks(true));
-                dispatch(setGeneratedTasks(res.data.tasks));
-                dispatch(addMessage({
-                    message: res.data.response,
-                    tasks: res.data.response.tasks,
-                    type: CONSTANTS.BOT_MESSAGE_TYPE,
-                }));
-                return;
+                let currentTasks: any = [];
+                convertTasks(res.data.tasks, currentTasks);
+                dispatch(setTasks(currentTasks))
             }
             dispatch(addMessage({
                 message: res.data.response,
