@@ -80,7 +80,7 @@ const TaskDetailBox = (props: TaskDetailBoxType) => {
                                         </div>
                                     ) : (
                                         <div>
-                                            Waiting for AI's assistance
+                                            Waiting for AI&apos;s assistance
                                         </div>
                                     )}
                                 </div>
