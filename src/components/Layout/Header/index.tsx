@@ -7,8 +7,9 @@ import dynamic from "next/dynamic";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
-import { login, setProfile, setRegisterStep } from "@/redux/slices/authSlice";
+import { login, setIsAuthenticated, setIsTasker, setProfile, setRegisterStep } from "@/redux/slices/authSlice";
 import { apiCaller } from "@/utils/fetcher";
+import { PrimaryButton } from "@/components/Common/Buttons";
 
 const DynamicWalletButton = dynamic(() => import('@solana/wallet-adapter-react-ui').then(mod => mod.WalletMultiButton), {
     ssr: false
@@ -19,11 +20,11 @@ export type HeaderType = {
 }
 
 const Header = (props: HeaderType) => {
-    const wallet = useWallet()
+    const wallet = useWallet();
     const dispatch = useAppDispatch();
     const router = useRouter();
 
-    const { logged } = useAppSelector(state => state.auth);
+    const { logged, profile, isAuthenticated, isTasker } = useAppSelector(state => state.auth);
 
     const connected = useMemo(() => {
         return wallet.connected
@@ -50,6 +51,7 @@ const Header = (props: HeaderType) => {
         })
 
         if(exist && isAuthenticated) {
+            dispatch(setIsAuthenticated(true));
             dispatch(setProfile(profile));
             return;
         }
@@ -62,12 +64,40 @@ const Header = (props: HeaderType) => {
         }))
     }
 
+    const toOnboarding = () => {
+        router.push(`/onboarding/`);
+    }
+
+    const toggleTasker = () => {
+        dispatch(setIsTasker(!isTasker));
+        if(!isTasker) {
+            router.push('/tasker/taskRequests');
+        } else {
+            router.push('/chat');
+        }
+    }
+
     return (
         <div className="h-[56px] flex justify-between border-b border-base-200 py-[16px] px-6">
             <Title 
                 title={props.title}
             />
-            <DynamicWalletButton />
+            <div className="flex gap-2">
+                {!!isAuthenticated && profile.registerFlag ? (
+                    <div className="form-control flex items-center pt-1 gap-2 ">
+                        <input type="checkbox" className="toggle toggle-primary" checked={isTasker} onClick={toggleTasker} />
+                    </div>
+                ): (
+                    <PrimaryButton 
+                        caption={"Create a tasker's profile"}
+                        type={false}
+                        icon={<></>}
+                        styles="!py-[16px]"
+                        onClick={toOnboarding}
+                    />
+                )}
+                <DynamicWalletButton />
+            </div>
         </div>
     );
 }

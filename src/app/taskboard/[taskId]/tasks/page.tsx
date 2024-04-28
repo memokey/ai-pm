@@ -12,6 +12,7 @@ import { setHistory, setLoading, setMessages } from "@/redux/slices/chatSlice";
 import { CONSTANTS } from "@/config/constants";
 import { apiCaller } from "@/utils/fetcher";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import Header from "@/components/Layout/Header";
 
 const TaskBoardPage = ({params}: any) => {
     const dispatch = useAppDispatch();
@@ -88,7 +89,11 @@ const TaskBoardPage = ({params}: any) => {
 
     return (
         <Layout
-            header={<TaskBoardHeader />}
+            header={
+                <Header 
+                    title="Board"
+                />
+            }
         >
             <TaskBoard />
         </Layout>

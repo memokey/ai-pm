@@ -12,14 +12,15 @@ import { useRouter } from "next/navigation";
 import TaskerLeftSidebar from "@/components/Layout/TaskerLeftSidebar";
 
 const TaskBoardPage = ({params}: any) => {
-    const [detailTask, setDetailTask] = useState<TaskType>(DEFAULT_TASKS[0]);
     const router = useRouter();
+    const { requests } = useAppSelector(state => state.task);
+    const [detailTask, setDetailTask] = useState<TaskType>(requests[0] || DEFAULT_TASKS[0]);
 
     useEffect(() => {
         if(!!params.taskId) {
-            const selectedIndex = DEFAULT_TASKS.findIndex(t => t.id == params.taskId);
+            const selectedIndex = requests.findIndex(t => t.id == params.taskId);
             if(selectedIndex != -1) {
-                setDetailTask(DEFAULT_TASKS[selectedIndex]);
+                setDetailTask(requests[selectedIndex]);
             }
         }
     }, [params.taskId])

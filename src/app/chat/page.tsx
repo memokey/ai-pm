@@ -6,6 +6,7 @@ import { ChatRightSidebar } from "@/components/Layout/RightSidebars";
 import ChatStaticContainer from "@/components/ChatStaticContainer";
 
 const DefaultChatPage = () => {
+
     return (
         <Layout
             rightSidebar={<ChatRightSidebar />}

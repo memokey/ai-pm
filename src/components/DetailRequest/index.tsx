@@ -8,13 +8,12 @@ import { PrimaryBorderButton } from "../Common/Buttons";
 import { AttachIcon, AvatarIcon, CalendarIcon, CloseIcon, DollarIcon, DownArrowIcon, FileShareIcon, FlagIcon, PaperIcon, PlussmIcon, RoundDollarIcon, ShareIcon, SlashIcon, ThreeDotIcon } from "../Icons";
 import { FlagBorderIcon } from "../Icons/FlagBorderIcon";
 import { ChatInputSm } from "../Common/Inputs";
-import { useAppDispatch } from "@/redux/hooks";
 
-const DetailRequest = (props: TaskType) => {
+const DetailRequest = (props: any) => {
     const [selectedSubTask, setSelectedSubTask] = useState(-1);
 
     return (
-        <div className="flex">
+        <div className="flex w-full">
             <div className="py-[24px] px-[60px] w-full">
                 <div className="flex gap-4 justify-between">
                     <div className="text-[20px] font-500 leading-[30px]">{props.title}</div>
@@ -34,13 +33,15 @@ const DetailRequest = (props: TaskType) => {
                                 <AvatarIcon />
                                 <span>Requester</span>
                             </div>
-                            <div className="flex p-2 gap-[8px] items-center">
-                                <Avatar 
-                                    img={props.properties.assignees[0].img || ''}
-                                    size={16} 
-                                />
-                                <span className="">{props.properties.assignees[0].name}</span>
-                            </div>
+                            {!!props.properties.requester && (
+                                <div className="flex p-2 gap-[8px] items-center">
+                                    <Avatar 
+                                        img={props.properties.requester.avatar || ''}
+                                        size={16} 
+                                    />
+                                    <span className="">{props.properties.requester.name}</span>
+                                </div>
+                            )}
                         </div>
                         <div className="flex text-[12px] font-500 leading-[12px] text-[#BFBFBF]">
                             <div className="flex p-2 px-0 gap-[8px] w-[97px] items-center">
@@ -48,7 +49,7 @@ const DetailRequest = (props: TaskType) => {
                                 <span>Reward</span>
                             </div>
                             <div className="flex p-2 gap-[8px] items-center">
-                                {5} USDC
+                                {props.cost} USDC
                             </div>
                         </div>
                         <div className="flex text-[12px] font-500 leading-[12px] text-[#BFBFBF]">
@@ -92,14 +93,14 @@ const DetailRequest = (props: TaskType) => {
                 <div className="py-4 grid gap-2 border-b border-base-200">
                     <h2 className="text-[12px] font-400 leading-[12px] text-base-300">Description</h2>
                     <div className="text-[12px] font-400 text-[#BFBFBF]">{props.description}</div>
-                    {props.subTasks.length != 0 && (
+                    {/* {props.subTasks.length != 0 && (
                         <div className="flex items-center gap-2 cursor-pointer">
                             <div className="text-base-content font-400 text-[12px] leading-[20px]">More</div>
                             <DownArrowIcon />
                         </div>
-                    )}
+                    )} */}
                 </div>
-                <div className="py-4 grid gap-2 border-b border-base-200">
+                {/* <div className="py-4 grid gap-2 border-b border-base-200">
                     <h2 className="text-[12px] font-400 leading-[12px] text-base-300">Subtasks</h2>
                     <div className="overflow-hidden w-full">
                         {props.subTasks.map((subtask, index) => (
@@ -118,7 +119,7 @@ const DetailRequest = (props: TaskType) => {
                             </div>
                         ))}
                     </div>
-                </div>
+                </div> */}
             </div>
             {selectedSubTask != null && props.subTasks.length != 0 && !!props.subTasks[selectedSubTask] && (
                 <div className="w-[420px] bg-[#191919] border-[#343434] border-l relative">

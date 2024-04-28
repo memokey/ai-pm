@@ -24,8 +24,8 @@ const StepTwo = () => {
             try {
                 const response = await apiCaller.get('/auth/userByPublicKey', {
                     params: {
-                        walletType: localStorage.getItem('type'),
-                        publicKey: localStorage.getItem('publickey'),
+                        wallet_type: localStorage.getItem('type'),
+                        public_key: localStorage.getItem('publickey'),
                     }
                 });
                 await setUserInfo(response.data);
@@ -51,12 +51,12 @@ const StepTwo = () => {
                 name,
                 avatar: imageUrl,
                 nation,
-                step: "2"
+                step: "1"
             });
         } catch (error) {
             
         }
-        dispatch(setRegisterStep(3));
+        dispatch(setRegisterStep(2));
     }
 
     const backStep = () => {

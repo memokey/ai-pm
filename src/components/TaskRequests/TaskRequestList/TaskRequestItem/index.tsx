@@ -8,7 +8,7 @@ import { TaskType } from "@/data/types/type";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-const TaskRequestItem = (props: TaskType) => {
+const TaskRequestItem = (props: any) => {
     const [itemHover, setItemHover] = useState(false);
     const router = useRouter();
     const viewDetailTask = () => {
@@ -31,7 +31,7 @@ const TaskRequestItem = (props: TaskType) => {
                     <div className="flex gap-4">
                         <Badge
                             icon={<CalendarIcon />}
-                            data={props.created}   
+                            data={props.created_at}   
                             styles="!border !border-[#343434] !bg-[#2c2b2b] !text-base-300 !leading-[13px] !text-[12px] !p-1"
                         />
                         <div className="p-1 rounded-[2px]" style={{backgroundColor: CONSTANTS.PRIORITY_COLORS[props.properties.priority]}}>
@@ -39,7 +39,7 @@ const TaskRequestItem = (props: TaskType) => {
                         </div>
                         <Badge
                             icon={<RoundDollarIcon />}
-                            data={"1200"}   
+                            data={props.cost}   
                             styles="!border !border-[#343434] !text-base-300 !leading-[13px] !text-[12px] !p-1"
                         />
                     </div>
@@ -64,12 +64,14 @@ const TaskRequestItem = (props: TaskType) => {
             <div className="text-[12px] font-400 leading-[20px] text-base-300">
                 {props.description}
             </div>
-            <div className="flex items-center gap-2">
-                <Avatar size={24} img={props.properties.assignees[0].img || ''} />
-                <div className="text-[12p] text-base-300">
-                    By {props.properties.assignees[0].name}
+            {props.properties.assignees.length != 0 && (
+                <div className="flex items-center gap-2">
+                    <Avatar size={24} img={props.properties.assignees[0].img || ''} />
+                    <div className="text-[12p] text-base-300">
+                        By {props.properties.assignees[0].name}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }

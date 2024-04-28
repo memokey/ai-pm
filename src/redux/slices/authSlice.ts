@@ -10,12 +10,16 @@ export interface AuthState {
     logged: Boolean;
     registerStep: Number;
     profile: any;
+    isAuthenticated: Boolean;
+    isTasker: boolean;
 }
 
 const initialState: AuthState = {
     logged: false,
     registerStep: 1,
     profile: {},
+    isAuthenticated: false,
+    isTasker: false,
 }
 
 export const login = createAsyncThunk<boolean, loginProps>(
@@ -49,7 +53,8 @@ export const login = createAsyncThunk<boolean, loginProps>(
                 signature,
             })
 
-            dispatch(setProfile(user))
+            dispatch(setIsAuthenticated(true));
+            dispatch(setProfile(user));
             response = true
             if (next) next()
         } catch (err) {
@@ -69,13 +74,21 @@ export const authSlice = createSlice({
         },
         setRegisterStep(state, action: PayloadAction<Number>) {
             state.registerStep = action.payload;
-        }
+        },
+        setIsAuthenticated(state, action: PayloadAction<Boolean>) {
+            state.isAuthenticated = action.payload;
+        },
+        setIsTasker(state, action: PayloadAction<Boolean>) {
+            state.isTasker = action.payload;
+        },
     },
 })
 
 export const {
     setProfile,
-    setRegisterStep
+    setRegisterStep,
+    setIsAuthenticated,
+    setIsTasker,
 } = authSlice.actions
 
 export default authSlice.reducer

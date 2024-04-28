@@ -1,14 +1,16 @@
 import { DEFAULT_TASKS } from "@/data/global";
 import React from "react";
 import TaskRequestItem from "./TaskRequestItem";
+import { useAppSelector } from "@/redux/hooks";
 
 const TaskRequestList = () => {
+    const { requests } = useAppSelector(state => state.task);
     return (
         <div className="grid gap-[12px]">
-            {DEFAULT_TASKS.map((task, index) => (
+            {requests.map((request, index) => (
                 <TaskRequestItem 
                     key={index}
-                    {...task}
+                    {...request}
                 />
             ))}
         </div>

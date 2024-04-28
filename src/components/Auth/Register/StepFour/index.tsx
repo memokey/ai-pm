@@ -25,8 +25,8 @@ const StepFour = () => {
             try {
                 const response = await apiCaller.get('/auth/userByPublicKey', {
                     params: {
-                        walletType: localStorage.getItem('type'),
-                        publicKey: localStorage.getItem('publickey'),
+                        wallet_type: localStorage.getItem('type'),
+                        public_key: localStorage.getItem('publickey'),
                     }
                 });
                 await setUserInfo(response.data);
@@ -82,15 +82,15 @@ const StepFour = () => {
                 wallet_type: localStorage.getItem('type'),
                 skills: skills.filter(s => s.selected).map(skill => skill.name),
                 desired_skills: desiredSkills.filter(s => s.selected).map(skill => skill.name),
-                step: "4",
+                step: "2",
             };
             await apiCaller.post('/auth/register/', data);
         } catch (error) {}
-        dispatch(setRegisterStep(5));
+        dispatch(setRegisterStep(3));
     }
 
     const backStep = () => {
-        dispatch(setRegisterStep(3));
+        dispatch(setRegisterStep(1));
     }
 
     const addSkills = useCallback((skillName: string) => {

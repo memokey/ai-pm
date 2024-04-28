@@ -9,6 +9,7 @@ export interface TaskState {
     activeDetail: Boolean;
     taskDetailModal: Boolean;
     tasks: any[];
+    requests: any[];
     taskId: Id;
 }
 
@@ -16,6 +17,7 @@ const initialState: TaskState = {
     activeDetail: false,
     taskDetailModal: false,
     tasks: [],
+    requests: [],
     taskId: "0",
 }
 
@@ -35,6 +37,9 @@ export const taskSlice = createSlice({
         },
         setTasks: (state, action: PayloadAction<any[]>) => {
             state.tasks = action.payload;
+        },
+        setTaskRequests: (state, action: PayloadAction<any[]>) => {
+            state.requests = action.payload;
         }
     },
 })
@@ -44,6 +49,7 @@ export const {
     setTaskDetailModal,
     setTaskId,
     setTasks,
+    setTaskRequests,
 } = taskSlice.actions
 
 export default taskSlice.reducer
