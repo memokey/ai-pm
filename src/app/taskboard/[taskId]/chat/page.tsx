@@ -14,9 +14,10 @@ import { DEFAULT_COLS_BY_ID } from "@/data/global";
 
 const ChatPage = ({params}: any) => {
     const dispatch = useAppDispatch();
-    const { tasks, messages } = useAppSelector(state => ({
+    const { tasks, messages, taskId } = useAppSelector(state => ({
         tasks: state.task.tasks,
-        messages: state.chat.messages
+        messages: state.chat.messages,
+        taskId: state.chat.taskId
     }));
     useEffect(() => {
         const taskId = params.taskId;
@@ -79,10 +80,10 @@ const ChatPage = ({params}: any) => {
                 }
             }
         }
-        dispatch(setTaskId(taskId));
-        if(tasks.length == 0 && messages.length == 0) {
+        if(tasks.length == 0 && messages.length == 0 || taskId != params.taskId) {
             fetchTask();
         }
+        dispatch(setTaskId(taskId));
     }, [])
     return (
         <Layout
