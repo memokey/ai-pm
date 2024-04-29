@@ -13,7 +13,7 @@ export type IconType = {
 }
 
 export type TaskType = {
-    id: Id;
+    id: string;
     columnId: Id;
     parentId: Id | null;
     title: string;
