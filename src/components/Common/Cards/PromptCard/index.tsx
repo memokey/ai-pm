@@ -15,7 +15,7 @@ const PromptCard = (props: PromptCardType) => {
     const router = useRouter();
     const { history, taskId } = useAppSelector((state) => ({
         history: state.chat.history,
-        taskId: state.chat.taskId
+        taskId: state.task.taskId
     }))
 
     const send = async (prompt: String) => {
