@@ -10,7 +10,7 @@ export interface TaskState {
     taskDetailModal: Boolean;
     tasks: any[];
     requests: any[];
-    taskId: Id;
+    taskId: String;
 }
 
 const initialState: TaskState = {
@@ -29,7 +29,7 @@ export const taskSlice = createSlice({
         setActiveDetail: (state, action: PayloadAction<Boolean>) => {
             state.activeDetail = action.payload;
         },
-        setTaskId: (state, action: PayloadAction<Id>) => {
+        setTaskId: (state, action: PayloadAction<String>) => {
             state.taskId = action.payload;
         },
         setTaskDetailModal: (state, action: PayloadAction<Boolean>) => {

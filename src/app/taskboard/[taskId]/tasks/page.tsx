@@ -19,14 +19,13 @@ const TaskBoardPage = ({params}: any) => {
     const { tasks, messages, taskId } = useAppSelector(state => ({
         tasks: state.task.tasks,
         messages: state.chat.messages,
-        taskId: state.chat.taskId
+        taskId: state.task.taskId
     }));
     useEffect(() => {
-        const taskId = params.taskId;
         const fetchTask = async () => {
             try {
                 dispatch(setLoading(true));
-                const response = await apiCaller.get(`/api/tasks/${taskId}/`);
+                const response = await apiCaller.get(`/api/tasks/${params.taskId}/`);
                 if(!!response.data.chat) {
                     let messages = [];
                     for(const chat of response.data.chat) {
@@ -77,15 +76,15 @@ const TaskBoardPage = ({params}: any) => {
                         shares: 1
                     }
                 })
-                if(task.tasks.length != 0 || taskId != params.taskId) {
+                if(task.tasks.length != 0) {
                     convertTasks(task.tasks, currentTasks);
                 }
             }
         }
-        dispatch(setTaskId(taskId));
-        if(tasks.length == 0 && messages.length == 0) {
+        if(tasks.length == 0 && messages.length == 0 || taskId != params.taskId) {
             fetchTask();
         }
+        dispatch(setTaskId(params.taskId));
     }, [])
 
     return (

@@ -8,8 +8,7 @@ import { apiCaller } from "@/utils/fetcher";
 import { CONSTANTS } from "@/config/constants";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setCurrentTaskId, setHistory, setLoading, setMessages, setTaskExpand } from "@/redux/slices/chatSlice";
-import { setTaskId } from "@/redux/slices/chatSlice";
-import { setTasks } from "@/redux/slices/taskSlice";
+import { setTaskId, setTasks } from "@/redux/slices/taskSlice";
 import { DEFAULT_COLS_BY_ID } from "@/data/global";
 
 const ChatPage = ({params}: any) => {
@@ -17,14 +16,13 @@ const ChatPage = ({params}: any) => {
     const { tasks, messages, taskId } = useAppSelector(state => ({
         tasks: state.task.tasks,
         messages: state.chat.messages,
-        taskId: state.chat.taskId
+        taskId: state.task.taskId
     }));
     useEffect(() => {
-        const taskId = params.taskId;
         const fetchTask = async () => {
             try {
                 dispatch(setLoading(true));
-                const response = await apiCaller.get(`/api/tasks/${taskId}/`);
+                const response = await apiCaller.get(`/api/tasks/${params.taskId}/`);
                 if(!!response.data.chat) {
                     let messages = [];
                     for(const chat of response.data.chat) {
@@ -83,7 +81,7 @@ const ChatPage = ({params}: any) => {
         if(tasks.length == 0 && messages.length == 0 || taskId != params.taskId) {
             fetchTask();
         }
-        dispatch(setTaskId(taskId));
+        dispatch(setTaskId(params.taskId));
     }, [])
     return (
         <Layout

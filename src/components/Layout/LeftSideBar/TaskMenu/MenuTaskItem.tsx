@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 const MenuItem = (props: MenuItemType) => {
     const dispatch = useAppDispatch();
+    const { taskId } = useAppSelector(state => state.task);
 
     const [type, setType] = useState('chat');
     const pathname = usePathname()
@@ -30,7 +31,7 @@ const MenuItem = (props: MenuItemType) => {
                 key={index}
                 {...submenu}
                 link={`/taskboard/${props._id}/${submenu.link}`}
-                active={submenu.title.toLowerCase() == type && !!props.expand}
+                active={submenu.title.toLowerCase() == type && taskId == props._id && !!props.expand}
             />
         ))
     ), [props.expand, type]);

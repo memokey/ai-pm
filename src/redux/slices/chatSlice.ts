@@ -21,7 +21,6 @@ export interface ChatState {
     streamingFlag: Boolean;
     generatedTasks: any[];
     isGeneratedTasks: Boolean;
-    taskId: String;
     taskMenuItems: any[];
     currentTaskId: String;
 }
@@ -38,7 +37,6 @@ const initialState: ChatState = {
     streamingFlag: false,
     generatedTasks: [],
     isGeneratedTasks: false,
-    taskId: "",
     taskMenuItems: [],
     currentTaskId: "",
 }
@@ -139,9 +137,6 @@ export const chatSlice = createSlice({
         setHistory: (state, action: PayloadAction<any>) => {
             state.history = action.payload
         },
-        setTaskId: (state, action: PayloadAction<string>) => {
-            state.taskId = action.payload
-        },
         setCurrentTaskId: (state, action: PayloadAction<string>) => {
             state.currentTaskId = action.payload
         },
@@ -173,7 +168,6 @@ export const {
     setStreamingFlag,
     setGeneratedTasks,
     setIsGeneratedTasks,
-    setTaskId,
     setTaskMenuItems,
     setCurrentTaskId,
     setTaskExpand,

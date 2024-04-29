@@ -17,7 +17,7 @@ const LeftSidebar = () => {
     const dispatch = useAppDispatch();
     const { currentTaskId, taskMenuItems, taskId } = useAppSelector((state) => ({
         currentTaskId: state.chat.currentTaskId,
-        taskId: state.chat.taskId,
+        taskId: state.task.taskId,
         taskMenuItems: state.chat.taskMenuItems,
     }))
     const router = useRouter();
