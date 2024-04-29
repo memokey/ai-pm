@@ -18,7 +18,7 @@ const ChatInput = (props: ChatInputType) => {
     const router = useRouter();
     const { history, taskId, loading } = useAppSelector((state) => ({
         history: state.chat.history,
-        taskId: state.chat.taskId,
+        taskId: state.task.taskId,
         loading: state.chat.loading
     }))
     const [prompt, setPrompt] = useState("");
