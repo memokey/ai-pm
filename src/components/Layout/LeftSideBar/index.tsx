@@ -75,7 +75,7 @@ const LeftSidebar = () => {
 
     return (
         <div className="bg-[#202020] border-[#090909] w-[240px] h-[100vh] z-20 py-[30px] px-[20px] border-r border-r-[1px]">
-            <div className="h-[calc(100vh-124px)]">
+            <div className="h-[calc(100vh-132px)]">
                 <ProfileCard />
                 <div className="grid gap-4">
                     <BaseButton 

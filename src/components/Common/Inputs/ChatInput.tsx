@@ -5,7 +5,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import { SendButton } from "../Buttons";
 import { CloudArrowUpIcon, MicIcon } from "@/components/Icons";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { addTaskMenuItem, sendMessage, setCurrentTaskId} from "@/redux/slices/chatSlice";
+import { addTaskMenuItem, sendMessage, setCurrentTaskId, setLoading} from "@/redux/slices/chatSlice";
 import { apiCaller } from "@/utils/fetcher";
 import { useRouter } from "next/navigation";
 
@@ -65,6 +65,10 @@ const ChatInput = (props: ChatInputType) => {
             }))
         }
     }
+
+    useEffect(() => {
+        dispatch(setLoading(false));
+    }, [])
 
     return (
         <label className="bg-[#2a2a2a] border-base-200 py-4 px-5 flex items-end shadow-[#141414] shadow-md gap-2 rounded-[30px] w-full">

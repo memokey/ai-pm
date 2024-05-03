@@ -27,7 +27,7 @@ const TaskDetailBox = (props: TaskDetailBoxType) => {
 
     return (
         <div className="relative h-full">
-            <div className="h-[calc(100vh-106px)] overflow-y-auto">
+            <div className="h-[calc(100vh-114px)] overflow-y-auto">
                 <div className="border-b border-base-200 flex justify-between px-5 py-2">
                     <div className="text-[12px] font-600 text-base-300">Description</div>
                     <div className="flex gap-2">

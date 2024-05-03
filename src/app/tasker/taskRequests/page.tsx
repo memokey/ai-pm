@@ -15,7 +15,7 @@ const TaskBoardPage = () => {
     useEffect(() => {
         const fetchTaskRequests = async () => {
             try {
-                const response = await apiCaller.get(`/api/tasks/all/`);
+                const response = await apiCaller.get(`/api/tasks/getRequests/`);
                     if(!!response.data.tasks && response.data.tasks.length != 0) {
                          let currentRequests = [];
                          for (const request of response.data.tasks) {
@@ -33,8 +33,8 @@ const TaskBoardPage = () => {
                                     status: DEFAULT_COLS_BY_ID[request.status],
                                     assignees: [],
                                     requester: request.requester,
-                                    priority: 0,
-                                    dueDate: "Yesterday",
+                                    priority: request.priority,
+                                    dueDate: request.dueDate || "Not Assigned",
                                     agents: [],
                                     humans: [],
                                     messages: 0,

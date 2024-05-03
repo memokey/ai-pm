@@ -122,7 +122,7 @@ const TaskRequestBoard = () => {
     }, [taskId])
 
     return (
-        <div className="relative pt-6 px-4 w-[calc(100vw-240px)] h-[calc(100vh-120px)]">
+        <div className="relative pt-6 px-4 w-[calc(100vw-240px)] h-[calc(100vh-128px)]">
             <div className="flex gap-4">
             <DndContext
                 sensors={sensors}

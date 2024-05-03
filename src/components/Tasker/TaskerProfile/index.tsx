@@ -50,7 +50,7 @@ const TaskerProfile = (props: any) => {
             <div className="w-full grid grid-cols-10 gap-4">
                 <div className="col-span-7 h-[20px]">
                     <div className="text-[16px] font-500 leading-[20px] text-neutral mb-4">Work History</div>
-                    <div className="grid gap-4 pr-1 h-[calc(100vh-268px)] overflow-y-auto">
+                    <div className="grid gap-4 pr-1 h-[calc(100vh-276px)] overflow-y-auto">
                         {PROFILE[0].histories.map((history: any, index: Number) => (
                             <WorkHistory 
                                 key={index}

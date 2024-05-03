@@ -14,7 +14,7 @@ const TaskerLeftSidebar = () => {
 
     return (
         <div className="bg-[#202020] border-[#090909] w-[240px] h-[100vh] z-20 py-[16px] px-[20px] border-r border-r-[1px]">
-            <div className="h-[calc(100vh-110px)]">
+            <div className="h-[calc(100vh-118px)]">
                 <ProfileCard />
                 <div className="grid">
                     {TASKER_SUB_MENUS.map((submenu, index) => (

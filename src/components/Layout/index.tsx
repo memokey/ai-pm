@@ -21,7 +21,7 @@ const Layout = (props: LayoutType) => {
                         title="PRD Report"
                     />
                 )}
-                <div className="flex h-[calc(100vh-56px)]">
+                <div className="flex h-[calc(100vh-64px)]">
                     {props.children}
                     {props.rightSidebar && (
                         props.rightSidebar

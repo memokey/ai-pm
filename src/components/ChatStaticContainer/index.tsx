@@ -41,8 +41,8 @@ const ChatStaticContainer = () => {
     }, [messages, streamingFlag, streamingMessage])
 
     return (
-        <div className="w-[calc(100vw-540px)] relative h-[calc(100vh-56px)] mx-auto pt-[20px]">
-            <div className="w-full h-[calc(100vh-156px)] overflow-y-auto pb-10 px-[95px]" id="chatting_thread_box_1">
+        <div className="w-[calc(100vw-540px)] relative h-[calc(100vh-64px)] mx-auto pt-[20px]">
+            <div className="w-full h-[calc(100vh-164px)] overflow-y-auto pb-10 px-[95px]" id="chatting_thread_box_1">
                 <Chatbox />
             </div>
             <div className="w-full absolute bottom-[23px] px-[95px]">

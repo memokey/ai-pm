@@ -32,7 +32,6 @@ const TaskBoard = () => {
     const { tasks } = useAppSelector(state => state.task);
 
     useEffect(() => {
-        console.log(tasks);
         setBoardTasks(JSON.parse(JSON.stringify(tasks)));
     }, [tasks])
 
@@ -135,7 +134,7 @@ const TaskBoard = () => {
     }, [taskId])
 
     return (
-        <div className="relative pt-6 px-4 w-[calc(100vw-240px)] h-[calc(100vh-120px)]">
+        <div className="relative pt-6 px-4 w-[calc(100vw-240px)] h-[calc(100vh-128px)]">
             <div className="flex gap-4">
             <DndContext
                 sensors={sensors}
@@ -161,8 +160,8 @@ const TaskBoard = () => {
             </div>
             {/* Task Detail in Right Sidebar */}
             {!!activeDetail && (
-                <div className="absolute w-[450px] h-[calc(100vh-56px)] top-0 right-0 flex">
-                    <div className="w-[450px] h-[calc(100vh-56px)] bg-[#191919] border-[#343434] border-l">
+                <div className="absolute w-[450px] h-[calc(100vh-64px)] top-0 right-0 flex">
+                    <div className="w-[450px] h-[calc(100vh-64px)] bg-[#191919] border-[#343434] border-l">
                         {!!taskDetail && (
                             <TaskDetailBox task={taskDetail} />
                         )}

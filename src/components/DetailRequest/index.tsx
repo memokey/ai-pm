@@ -7,10 +7,21 @@ import { Badge } from "../Common/Badges";
 import { PrimaryBorderButton } from "../Common/Buttons";
 import { AttachIcon, AvatarIcon, CalendarIcon, CloseIcon, DollarIcon, DownArrowIcon, FileShareIcon, FlagIcon, PaperIcon, PlussmIcon, RoundDollarIcon, ShareIcon, SlashIcon, ThreeDotIcon } from "../Icons";
 import { FlagBorderIcon } from "../Icons/FlagBorderIcon";
-import { ChatInputSm } from "../Common/Inputs";
+import { apiCaller } from "@/utils/fetcher";
 
 const DetailRequest = (props: any) => {
     const [selectedSubTask, setSelectedSubTask] = useState(-1);
+
+    const addToBoard = async () => {
+        try {
+            const response = await apiCaller.post('/api/tasks/addToBoard/', {
+                task_id: props.id
+            });
+            console.log(response);
+        } catch (error: any) {
+            console.log(error.message);
+        }
+    }
 
     return (
         <div className="flex w-full">
@@ -22,6 +33,7 @@ const DetailRequest = (props: any) => {
                             icon={<></>}
                             caption="Add to Board"
                             type={false}
+                            onClick={addToBoard}
                         />
                     </div>
                 </div>
@@ -33,13 +45,13 @@ const DetailRequest = (props: any) => {
                                 <AvatarIcon />
                                 <span>Requester</span>
                             </div>
-                            {!!props.properties.requester && (
+                            {!!props.requester && (
                                 <div className="flex p-2 gap-[8px] items-center">
                                     <Avatar 
-                                        img={props.properties.requester.avatar || ''}
+                                        img={props.requester.avatar || ''}
                                         size={16} 
                                     />
-                                    <span className="">{props.properties.requester.name}</span>
+                                    <span className="">{props.requester.name}</span>
                                 </div>
                             )}
                         </div>
@@ -58,10 +70,10 @@ const DetailRequest = (props: any) => {
                                 <span>Priority</span>
                             </div>
                             <div className="flex p-2 gap-[8px] items-center">
-                                <div className="p-[2px] rounded-[2px]" style={{backgroundColor: CONSTANTS.PRIORITY_COLORS[props.properties.priority]}}>
+                                <div className="p-[2px] rounded-[2px]" style={{backgroundColor: CONSTANTS.PRIORITY_COLORS[props.priority]}}>
                                     <FlagIcon size={12} />
                                 </div>
-                                <span className="">{CONSTANTS.PRIORITY_TEXTS[props.properties.priority]}</span>
+                                <span className="">{CONSTANTS.PRIORITY_TEXTS[props.priority]}</span>
                             </div>
                         </div>
                     </div>
@@ -72,22 +84,27 @@ const DetailRequest = (props: any) => {
                                 <span>Due Date</span>
                             </div>
                             <div className="p-2">
-                                {props.properties.dueDate}
+                                {props.dueDate}
                             </div>
                         </div>
-                        <div className="flex text-[12px] font-500 leading-[12px] text-[#BFBFBF]">
-                            <div className="flex p-2 px-0 gap-[8px] w-[97px] items-center">
-                                <PaperIcon />
-                                <span>Label</span>
+                        {props.labels.length != 0 && (
+                            <div className="flex text-[12px] font-500 leading-[12px] text-[#BFBFBF]">
+                                <div className="flex p-2 px-0 gap-[8px] w-[97px] items-center">
+                                    <PaperIcon />
+                                    <span>Label</span>
+                                </div>
+                                <div className="flex p-2 gap-[8px] items-center">
+                                    {props.labels.map((label: string, index: number) => (
+                                        <Badge 
+                                            key={index}
+                                            icon={<div className="w-1 h-1 rounded-full bg-[#E54C26]"></div>}
+                                            data={label}
+                                            styles="!rounded-[20px] !text-[12px] !px-[10px]"
+                                        />
+                                    ))}
+                                </div>
                             </div>
-                            <div className="flex p-2 gap-[8px] items-center">
-                                <Badge 
-                                    icon={<div className="w-1 h-1 rounded-full bg-[#E54C26]"></div>}
-                                    data={"Bug"}
-                                    styles="!rounded-[20px] !text-[12px] !px-[10px]"
-                                />
-                            </div>
-                        </div>
+                        )}
                     </div>
                 </div>
                 <div className="py-4 grid gap-2 border-b border-base-200">

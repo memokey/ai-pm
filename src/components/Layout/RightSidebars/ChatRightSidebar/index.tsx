@@ -11,7 +11,7 @@ import { useAppDispatch } from "@/redux/hooks";
 const ChatRightSidebar = () => {
     const dispatch = useAppDispatch();
     return (
-        <div className="w-[300px] h-[calc(100vh-56px)] border-base-200 border-l">
+        <div className="w-[300px] h-[calc(100vh-64px)] border-base-200 border-l">
             <div className="p-6 grid gap-4 border-base-200 border-b">
                 <div className="flex justify-between items-center">
                     <h2 className="font-600 text-[14px] text-[#737373]">Human/AI Ratio</h2>

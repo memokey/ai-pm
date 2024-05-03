@@ -732,4 +732,14 @@ export const AI_TOOLS: any[] = [
     icon: <Image src="/images/utils/devin.png" width={16} height={16} alt="AI avatar" />,
     selected: false,
   },
-]
+];
+
+export const MENUS: any[] = [
+  {
+    title: "Requester",
+    link: "/chat"
+  },{
+    title: "Tasker",
+    link: "/tasker/taskRequests"
+  }
+];
