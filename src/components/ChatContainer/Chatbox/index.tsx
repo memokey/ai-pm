@@ -12,35 +12,31 @@ import { DepositButton } from "@/components/Escrow/DepositButton";
 import { PrimaryBorderButton } from "@/components/Common/Buttons";
 
 const Chatbox = () => {
-    const { 
-        messages, 
-        streamingFlag, 
-        streamingMessage, 
-        loading, 
-        tasks 
-    } = useAppSelector(state => ({
-        messages: state.chat.messages,
-        streamingFlag: state.chat.streamingFlag,
-        streamingMessage: state.chat.streamingMessage,
-        loading: state.chat.loading,
-        tasks: state.task.tasks,
-    }));
+    const { messages, streamingFlag, streamingMessage, loading, tasks } =
+        useAppSelector((state) => ({
+            messages: state.chat.messages,
+            streamingFlag: state.chat.streamingFlag,
+            streamingMessage: state.chat.streamingMessage,
+            loading: state.chat.loading,
+            tasks: state.task.tasks,
+        }));
 
     return (
         <div className="grid gap-6 w-full">
             {messages.length === 0 && (
                 <div className="grid gap-4 w-full">
                     <h1 className="text-[36px] font-[400] traking-tighter">
-                        Hello, 
-                        <span className="name-linear font-[700]">Thomas</span>&nbsp;what do you want to create?
+                        Hello,
+                        <span className="name-linear font-[700]">Thomas</span>
+                        &nbsp;what do you want to create?
                     </h1>
-                    <p className="text-[16px] font-[400] leading-[30px] text-base-300">Please Write down task along with description for AI so we can generate detail report for you.</p>
+                    <p className="text-[16px] font-[400] leading-[30px] text-base-300">
+                        Please Write down task along with description for AI so
+                        we can generate detail report for you.
+                    </p>
                     <div className="flex gap-4">
                         {CARD_PROMPTS.map((prompt, index) => (
-                            <PromptCard
-                                key={index}
-                                {...prompt}
-                            />
+                            <PromptCard key={index} {...prompt} />
                         ))}
                     </div>
                 </div>
@@ -50,20 +46,24 @@ const Chatbox = () => {
                     key={index}
                     type={msg.type}
                     message={msg.message}
-                    action={!!msg.tasks && msg.tasks.length != 0 ? CONSTANTS.TASKS_ACTION : -1}
+                    action={
+                        !!msg.tasks && msg.tasks.length != 0
+                            ? CONSTANTS.TASKS_ACTION
+                            : -1
+                    }
                     tasks={msg.tasks}
                 />
             ))}
             {!loading && tasks.length != 0 && (
                 <div>
                     <div className="w-full grid gap-4 mb-4">
-                        <TaskBoard tasks={tasks}/>
+                        <TaskBoard tasks={tasks} />
                     </div>
                     <div className="w-full grid gap-4">
                         <div className="grid gap-2">
                             <div className="flex gap-[10px]">
                                 {METRIX.map((badge, index) => (
-                                    <Badge 
+                                    <Badge
                                         key={index}
                                         icon={badge.icon}
                                         title={badge.title}
@@ -72,12 +72,12 @@ const Chatbox = () => {
                                 ))}
                             </div>
                             <div className="text-[16px] font-[400] text-base-content leading-[24px]">
-                                Will this plan work for you? 
+                                Will this plan work for you?
                             </div>
                             <div className="flex gap-[10px]">
                                 <div className="flex gap-2">
                                     <DepositButton />
-                                    <PrimaryBorderButton 
+                                    <PrimaryBorderButton
                                         caption="Reject"
                                         type={false}
                                     />
@@ -117,6 +117,6 @@ const Chatbox = () => {
             /> */}
         </div>
     );
-}
+};
 
 export default Chatbox;

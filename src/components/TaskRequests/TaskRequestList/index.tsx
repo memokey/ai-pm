@@ -4,17 +4,14 @@ import TaskRequestItem from "./TaskRequestItem";
 import { useAppSelector } from "@/redux/hooks";
 
 const TaskRequestList = () => {
-    const { requests } = useAppSelector(state => state.task);
+    const { listRequests } = useAppSelector((state) => state.task);
     return (
         <div className="grid gap-[12px]">
-            {requests.map((request, index) => (
-                <TaskRequestItem 
-                    key={index}
-                    {...request}
-                />
+            {listRequests.map((request, index) => (
+                <TaskRequestItem key={index} {...request} />
             ))}
         </div>
     );
-}
+};
 
 export default TaskRequestList;

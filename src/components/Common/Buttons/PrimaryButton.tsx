@@ -6,13 +6,15 @@ type PrimaryButtonType = {
     type: boolean; //icon's position
     disabled?: boolean;
     styles?: string;
-    onClick?: any
+    onClick?: () => void;
 };
 
-const PrimaryButton = (props:PrimaryButtonType) => {
+const PrimaryButton = (props: PrimaryButtonType) => {
     return (
         <button
-            className={`bg-primary text-center py-[6px] px-[8px] text-[12px] text-base-content font-500 rounded-[4px] flex gap-2 items-center hover:bg-[#3268E9] shadow-b shadow-[#141414] shadow-sm ${props.styles ? props.styles: ''}`}
+            className={`bg-primary text-center py-[6px] px-[8px] text-[12px] text-base-content font-500 rounded-[4px] flex gap-2 items-center hover:bg-[#3268E9] shadow-b shadow-[#141414] shadow-sm ${
+                props.styles ? props.styles : ""
+            }`}
             onClick={props.onClick}
         >
             {props.type == true && props.icon}
@@ -20,6 +22,6 @@ const PrimaryButton = (props:PrimaryButtonType) => {
             {!props.type == true && props.icon}
         </button>
     );
-}
+};
 
 export default PrimaryButton;

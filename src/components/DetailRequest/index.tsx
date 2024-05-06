@@ -5,29 +5,48 @@ import React, { useState } from "react";
 import { Avatar } from "../Common/Avatars";
 import { Badge } from "../Common/Badges";
 import { PrimaryBorderButton } from "../Common/Buttons";
-import { AttachIcon, AvatarIcon, CalendarIcon, CloseIcon, DollarIcon, DownArrowIcon, FileShareIcon, FlagIcon, PaperIcon, PlussmIcon, RoundDollarIcon, ShareIcon, SlashIcon, ThreeDotIcon } from "../Icons";
+import {
+    AttachIcon,
+    AvatarIcon,
+    CalendarIcon,
+    CloseIcon,
+    DollarIcon,
+    DownArrowIcon,
+    FileShareIcon,
+    FlagIcon,
+    PaperIcon,
+    PlussmIcon,
+    RoundDollarIcon,
+    ShareIcon,
+    SlashIcon,
+    ThreeDotIcon,
+} from "../Icons";
 import { FlagBorderIcon } from "../Icons/FlagBorderIcon";
 import { apiCaller } from "@/utils/fetcher";
+import { useRouter } from "next/navigation";
 
 const DetailRequest = (props: any) => {
+    const router = useRouter();
     const [selectedSubTask, setSelectedSubTask] = useState(-1);
 
     const addToBoard = async () => {
         try {
-            const response = await apiCaller.post('/api/tasks/addToBoard/', {
-                task_id: props.id
+            const response = await apiCaller.post("/api/tasks/addToBoard/", {
+                task_id: props.id,
             });
-            console.log(response);
+            router.push("/tasker/taskRequests");
         } catch (error: any) {
             console.log(error.message);
         }
-    }
+    };
 
     return (
         <div className="flex w-full">
             <div className="py-[24px] px-[60px] w-full">
                 <div className="flex gap-4 justify-between">
-                    <div className="text-[20px] font-500 leading-[30px]">{props.title}</div>
+                    <div className="text-[20px] font-500 leading-[30px]">
+                        {props.title}
+                    </div>
                     <div className="min-w-[120px]">
                         <PrimaryBorderButton
                             icon={<></>}
@@ -38,7 +57,9 @@ const DetailRequest = (props: any) => {
                     </div>
                 </div>
                 <div className="py-4 grid gap-2 border-b border-base-200">
-                    <h2 className="text-[12px] font-400 leading-[12px] text-base-300">Properties</h2>
+                    <h2 className="text-[12px] font-400 leading-[12px] text-base-300">
+                        Properties
+                    </h2>
                     <div className="grid grid-cols-3 items-center">
                         <div className="flex text-[12px] font-500 leading-[12px] text-[#BFBFBF]">
                             <div className="flex p-2 px-0 gap-[8px] w-[97px] items-center">
@@ -47,11 +68,13 @@ const DetailRequest = (props: any) => {
                             </div>
                             {!!props.requester && (
                                 <div className="flex p-2 gap-[8px] items-center">
-                                    <Avatar 
-                                        img={props.requester.avatar || ''}
-                                        size={16} 
+                                    <Avatar
+                                        img={props.requester.avatar || ""}
+                                        size={16}
                                     />
-                                    <span className="">{props.requester.name}</span>
+                                    <span className="">
+                                        {props.requester.name}
+                                    </span>
                                 </div>
                             )}
                         </div>
@@ -70,10 +93,20 @@ const DetailRequest = (props: any) => {
                                 <span>Priority</span>
                             </div>
                             <div className="flex p-2 gap-[8px] items-center">
-                                <div className="p-[2px] rounded-[2px]" style={{backgroundColor: CONSTANTS.PRIORITY_COLORS[props.priority]}}>
+                                <div
+                                    className="p-[2px] rounded-[2px]"
+                                    style={{
+                                        backgroundColor:
+                                            CONSTANTS.PRIORITY_COLORS[
+                                                props.priority
+                                            ],
+                                    }}
+                                >
                                     <FlagIcon size={12} />
                                 </div>
-                                <span className="">{CONSTANTS.PRIORITY_TEXTS[props.priority]}</span>
+                                <span className="">
+                                    {CONSTANTS.PRIORITY_TEXTS[props.priority]}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -83,9 +116,7 @@ const DetailRequest = (props: any) => {
                                 <CalendarIcon />
                                 <span>Due Date</span>
                             </div>
-                            <div className="p-2">
-                                {props.dueDate}
-                            </div>
+                            <div className="p-2">{props.dueDate}</div>
                         </div>
                         {props.labels.length != 0 && (
                             <div className="flex text-[12px] font-500 leading-[12px] text-[#BFBFBF]">
@@ -94,22 +125,30 @@ const DetailRequest = (props: any) => {
                                     <span>Label</span>
                                 </div>
                                 <div className="flex p-2 gap-[8px] items-center">
-                                    {props.labels.map((label: string, index: number) => (
-                                        <Badge 
-                                            key={index}
-                                            icon={<div className="w-1 h-1 rounded-full bg-[#E54C26]"></div>}
-                                            data={label}
-                                            styles="!rounded-[20px] !text-[12px] !px-[10px]"
-                                        />
-                                    ))}
+                                    {props.labels.map(
+                                        (label: string, index: number) => (
+                                            <Badge
+                                                key={index}
+                                                icon={
+                                                    <div className="w-1 h-1 rounded-full bg-[#E54C26]"></div>
+                                                }
+                                                data={label}
+                                                styles="!rounded-[20px] !text-[12px] !px-[10px]"
+                                            />
+                                        )
+                                    )}
                                 </div>
                             </div>
                         )}
                     </div>
                 </div>
                 <div className="py-4 grid gap-2 border-b border-base-200">
-                    <h2 className="text-[12px] font-400 leading-[12px] text-base-300">Description</h2>
-                    <div className="text-[12px] font-400 text-[#BFBFBF]">{props.description}</div>
+                    <h2 className="text-[12px] font-400 leading-[12px] text-base-300">
+                        Description
+                    </h2>
+                    <div className="text-[12px] font-400 text-[#BFBFBF]">
+                        {props.description}
+                    </div>
                     {/* {props.subTasks.length != 0 && (
                         <div className="flex items-center gap-2 cursor-pointer">
                             <div className="text-base-content font-400 text-[12px] leading-[20px]">More</div>
@@ -194,6 +233,6 @@ const DetailRequest = (props: any) => {
             )} */}
         </div>
     );
-}
+};
 
 export default DetailRequest;
