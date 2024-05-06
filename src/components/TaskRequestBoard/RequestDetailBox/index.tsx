@@ -373,7 +373,7 @@ const RequestDetailBox = (props: RequestDetailBoxType) => {
                             </div>
                         ) : (
                             <div className="text-base-content">
-                                The requester didn't give you a feedback yet.
+                                The requester did not give you a feedback yet.
                             </div>
                         )}
                     </div>
