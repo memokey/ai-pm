@@ -97,7 +97,7 @@ const RequestDetailBox = (props: RequestDetailBoxType) => {
                     formData.append("folder", "assets/avatars");
 
                     const resp = await axios.post(
-                        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/raw/upload`,
+                        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/auto/upload`,
                         formData
                     );
                     fileUrls = [resp.data.url];

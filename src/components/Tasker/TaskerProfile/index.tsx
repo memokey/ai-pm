@@ -44,7 +44,7 @@ const TaskerProfile = (props: any) => {
                             Hourly Rate
                         </div>
                     </div>
-                    <div className="px-[20px] border-r border-base-200">
+                    <div className="px-[20px]">
                         <div className="text-base-content text-[18px] font-600 spacing-[0.18px] grid gap-2">
                             {props.totalJobs}
                         </div>

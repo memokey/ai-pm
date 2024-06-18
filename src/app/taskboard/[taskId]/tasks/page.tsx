@@ -25,6 +25,7 @@ const TaskBoardPage = ({ params }: any) => {
         taskId: state.task.taskId,
     }));
     useEffect(() => {
+        alert();
         const fetchTask = async () => {
             try {
                 dispatch(setLoading(true));
@@ -73,7 +74,7 @@ const TaskBoardPage = ({ params }: any) => {
                         cost: task.cost,
                         status: DEFAULT_COLS_BY_ID[task.status],
                         assignees: !!task.assignee ? [task.assignee] : [],
-                        submission: task.submission,
+                        submission: task.submission || {},
                         tasker_feedback: task.tasker_feedback,
                         priority: 0,
                         dueDate: "Yesterday",

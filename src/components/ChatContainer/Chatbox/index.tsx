@@ -94,6 +94,7 @@ const Chatbox = () => {
                     message={streamingMessage}
                 />
             )}
+
             {/* <Message
                 type={CONSTANTS.USER_MESSAGE_TYPE}
                 message={`I need Virtual Assistant for Company Assessment FormCreation:\nCreate comprehensive assessments using FormsWise.AI tailored to BEF’s requirements.\nIntegrate assessment forms with n8n to automate workflows, including data capture and processing.

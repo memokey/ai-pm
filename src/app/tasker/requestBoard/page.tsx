@@ -34,7 +34,7 @@ const RequestBoard = () => {
                                 status: DEFAULT_COLS_BY_ID[request.status],
                                 assignees: [],
                                 tasker_feedback: request.taskerFeedback,
-                                submission: request.submission,
+                                submission: request.submission || {},
                                 requester: request.requester,
                                 priority: request.priority,
                                 dueDate: request.dueDate || "Not Assigned",

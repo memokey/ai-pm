@@ -267,12 +267,18 @@ const TaskDetailBox = (props: TaskDetailBoxType) => {
                                         }
                                     </div>
                                     <div className="text-[11px] font-400 text-[#626262]">
-                                        {props.task.properties.submission.date}
+                                        {!!props.task.properties.submission
+                                            ? props.task.properties.submission
+                                                  .date
+                                            : ""}
                                     </div>
                                 </div>
                             )}
                             <div className="text-[12px] font-400 leading-[20px] text-base-300">
-                                {props.task.properties.submission.description}
+                                {!!props.task.properties.submission
+                                    ? props.task.properties.submission
+                                          .description
+                                    : ""}
                             </div>
                             {props.task.properties.submission.attachments
                                 .length != 0 && (
