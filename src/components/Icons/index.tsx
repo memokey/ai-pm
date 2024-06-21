@@ -63,3 +63,4 @@ export { CrossIcon } from "./CrossIcon";
 export { FullScreenIcon } from "./FullScreenIcon";
 export { PlayIcon } from "./PlayIcon";
 export { CheckClipboardIcon } from "./CheckClipboardIcon";
+export { SubTaskIcon } from "./SubTaskIcon";

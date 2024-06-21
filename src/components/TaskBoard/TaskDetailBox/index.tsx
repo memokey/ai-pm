@@ -29,6 +29,7 @@ import { TaskType } from "@/data/types/type";
 import { useAppSelector } from "@/redux/hooks";
 import {
     setActiveDetail,
+    setExecuteModal,
     setIsFeedback,
     updateTask,
 } from "@/redux/slices/taskSlice";
@@ -316,10 +317,13 @@ const TaskDetailBox = (props: TaskDetailBoxType) => {
                 <div className="grid gap-3 border-b border-base-200 p-3 text-[12px]">
                     <div className="flex justify-between gap-5">
                         <div className="font-600 text-base-300">Subtasks</div>
-                        <div className="flex gap-2">
+                        <div
+                            className="flex gap-2 cursor-pointer"
+                            onClick={() => dispatch(setExecuteModal(true))}
+                        >
                             <ColoredSparkleIcon />
                             <div className="font-400 text-base-300">
-                                Suggest subtasks
+                                Execute the task
                             </div>
                         </div>
                     </div>

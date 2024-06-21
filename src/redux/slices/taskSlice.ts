@@ -13,6 +13,7 @@ export interface TaskState {
     listRequests: any[];
     taskId: String;
     isFeedback: boolean;
+    executeModal: boolean;
 }
 
 const initialState: TaskState = {
@@ -23,6 +24,7 @@ const initialState: TaskState = {
     listRequests: [],
     taskId: "0",
     isFeedback: false,
+    executeModal: false,
 }
 
 export const taskSlice = createSlice({
@@ -50,6 +52,9 @@ export const taskSlice = createSlice({
         },
         setIsFeedback: (state, action: PayloadAction<boolean>) => {
             state.isFeedback = action.payload;
+        },
+        setExecuteModal: (state, action: PayloadAction<boolean>) => {
+            state.executeModal = action.payload;
         },
         updateTask: (state, action: PayloadAction<any>) => {
             const { taskId, task } = action.payload;
@@ -122,6 +127,13 @@ export const taskSlice = createSlice({
             })
             state.requests = JSON.parse(JSON.stringify(renderedRequests));
         },
+        updateTaskExpand: (state, action: PayloadAction<any>) => {
+            const { taskId } = action.payload;
+            let renderedTasks = JSON.parse(JSON.stringify(current(state).tasks));
+            let selectedTask = renderedTasks.find((s: any) => s.id == taskId);
+            selectedTask.isExpand = !selectedTask.isExpand;
+            state.tasks = renderedTasks;
+        }
     },
 })
 
@@ -134,7 +146,9 @@ export const {
     setTaskListRequests,
     updateTask,
     updateRequest,
-    setIsFeedback
+    setIsFeedback,
+    updateTaskExpand,
+    setExecuteModal,
 } = taskSlice.actions
 
 export default taskSlice.reducer

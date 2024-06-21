@@ -4,10 +4,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import StatusBox from "./StatusBox";
 import {
     DndContext,
-    DragEndEvent,
-    DragOverEvent,
-    DragOverlay,
-    DragStartEvent,
     PointerSensor,
     useSensor,
     useSensors,
@@ -18,7 +14,7 @@ import { DEFAULT_COLS, DEFAULT_TASKS } from "@/data/global";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setActiveDetail, setIsFeedback } from "@/redux/slices/taskSlice";
 import TaskDetailBox from "./TaskDetailBox";
-import { FeedbackModal } from "../Common/Modals";
+import { FeedbackModal, TaskerInterfaceModal } from "../Common/Modals";
 const TaskBoard = () => {
     const dispatch = useAppDispatch();
     const [columns, setColumns] = useState<ColumnType[]>(DEFAULT_COLS);
@@ -31,7 +27,9 @@ const TaskBoard = () => {
     const [activeTask, setActiveTask] = useState<TaskType | null>(null);
     const [taskDetail, setTaskDetail] = useState<TaskType | null>(null);
 
-    const { activeDetail, taskId } = useAppSelector((state) => state.task);
+    const { activeDetail, taskId, executeModal } = useAppSelector(
+        (state) => state.task
+    );
 
     const { tasks, isFeedback } = useAppSelector((state) => state.task);
 
@@ -47,101 +45,6 @@ const TaskBoard = () => {
         })
     );
 
-    // const onDragStart = (event: DragStartEvent) => {
-    //     if (event.active.data.current?.type === "Column") {
-    //         setActiveColumn(event.active.data.current.column);
-    //         return;
-    //     }
-
-    //     if (event.active.data.current?.type === "Task") {
-    //         setActiveTask(event.active.data.current.task);
-    //         return;
-    //     }
-    // };
-
-    // const onDragEnd = (event: DragEndEvent) => {
-    //     setActiveColumn(null);
-    //     setActiveTask(null);
-
-    //     const { active, over } = event;
-    //     if (!over) return;
-
-    //     const activeId = active.id;
-    //     const overId = over.id;
-
-    //     if (activeId === overId) return;
-
-    //     const isActiveAColumn = active.data.current?.type === "Column";
-    //     if (!isActiveAColumn) return;
-
-    //     console.log("DRAG END");
-
-    //     setColumns((columns) => {
-    //         const activeColumnIndex = columns.findIndex(
-    //             (col) => col.id === activeId
-    //         );
-
-    //         const overColumnIndex = columns.findIndex(
-    //             (col) => col.id === overId
-    //         );
-
-    //         return arrayMove(columns, activeColumnIndex, overColumnIndex);
-    //     });
-    // };
-
-    // const onDragOver = (event: DragOverEvent) => {
-    //     const { active, over } = event;
-    //     if (!over) return;
-
-    //     const activeId = active.id;
-    //     const overId = over.id;
-
-    //     if (activeId === overId) return;
-
-    //     const isActiveATask = active.data.current?.type === "Task";
-    //     const isOverATask = over.data.current?.type === "Task";
-
-    //     if (!isActiveATask) return;
-
-    //     // Im dropping a Task over another Task
-    //     if (isActiveATask && isOverATask) {
-    //         setBoardTasks((boardTasks) => {
-    //             const activeIndex = boardTasks.findIndex(
-    //                 (t) => t.id === activeId
-    //             );
-    //             const overIndex = boardTasks.findIndex((t) => t.id === overId);
-
-    //             if (
-    //                 boardTasks[activeIndex].columnId !=
-    //                 boardTasks[overIndex].columnId
-    //             ) {
-    //                 // Fix introduced after video recording
-    //                 boardTasks[activeIndex].columnId =
-    //                     boardTasks[overIndex].columnId;
-    //                 return arrayMove(boardTasks, activeIndex, overIndex - 1);
-    //             }
-
-    //             return arrayMove(boardTasks, activeIndex, overIndex);
-    //         });
-    //     }
-
-    //     const isOverAColumn = over.data.current?.type === "Column";
-
-    //     // Im dropping a Task over a column
-    //     if (isActiveATask && isOverAColumn) {
-    //         setBoardTasks((boardTasks) => {
-    //             const activeIndex = boardTasks.findIndex(
-    //                 (t) => t.id === activeId
-    //             );
-    //             if (activeIndex != -1) {
-    //                 boardTasks[activeIndex].columnId = overId;
-    //             }
-    //             console.log("DROPPING TASK OVER COLUMN", { activeIndex });
-    //             return arrayMove(boardTasks, activeIndex, activeIndex);
-    //         });
-    //     }
-    // };
-
     useEffect(() => {
         const detailIndex = tasks.findIndex((t) => t.id == taskId);
         if (detailIndex != -1) {
@@ -156,12 +59,7 @@ const TaskBoard = () => {
     return (
         <div className="relative pt-6 px-4 w-[calc(100vw-240px)] h-[calc(100vh-128px)]">
             <div className="flex gap-4">
-                <DndContext
-                    sensors={sensors}
-                    // onDragStart={onDragStart}
-                    // onDragEnd={onDragEnd}
-                    // onDragOver={onDragOver}
-                >
+                <DndContext sensors={sensors}>
                     <SortableContext items={columnsId}>
                         {DEFAULT_COLS.map((col: ColumnType) => (
                             <StatusBox
@@ -187,6 +85,12 @@ const TaskBoard = () => {
                         {!!taskDetail && <TaskDetailBox task={taskDetail} />}
                     </div>
                 </div>
+            )}
+            {executeModal && !!activeDetail && !!taskDetail && (
+                <TaskerInterfaceModal
+                    title={taskDetail.title}
+                    task={taskDetail}
+                />
             )}
             {isFeedback && (
                 <FeedbackModal

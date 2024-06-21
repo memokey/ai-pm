@@ -1,10 +1,11 @@
-import { FullScreenIcon } from "@/components/Icons";
+import { EditIcon, FullScreenIcon } from "@/components/Icons";
 import React, { ReactNode } from "react";
 
 export type TaskerBoxType = {
     title: string;
     children: ReactNode;
-}
+    onEdit?: (index: any) => void;
+};
 
 const TaskerBox = (props: TaskerBoxType) => {
     return (
@@ -13,15 +14,27 @@ const TaskerBox = (props: TaskerBoxType) => {
                 <div className="text-base-300 text-[12px] font-400">
                     {props.title}
                 </div>
-                <div className="cursor-pointer">
-                    <FullScreenIcon />
+                <div className="flex gap-2">
+                    <div
+                        className="cursor-pointer"
+                        onClick={() => {
+                            if (props.onEdit) {
+                                props.onEdit((prev: boolean) => {
+                                    return !prev;
+                                });
+                            }
+                        }}
+                    >
+                        <EditIcon />
+                    </div>
+                    <div className="cursor-pointer">
+                        <FullScreenIcon />
+                    </div>
                 </div>
             </div>
-            <div className="">
-                {props.children}
-            </div>
+            <div className="">{props.children}</div>
         </div>
     );
-}
+};
 
 export default TaskerBox;

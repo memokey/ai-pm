@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect } from "react";
 import Layout from "@/components/Layout";
@@ -7,28 +7,30 @@ import { ChatRightSidebar } from "@/components/Layout/RightSidebars";
 import { apiCaller } from "@/utils/fetcher";
 import { CONSTANTS } from "@/config/constants";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setCurrentTaskId, setHistory, setLoading, setMessages, setTaskExpand } from "@/redux/slices/chatSlice";
+import { setHistory, setLoading, setMessages } from "@/redux/slices/chatSlice";
 import { setTaskId, setTasks } from "@/redux/slices/taskSlice";
 import { DEFAULT_COLS_BY_ID } from "@/data/global";
 
-const ChatPage = ({params}: any) => {
+const ChatPage = ({ params }: any) => {
     const dispatch = useAppDispatch();
-    const { tasks, messages, taskId } = useAppSelector(state => ({
+    const { tasks, messages, taskId } = useAppSelector((state) => ({
         tasks: state.task.tasks,
         messages: state.chat.messages,
-        taskId: state.task.taskId
+        taskId: state.task.taskId,
     }));
     useEffect(() => {
         const fetchTask = async () => {
             try {
                 dispatch(setLoading(true));
-                const response = await apiCaller.get(`/api/tasks/${params.taskId}/`);
-                if(!!response.data.chat) {
+                const response = await apiCaller.get(
+                    `/api/tasks/${params.taskId}/`
+                );
+                if (!!response.data.chat) {
                     let messages = [];
-                    for(const chat of response.data.chat) {
+                    for (const chat of response.data.chat) {
                         messages.push({
                             type: CONSTANTS.USER_MESSAGE_TYPE,
-                            message:chat.message,
+                            message: chat.message,
                         });
                         messages.push({
                             type: CONSTANTS.BOT_MESSAGE_TYPE,
@@ -40,19 +42,18 @@ const ChatPage = ({params}: any) => {
                     }
                     dispatch(setMessages(messages));
                 }
-                if(!!response.data.tasks && response.data.tasks.length != 0) {
+                if (!!response.data.tasks && response.data.tasks.length != 0) {
                     let currentTasks: any[] = [];
                     convertTasks(response.data.tasks, currentTasks);
-                    console.log(currentTasks);
                     dispatch(setTasks(currentTasks));
-                }   
+                }
                 dispatch(setLoading(false));
             } catch (error) {
-                console.error('Fetching task issue.');
+                console.error("Fetching task issue.");
             }
-        }
+        };
         const convertTasks = (tasks: any[], currentTasks: any[] = []) => {
-            for(const task of tasks) {
+            for (const task of tasks) {
                 currentTasks.push({
                     id: task.id,
                     columnId: task.status,
@@ -62,6 +63,7 @@ const ChatPage = ({params}: any) => {
                     taskProgress: 0,
                     created: task.created_at || "Yesterday",
                     lastUpdated: task.updated_at || "Just Now",
+                    isExpand: false,
                     properties: {
                         status: DEFAULT_COLS_BY_ID[task.status],
                         assignees: [],
@@ -70,26 +72,27 @@ const ChatPage = ({params}: any) => {
                         agents: [],
                         humans: [],
                         messages: task.chat.length,
-                        shares: 1
-                    }
-                })
-                if(task.tasks.length != 0) {
+                        shares: 1,
+                    },
+                });
+                if (task.tasks.length != 0) {
                     convertTasks(task.tasks, currentTasks);
                 }
             }
-        }
-        if(tasks.length == 0 && messages.length == 0 || taskId != params.taskId) {
+        };
+        if (
+            (tasks.length == 0 && messages.length == 0) ||
+            taskId != params.taskId
+        ) {
             fetchTask();
         }
         dispatch(setTaskId(params.taskId));
-    }, [])
+    }, []);
     return (
-        <Layout
-            rightSidebar={<ChatRightSidebar />}
-        >
+        <Layout rightSidebar={<ChatRightSidebar />}>
             <ChatContainer />
         </Layout>
     );
-}
+};
 
 export default ChatPage;

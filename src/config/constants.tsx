@@ -1,4 +1,9 @@
-import { CircleIcon, DoneIcon, ProgressIcon, ReviewIcon } from "@/components/Icons";
+import {
+    CircleIcon,
+    DoneIcon,
+    ProgressIcon,
+    ReviewIcon,
+} from "@/components/Icons";
 
 export const CONSTANTS = {
     // Message type
@@ -16,12 +21,13 @@ export const CONSTANTS = {
     USER_INACTIVE: 2,
 
     //Task Progress
-    TASK_CONFIRMED: 0,
-    TASK_IN_PROGRESS: 1,
-    TASK_WAITING: 2,
+    TASK_CONFIRMED: "Done",
+    TASK_IN_REVIEW: "In Review",
+    TASK_IN_PROGRESS: "In Progress",
+    TASK_WAITING: "To do",
 
-    PRIORITY_COLORS: ['#DCC32A', '#04CD76', '#E54C26'],
-    PRIORITY_TEXTS: ['Easy', 'Medium', 'High'],
+    PRIORITY_COLORS: ["#DCC32A", "#04CD76", "#E54C26"],
+    PRIORITY_TEXTS: ["Easy", "Medium", "High"],
 
-    USER_STATES: ['#069F5D', '#FE3300', '#929292'],
+    USER_STATES: ["#069F5D", "#FE3300", "#929292"],
 };

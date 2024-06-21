@@ -15,10 +15,9 @@ export type StatusBoxType = {
     createTask?: any;
     deleteTask?: any;
     updateTask?: any;
-}
+};
 
 const StatusBox = (props: StatusBoxType) => {
-
     const tasksIds = useMemo(() => {
         return props.tasks.map((task: TaskType) => task.id);
     }, [props.tasks]);
@@ -33,12 +32,12 @@ const StatusBox = (props: StatusBoxType) => {
     } = useSortable({
         id: props.column.id,
         data: {
-          type: "Column",
-          column: props.column,
+            type: "Column",
+            column: props.column,
         },
         disabled: false,
     });
-    
+
     const style = {
         transition,
         transform: CSS.Transform.toString(transform),
@@ -46,16 +45,20 @@ const StatusBox = (props: StatusBoxType) => {
 
     const fetchTasks = (tasks: TaskType[]): ReactNode => {
         return tasks.map((task: TaskType) => {
-            const parentTaskIndex = tasks.findIndex(t => t.id == task.parentId);
-            if(parentTaskIndex == -1) {
-                let tasksContent = (<TaskCard
-                    key={task.id}
-                    task={task}
-                    deleteTask={props.deleteTask}
-                    updateTask={props.updateTask}
-                />);
-                const subTasks = tasks.filter(t => t.parentId == task.id);
-                if(!!subTasks && subTasks.length != 0) {
+            const parentTaskIndex = tasks.findIndex(
+                (t) => t.id == task.parentId
+            );
+            if (parentTaskIndex == -1) {
+                let tasksContent = (
+                    <TaskCard
+                        key={task.id}
+                        task={task}
+                        deleteTask={props.deleteTask}
+                        updateTask={props.updateTask}
+                    />
+                );
+                const subTasks = tasks.filter((t) => t.parentId == task.id);
+                if (!!subTasks && subTasks.length != 0) {
                     tasksContent = (
                         <div key={task.id}>
                             {tasksContent}
@@ -67,16 +70,12 @@ const StatusBox = (props: StatusBoxType) => {
                 }
                 return tasksContent;
             }
-        })
-    }
+        });
+    };
 
     return (
-        <div 
-            ref={setNodeRef}
-            style={style}
-            className="grid w-[340px]"
-        >
-            <StatusTitle 
+        <div ref={setNodeRef} style={style} className="grid w-[340px]">
+            <StatusTitle
                 stateIcon={props.column.icon}
                 title={props.column.title}
             />
@@ -87,6 +86,6 @@ const StatusBox = (props: StatusBoxType) => {
             </div>
         </div>
     );
-}   
+};
 
 export default StatusBox;

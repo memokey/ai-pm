@@ -23,6 +23,7 @@ export type TaskType = {
     subTasks: TaskType[];
     created: string;
     lastUpdated: string;
+    isExpand?: boolean;
     
 };
 
