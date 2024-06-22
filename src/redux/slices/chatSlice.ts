@@ -1,6 +1,6 @@
 'use client'
 
-import { MessageType } from '@/components/ChatContainer/Chatbox/UserMessage';
+import { MessageType, TextMessageType } from '@/components/ChatContainer/Chatbox/UserMessage';
 import { CONSTANTS } from '@/config/constants';
 import { DEFAULT_COLS_BY_ID } from '@/data/global';
 import { SendMessageTpye } from '@/data/types/type';
@@ -12,6 +12,7 @@ import { convertTasks } from '@/utils/convertTasks';
 export interface ChatState {
     loading: Boolean;
     messages: MessageType[];
+    textmessages: TextMessageType[];
     history: any[];
     modal:Boolean;
     baseModal: Boolean;
@@ -28,6 +29,7 @@ export interface ChatState {
 const initialState: ChatState = {
     loading: false,
     messages: [],
+    textmessages:[],
     history: [],
     modal: false,
     baseModal: false,
@@ -108,6 +110,12 @@ export const chatSlice = createSlice({
         addMessage: (state, action: PayloadAction<MessageType>) => {
             state.messages = [...current(state).messages, action.payload];
         },
+        setTextMessages: (state, action: PayloadAction<TextMessageType[]>) => {
+            state.textmessages = action.payload
+        },
+        addTextMessage: (state, action: PayloadAction<TextMessageType>) => {
+            state.textmessages = [...current(state).textmessages, action.payload];
+        },
         addStreamingMessage: (state, action: PayloadAction<String>) => {
             state.streamingMessage = current(state).streamingMessage + action.payload;
         },
@@ -162,8 +170,10 @@ export const {
     setReviewerModal,
     setAgentModal,
     setMessages,
+    setTextMessages,
     setHistory,
     addMessage,
+    addTextMessage,
     addStreamingMessage,
     setStreamingFlag,
     setGeneratedTasks,

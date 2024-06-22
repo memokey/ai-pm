@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
-import { OpenAIStream, StreamingTextResponse } from 'ai';
 import { NextResponse } from 'next/server';
+import prompt_content from "@/data/Prompts/subTaskPrompt"
 
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
@@ -12,26 +12,23 @@ export const runtime = 'edge';
 
 export async function POST(req: Request) {
     try {
-        const { message, history } = await req.json();
-
-        const fastAPIResponse = await fetch('http://127.0.0.1:8080/chat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ message: message, history }),
+        let { messages } = await req.json();
+        if (messages.length === 1) {
+            messages = [{ role: "system", content: prompt_content }, ...messages];
+        }
+        console.log("messages>>>>>", messages)
+        // Ask OpenAI for a streaming chat completion given the prompt
+        const response = await openai.chat.completions.create({
+            model: 'gpt-4-turbo',
+            stream: false,
+            messages,
         });
 
-        // Check if the FastAPI call was successful
-        if (!fastAPIResponse.ok) {
-            throw new Error(`Failed to call FastAPI. Status: ${fastAPIResponse.status}`);
-        }
-
-        // Get the response from FastAPI
-        const fastAPIResponseBody = await fastAPIResponse.json()
+        const output =
+        response.choices[0]?.message;
 
         // Respond with the response from FastAPI
-        return NextResponse.json(fastAPIResponseBody);
+        return NextResponse.json({output});
     } catch (error) {
         if (error instanceof OpenAI.APIError) {
             const { name, status, headers, message } = error;
