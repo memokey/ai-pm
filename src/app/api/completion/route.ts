@@ -4,7 +4,7 @@ import prompt_content from "@/data/Prompts/subTaskPrompt"
 
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
-    apiKey: process.env.NEXT_PUBLIC_OPENAI_SECRET_KEY, // Your OpenAI key
+    // apiKey: process.env.NEXT_PUBLIC_OPENAI_SECRET_KEY, // Your OpenAI key
 });
 
 // IMPORTANT! Set the runtime to edge
