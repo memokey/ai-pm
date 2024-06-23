@@ -7,9 +7,9 @@ import { CloudArrowUpIcon, MicIcon } from "@/components/Icons";
 import { useAppSelector } from "@/redux/hooks";
 
 export type ChatInputSmType = {
-    sendMessage: any;
-    message: string;
-    setMessage: (index: string) => void;
+    sendMessage?: any;
+    message?: string;
+    setMessage?: (index: string) => void;
 };
 
 const ChatInputSm = (props: ChatInputSmType) => {
@@ -36,7 +36,7 @@ const ChatInputSm = (props: ChatInputSmType) => {
                     if (!!loading) {
                         return;
                     }
-                    props.setMessage(e.target.value);
+                    !!props.setMessage && props.setMessage(e.target.value);
                 }}
             />
             <div className="flex gap-[11px] items-end h-full">
