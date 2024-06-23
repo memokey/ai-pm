@@ -7,17 +7,17 @@ import ReactMarkdown, { Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import {
-  addTextMessage,
   setHistory,
   setLoading,
   setTextMessages,
 } from "@/redux/slices/chatSlice";
+import { setExecuteModal } from "@/redux/slices/taskSlice";
+import { updateTask } from "@/redux/slices/taskSlice";
 import { ChatInputAI } from "../Inputs";
 import { useAppSelector } from "@/redux/hooks";
 import { TaskType } from "@/data/types/type";
 import { apiCaller } from "@/utils/fetcher";
 import { PrimaryBorderButton, PrimaryButton } from "../Buttons";
-import { setExecuteModal } from "@/redux/slices/taskSlice";
 import { TextMessageType } from "@/components/ChatContainer/Chatbox/UserMessage";
 import {
   DownArrowIcon,
@@ -27,6 +27,7 @@ import {
   EditIcon,
   SaveIcon,
 } from "@/components/Icons";
+import subTaskPrompt from "@/data/Prompts/subTaskPrompt";
 
 export type ModalType = {
   title: string;
@@ -42,7 +43,6 @@ const TaskerInterfaceModal = (props: ModalType) => {
     textmessages: state.chat.textmessages,
   }));
 
-  console.log("auth>>>>>>>>", auth);
   var indexToExclude = 0;
   var tasks = props.tasks.filter((_, index) => index !== indexToExclude);
   const dispatch = useDispatch();
@@ -53,11 +53,64 @@ const TaskerInterfaceModal = (props: ModalType) => {
 
   useEffect(() => {
     const fetchTask = async () => {
+      console.log(props.task.id);
       try {
         dispatch(setLoading(true));
         const response = await apiCaller.get(`/api/tasks/${props.task.id}/`);
-        if (!!response.data.chat) {
-          let messages = [];
+        let messages = [];
+        if (response.data.chat.length == 0) {
+          const firstPrompt =
+            "The task title is " +
+            props.tasks[0].title +
+            ". The subtask description is " +
+            props.task.description +
+            " Let's make documentation to do it";
+          dispatch(setHistory([]));
+          const firstMessage: TextMessageType[] = [
+            {
+              role: "user",
+              content: firstPrompt,
+            },
+          ];
+          try {
+            dispatch(setLoading(true));
+            const response = await getOpenAIResponse(firstMessage);
+            dispatch(setLoading(false));
+
+            setPrompt("");
+            setAIResult(response.content);
+            console.log("textmessage", textmessages);
+
+            const newMessages: TextMessageType[] = [
+              ...firstMessage,
+              { role: response.role, content: response.content },
+            ];
+            dispatch(setTextMessages(newMessages));
+            const chatSaveResponse: any = await apiCaller.post(
+              `/api/tasks/subtask/chat/${props.task.id}/`,
+              {
+                message: firstPrompt,
+                response: response.content,
+                history: [
+                  {
+                    role: "system",
+                    content: subTaskPrompt,
+                  },
+                  ...newMessages,
+                ],
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            dispatch(setHistory(chatSaveResponse.task.chat[0].history));
+            console.log("chatSaveResponse", chatSaveResponse);
+          } catch (error) {
+            console.error("Error getting response from OpenAI API:", error);
+          }
+        } else {
           for (const chat of response.data.chat) {
             messages.push({
               role: "user",
@@ -67,47 +120,13 @@ const TaskerInterfaceModal = (props: ModalType) => {
               role: "assistant",
               content: chat.response,
             });
+
             dispatch(setHistory(chat.history));
           }
-          if (response.data.chat.length == 0) {
-            const firstPrompt =
-              "The task title is " +
-              props.tasks[0].title +
-              ". The subtask description is " +
-              props.task.description +
-              " Let's make documentation to do it";
-            dispatch(setHistory([]));
-            dispatch(
-              addTextMessage({
-                content: firstPrompt,
-                role: "user",
-              })
-            );
-            try {
-              dispatch(setLoading(true));
-              const response = await getOpenAIResponse([
-                { content: firstPrompt, role: "user" },
-              ]);
-              dispatch(setLoading(false));
-
-              setPrompt("");
-              console.log("response", response);
-              setAIResult(response.content);
-
-              const newMessages: TextMessageType[] = [
-                ...textmessages,
-                {
-                  role: response.role,
-                  content: response.content,
-                },
-              ];
-              dispatch(setTextMessages(newMessages));
-            } catch (error) {
-              console.error("Error getting response from OpenAI API:", error);
-            }
-          }
           dispatch(setTextMessages(messages));
+          setAIResult(messages[messages.length - 1]["content"]);
         }
+
         dispatch(setLoading(false));
       } catch (error) {
         console.error("Fetching task issue.");
@@ -134,12 +153,6 @@ const TaskerInterfaceModal = (props: ModalType) => {
     const tmpMessages: TextMessageType[] = JSON.parse(
       JSON.stringify([...textmessages, { content: prompt, role: "user" }])
     );
-    dispatch(
-      addTextMessage({
-        content: prompt.trim(),
-        role: "user",
-      })
-    );
     try {
       dispatch(setLoading(true));
       const response = await getOpenAIResponse(tmpMessages);
@@ -155,6 +168,24 @@ const TaskerInterfaceModal = (props: ModalType) => {
           content: response.content,
         },
       ];
+      const chatSaveResponse = await apiCaller.post(
+        `/api/tasks/subtask/chat/${props.task.id}/`,
+        {
+          message: prompt,
+          response: response.content,
+          history: [
+            ...history,
+            { role: "user", content: prompt },
+            { role: response.role, content: response.content },
+          ],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("chatSaveResponse", chatSaveResponse);
       dispatch(setTextMessages(newMessages));
     } catch (error) {
       console.error("Error getting response from OpenAI API:", error);
@@ -183,12 +214,33 @@ const TaskerInterfaceModal = (props: ModalType) => {
     setIsEdit(!isEdit);
   };
 
+  const approveTask = async () => {
+    const params = {
+      task_id: props.task.id,
+      tasker: "OpenAI",
+    };
+    try {
+      const res = await apiCaller.post("/api/tasks/approveTask/", params);
+      if (res.data._id) {
+        dispatch(
+          updateTask({
+            taskId: res.data._id,
+            task: res.data,
+          })
+        );
+      }
+      dispatch(setExecuteModal(false));
+    } catch (error) {
+      console.error("Approvement error");
+    }
+  };
+
   return (
     <div
       className="fixed top-[0px] left-[0px] right-[0px] bottom-[0px] backdrop-blur-[20px] z-[1002] justify-center items-center room_setting_dlg"
       onClick={(e) => closeDlg(e)}
     >
-      <div className="w-[70vw] grid grid-cols-10 h-[92vh] mt-[5vh] pt-[5vh] rounded-[6px] top-10 bg-[#202020] shadow-[#141414] shadow-lg border border-[#212121] mx-auto flex justify-between">
+      <div className="w-[70vw] grid grid-cols-10 h-[92vh] mt-[5vh] pt-[5vh] rounded-[6px] top-10 bg-[#191919] shadow-[#141414] shadow-lg border border-[#212121] mx-auto flex justify-between">
         <div className="col-span-2 bg-[#202020] p-[2vh] rounded-[4px] border-r-[1px] border-r-[#343434]">
           <div className="mb-2 text-left text-[10px] text-[#474747]">Task</div>
           <div>
@@ -386,6 +438,51 @@ const TaskerInterfaceModal = (props: ModalType) => {
                           console.error("Error rendering paragraph", error);
                         }
                       },
+                      strong({ children }) {
+                        try {
+                          return (
+                            <strong className="text-sm">{children}</strong>
+                          );
+                        } catch (err) {
+                          console.log(err);
+                        }
+                      },
+                      h2({ children }) {
+                        try {
+                          return (
+                            <h2 className="text-[24px] mb-3">{children}</h2>
+                          );
+                        } catch (err) {
+                          console.log(err);
+                        }
+                      },
+                      h3({ children }) {
+                        try {
+                          return (
+                            <h3 className="text-[20px] mb-2">{children}</h3>
+                          );
+                        } catch (err) {
+                          console.log(err);
+                        }
+                      },
+                      h4({ children }) {
+                        try {
+                          return (
+                            <h4 className="text-[16px] mb-1">{children}</h4>
+                          );
+                        } catch (err) {
+                          console.log(err);
+                        }
+                      },
+                      h5({ children }) {
+                        try {
+                          return (
+                            <h5 className="text-[14px] mb-1">{children}</h5>
+                          );
+                        } catch (err) {
+                          console.log(err);
+                        }
+                      },
                     }}
                   >
                     {aiResult}
@@ -488,7 +585,12 @@ const TaskerInterfaceModal = (props: ModalType) => {
           </div>
           <div className="flex justify-end px-5 py-4 text-base-content text-[11px] font-normal leading-[20px] ">
             <div className="flex gap-4">
-              <PrimaryButton caption="Approve Task" icon={<></>} type={false} />
+              <PrimaryButton
+                caption="Approve Task"
+                icon={<></>}
+                type={false}
+                onClick={approveTask}
+              />
               <PrimaryBorderButton
                 caption="Reject"
                 icon={<></>}

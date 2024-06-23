@@ -16,7 +16,6 @@ export async function POST(req: Request) {
         if (messages.length === 1) {
             messages = [{ role: "system", content: prompt_content }, ...messages];
         }
-        console.log("messages>>>>>", messages)
         // Ask OpenAI for a streaming chat completion given the prompt
         const response = await openai.chat.completions.create({
             model: 'gpt-4-turbo',
