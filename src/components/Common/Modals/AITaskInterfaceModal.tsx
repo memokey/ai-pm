@@ -293,13 +293,14 @@ const TaskerInterfaceModal = (props: ModalType) => {
 
   const uploadResult = async () => {
     const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage([708.66, 1000.63]); // B4 page size in points
-    const { width, height } = page.getSize();
-    const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
+    const pageWidth = 708.66; // B4 page width in points
+    const pageHeight = 1000.63; // B4 page height in points
+    const margin = 50;
+    const fontSize = 12;
 
     const parseMarkdown = (markdown: any) => {
       const lines = markdown.split("\n");
-      const parsedContent = lines.map((line: any) => {
+      return lines.map((line: any) => {
         if (line.startsWith("# ")) {
           return { text: line.substring(2), fontSize: 24 };
         } else if (line.startsWith("## ")) {
@@ -316,42 +317,86 @@ const TaskerInterfaceModal = (props: ModalType) => {
           return { text: line, fontSize: 12 };
         }
       });
-      return parsedContent;
+    };
+
+    const wrapText = (text: any, font: any, fontSize: any, maxWidth: any) => {
+      const words = text.split(" ");
+      const lines = [];
+      let currentLine = words[0];
+
+      for (let i = 1; i < words.length; i++) {
+        const word = words[i];
+        const width = font.widthOfTextAtSize(
+          currentLine + " " + word,
+          fontSize
+        );
+        if (width < maxWidth) {
+          currentLine += " " + word;
+        } else {
+          lines.push(currentLine);
+          currentLine = word;
+        }
+      }
+      lines.push(currentLine);
+      return lines;
     };
 
     const parsedContent = parseMarkdown(aiResult);
 
-    let yPosition = height - 40;
+    const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
+
+    let page = pdfDoc.addPage([pageWidth, pageHeight]);
+    let { width, height } = page.getSize();
+    let yPosition = height - margin;
 
     parsedContent.forEach((item: any) => {
-      page.drawText(item.text, {
-        x: 50,
-        y: yPosition,
-        size: item.fontSize,
-        font: timesRomanFont,
-        color: rgb(0, 0, 0),
+      const lines = wrapText(
+        item.text,
+        timesRomanFont,
+        item.fontSize,
+        width - 2 * margin
+      );
+      lines.forEach((line) => {
+        if (yPosition - item.fontSize < margin) {
+          page = pdfDoc.addPage([pageWidth, pageHeight]);
+          yPosition = height - margin;
+        }
+        page.drawText(line, {
+          x: margin,
+          y: yPosition,
+          size: item.fontSize,
+          font: timesRomanFont,
+          color: rgb(0, 0, 0),
+        });
+        yPosition -= item.fontSize + 5;
       });
-      yPosition -= item.fontSize + 10;
     });
 
     const pdfBytes = await pdfDoc.save();
 
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
-    const file = new File([blob], "document.pdf", {
-      type: blob.type,
-      lastModified: Date.now(),
-    });
     console.log("pdfBytes", pdfBytes);
 
+    const presetName = process.env.NEXT_PUBLIC_PRESET_NAME;
+    const cloudName = process.env.NEXT_PUBLIC_CLOUD_NAME;
+
+    if (!presetName) {
+      throw new Error("NEXT_PUBLIC_PRESET_NAME is not defined");
+    }
+
+    if (!cloudName) {
+      throw new Error("NEXT_PUBLIC_CLOUD_NAME is not defined");
+    }
+
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", process.env.NEXT_PUBLIC_PRESET_NAME || "");
-    formData.append("cloud_name", process.env.NEXT_PUBLIC_CLOUD_NAME || "");
-    formData.append("folder", "assets/avatars");
+    formData.append("file", blob, "document.pdf");
+    formData.append("upload_preset", presetName);
+    formData.append("cloud_name", cloudName);
+    formData.append("folder", "assets/documents");
 
     try {
       const response = await axios.post(
-        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/raw/upload`,
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload`,
         formData
       );
       setPdfUrl(response.data.url);
@@ -488,11 +533,7 @@ const TaskerInterfaceModal = (props: ModalType) => {
               </div>
               <div className="text-[#3775FF] text-xs font-normal leading-5 cursor-pointer">
                 {pdfUrl ? (
-                  <a
-                    onClick={downloadPDF}
-                    download="report"
-                    rel="noopener noreferrer"
-                  >
+                  <a href={pdfUrl} download="report" rel="noopener noreferrer">
                     View Uploaded PDF
                   </a>
                 ) : (
