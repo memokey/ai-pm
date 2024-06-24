@@ -65,3 +65,4 @@ export { PlayIcon } from "./PlayIcon";
 export { CheckClipboardIcon } from "./CheckClipboardIcon";
 export { SubTaskIcon } from "./SubTaskIcon";
 export { SaveIcon } from "./SaveIcon";
+export { UploadIcon } from "./UploadIcon";

@@ -281,13 +281,15 @@ const TaskDetailBox = (props: TaskDetailBoxType) => {
         <div className="grid gap-3 border-b border-base-200 p-3 text-[12px]">
           <div className="flex justify-between gap-5">
             <div className="font-600 text-base-300">Subtasks</div>
-            <div
-              className="flex gap-2 cursor-pointer"
-              onClick={() => dispatch(setExecuteModal(true))}
-            >
-              <ColoredSparkleIcon />
-              <div className="font-400 text-base-300">Execute the task</div>
-            </div>
+            {subTasks.length == 0 && (
+              <div
+                className="flex gap-2 cursor-pointer"
+                onClick={() => dispatch(setExecuteModal(true))}
+              >
+                <ColoredSparkleIcon />
+                <div className="font-400 text-base-300">Execute the task</div>
+              </div>
+            )}
           </div>
           <div className="font-400 text-base-content flex gap-2 items-center">
             {subTasks.length != 0 && (
