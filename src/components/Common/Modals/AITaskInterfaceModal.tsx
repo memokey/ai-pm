@@ -533,7 +533,7 @@ const TaskerInterfaceModal = (props: ModalType) => {
               </div>
               <div className="text-[#3775FF] text-xs font-normal leading-5 cursor-pointer">
                 {pdfUrl ? (
-                  <a href={pdfUrl} download="report" rel="noopener noreferrer">
+                  <a href={pdfUrl} download="report" rel="noopener noreferrer" target="_blank">
                     View Uploaded PDF
                   </a>
                 ) : (
