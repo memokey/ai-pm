@@ -13,7 +13,7 @@ import {
   setLoading,
   setTextMessages,
 } from "@/redux/slices/chatSlice";
-import { setExecuteModal } from "@/redux/slices/taskSlice";
+import { setExecuteDocumentationModal } from "@/redux/slices/taskSlice";
 import { updateTask } from "@/redux/slices/taskSlice";
 import { ChatInputAI } from "../Inputs";
 import { useAppSelector } from "@/redux/hooks";
@@ -30,7 +30,7 @@ import {
   SaveIcon,
   UploadIcon,
 } from "@/components/Icons";
-import subTaskPrompt from "@/data/Prompts/subTaskPrompt";
+import GenerateDocumentkPrompt from "@/data/Prompts/GenerateDocumentkPrompt";
 
 export type ModalType = {
   title: string;
@@ -90,6 +90,10 @@ const TaskerInterfaceModal = (props: ModalType) => {
         dispatch(setHistory([]));
         const firstMessage: TextMessageType[] = [
           {
+            role: "system",
+            content: GenerateDocumentkPrompt,
+          },
+          {
             role: "user",
             content: firstPrompt,
           },
@@ -116,7 +120,7 @@ const TaskerInterfaceModal = (props: ModalType) => {
               history: [
                 {
                   role: "system",
-                  content: subTaskPrompt,
+                  content: GenerateDocumentkPrompt,
                 },
                 ...newMessages,
               ],
@@ -168,7 +172,7 @@ const TaskerInterfaceModal = (props: ModalType) => {
       !!e.target.className.includes &&
       e.target.className.includes("room_setting_dlg")
     ) {
-      dispatch(setExecuteModal(false));
+      dispatch(setExecuteDocumentationModal(false));
     }
   };
 
@@ -245,7 +249,7 @@ const TaskerInterfaceModal = (props: ModalType) => {
   };
 
   const handleReject = () => {
-    dispatch(setExecuteModal(false));
+    dispatch(setExecuteDocumentationModal(false));
   };
   const approveTask = async () => {
     const params = {
@@ -263,7 +267,7 @@ const TaskerInterfaceModal = (props: ModalType) => {
           })
         );
       }
-      dispatch(setExecuteModal(false));
+      dispatch(setExecuteDocumentationModal(false));
     } catch (error) {
       console.error("Approvement error");
     }
@@ -533,7 +537,7 @@ const TaskerInterfaceModal = (props: ModalType) => {
               </div>
               <div className="text-[#3775FF] text-xs font-normal leading-5 cursor-pointer">
                 {pdfUrl ? (
-                  <a href={pdfUrl} download="report" rel="noopener noreferrer" target="_blank">
+                  <a href={pdfUrl} download="report" rel="noopener noreferrer">
                     View Uploaded PDF
                   </a>
                 ) : (

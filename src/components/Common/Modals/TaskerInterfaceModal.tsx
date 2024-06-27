@@ -10,7 +10,7 @@ import { Avatar } from "../Avatars";
 import { TaskType } from "@/data/types/type";
 import { ChatInputSm } from "../Inputs";
 import { PrimaryBorderButton, PrimaryButton } from "../Buttons";
-import { setExecuteModal } from "@/redux/slices/taskSlice";
+import { setExecuteCodeModal } from "@/redux/slices/taskSlice";
 
 export type ModalType = {
   title: string;
@@ -26,7 +26,7 @@ const TaskerInterfaceModal = (props: ModalType) => {
       !!e.target.className.includes &&
       e.target.className.includes("room_setting_dlg")
     ) {
-      dispatch(setExecuteModal(false));
+      dispatch(setExecuteCodeModal(false));
     }
   };
 
@@ -47,12 +47,12 @@ const TaskerInterfaceModal = (props: ModalType) => {
               icon={<></>}
               type={false}
               onClick={() => {
-                dispatch(setTaskerModal(false));
+                dispatch(setExecuteCodeModal(false));
               }}
             />
           </div>
         </div>
-        <div className="text-[13px] text-base-300 py-4 px-5 grid gap-2">
+        <div className="text-[13px] text-base-300 py-4 px-5 grid grid-cols-10gap-2">
           <div className="flex gap-2 h-[calc(45vh-46px)]">
             <TaskerBox title="Description" key={0}>
               <div className="py-5 px-4">{props.task.description}</div>

@@ -13,7 +13,8 @@ export interface TaskState {
     listRequests: any[];
     taskId: String;
     isFeedback: boolean;
-    executeModal: boolean;
+    executeDocumentationModal: boolean;
+    executeCodeModal: boolean;
 }
 
 const initialState: TaskState = {
@@ -24,7 +25,8 @@ const initialState: TaskState = {
     listRequests: [],
     taskId: "0",
     isFeedback: false,
-    executeModal: false,
+    executeDocumentationModal: false,
+    executeCodeModal: false,
 }
 
 export const taskSlice = createSlice({
@@ -53,8 +55,11 @@ export const taskSlice = createSlice({
         setIsFeedback: (state, action: PayloadAction<boolean>) => {
             state.isFeedback = action.payload;
         },
-        setExecuteModal: (state, action: PayloadAction<boolean>) => {
-            state.executeModal = action.payload;
+        setExecuteDocumentationModal: (state, action: PayloadAction<boolean>) => {
+            state.executeDocumentationModal = action.payload;
+        },
+        setExecuteCodeModal: (state, action: PayloadAction<boolean>) => {
+            state.executeCodeModal = action.payload;
         },
         updateTask: (state, action: PayloadAction<any>) => {
             const { taskId, task } = action.payload;
@@ -69,6 +74,7 @@ export const taskSlice = createSlice({
                         taskProgress: 0,
                         created: task.created_at || "Yesterday",
                         lastUpdated: task.updated_at || "Just Now",
+                        isExpand: false,
                         properties: {
                             cost: task.cost,
                             status: DEFAULT_COLS_BY_ID[task.status],
@@ -148,7 +154,8 @@ export const {
     updateRequest,
     setIsFeedback,
     updateTaskExpand,
-    setExecuteModal,
+    setExecuteDocumentationModal,
+    setExecuteCodeModal,
 } = taskSlice.actions
 
 export default taskSlice.reducer

@@ -82,3 +82,19 @@ export type SkillType = {
     name: string;
     selected?: boolean;
 }
+
+export type TreeNode = {
+    id: number;
+    name: string;
+    code?: string;
+    children?: TreeNode[];
+  }
+
+export interface languageMap {
+    [key: string]: string | undefined
+}
+
+export interface Props {
+    language: string
+    value: string
+}

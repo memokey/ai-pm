@@ -17,6 +17,7 @@ import TaskDetailBox from "./TaskDetailBox";
 import {
   FeedbackModal,
   TaskerInterfaceModal,
+  CodeInterfaceModal,
   AITaskInterfaceModal,
 } from "../Common/Modals";
 const TaskBoard = () => {
@@ -31,9 +32,8 @@ const TaskBoard = () => {
   const [activeTask, setActiveTask] = useState<TaskType | null>(null);
   const [taskDetail, setTaskDetail] = useState<TaskType | null>(null);
 
-  const { activeDetail, taskId, executeModal } = useAppSelector(
-    (state) => state.task
-  );
+  const { activeDetail, taskId, executeDocumentationModal, executeCodeModal } =
+    useAppSelector((state) => state.task);
 
   const { tasks, isFeedback } = useAppSelector((state) => state.task);
 
@@ -88,8 +88,15 @@ const TaskBoard = () => {
           </div>
         </div>
       )}
-      {executeModal && !!activeDetail && !!taskDetail && (
+      {executeDocumentationModal && !!activeDetail && !!taskDetail && (
         <AITaskInterfaceModal
+          title={taskDetail.title}
+          task={taskDetail}
+          tasks={boardTasks}
+        />
+      )}
+      {executeCodeModal && !!activeDetail && !!taskDetail && (
+        <CodeInterfaceModal
           title={taskDetail.title}
           task={taskDetail}
           tasks={boardTasks}

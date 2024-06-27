@@ -66,3 +66,6 @@ export { CheckClipboardIcon } from "./CheckClipboardIcon";
 export { SubTaskIcon } from "./SubTaskIcon";
 export { SaveIcon } from "./SaveIcon";
 export { UploadIcon } from "./UploadIcon";
+export { CodeIcon } from "./CodeIcon";
+export { DocumentIcon } from "./DocumentIcon";
+export { CopyIcon } from "./CopyIcon";

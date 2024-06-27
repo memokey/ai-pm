@@ -1,6 +1,7 @@
 import OpenAI from 'openai';
 import { NextResponse } from 'next/server';
-import prompt_content from "@/data/Prompts/subTaskPrompt"
+import GenerateDocumentkPrompt from "@/data/Prompts/GenerateDocumentkPrompt"
+import GenerateProjectPrompt from "@/data/Prompts/GenerateProjectPrompt"
 
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
@@ -14,7 +15,7 @@ export async function POST(req: Request) {
     try {
         let { messages } = await req.json();
         if (messages.length === 1) {
-            messages = [{ role: "system", content: prompt_content }, ...messages];
+            messages = [...messages];
         }
         // Ask OpenAI for a streaming chat completion given the prompt
         const response = await openai.chat.completions.create({

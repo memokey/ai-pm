@@ -26,7 +26,7 @@ const TaskRequestBoard = () => {
             taskId: state.task.taskId,
             taskerModal: state.tasker.taskerModal,
             requests: state.task.requests,
-            executeModal: state.task.executeModal,
+            executeModal: state.task.executeCodeModal,
         })
     );
 

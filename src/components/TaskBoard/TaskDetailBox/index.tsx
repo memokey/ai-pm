@@ -22,6 +22,8 @@ import {
   SparklesIcon,
   ThreeDotIcon,
   TwoCircleIcon,
+  CodeIcon,
+  DocumentIcon,
 } from "@/components/Icons";
 import { CONSTANTS } from "@/config/constants";
 import { STATUS_ICONS } from "@/data/global";
@@ -29,7 +31,8 @@ import { TaskType } from "@/data/types/type";
 import { useAppSelector } from "@/redux/hooks";
 import {
   setActiveDetail,
-  setExecuteModal,
+  setExecuteDocumentationModal,
+  setExecuteCodeModal,
   setIsFeedback,
   updateTask,
 } from "@/redux/slices/taskSlice";
@@ -282,13 +285,24 @@ const TaskDetailBox = (props: TaskDetailBoxType) => {
           <div className="flex justify-between gap-5">
             <div className="font-600 text-base-300">Subtasks</div>
             {subTasks.length == 0 && (
-              <div
-                className="flex gap-2 cursor-pointer"
-                onClick={() => dispatch(setExecuteModal(true))}
-              >
-                <ColoredSparkleIcon />
-                <div className="font-400 text-base-300">Execute the task</div>
-              </div>
+              <>
+                <div
+                  className="flex gap-2 cursor-pointer"
+                  onClick={() => dispatch(setExecuteDocumentationModal(true))}
+                >
+                  <DocumentIcon />
+                  <div className="font-400 text-base-300">
+                    Generate Documentation
+                  </div>
+                </div>
+                <div
+                  className="flex gap-2 cursor-pointer"
+                  onClick={() => dispatch(setExecuteCodeModal(true))}
+                >
+                  <CodeIcon />
+                  <div className="font-400 text-base-300">Generate Code</div>
+                </div>
+              </>
             )}
           </div>
           <div className="font-400 text-base-content flex gap-2 items-center">
