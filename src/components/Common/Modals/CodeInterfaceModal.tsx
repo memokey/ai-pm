@@ -111,10 +111,11 @@ const CodeInterfaceModal = (props: ModalType) => {
             );
             let messages = [];
             const firstPrompt = `
-        Parent Task Title: ${parentTask[0].title}
-        Parent Task Description: ${parentTask[0].description}
-        Task Description: ${props.task.description}        
-      `;
+    Parent Task Title: ${parentTask[0].title}
+    Parent Task Description: ${parentTask[0].description}
+    Task Description: ${props.task.description}        
+  `;
+            console.log("response", response.data);
             if (response.data.code_chat) {
                 if (response.data.code_chat.length == 0) {
                     dispatch(setHistory([]));
@@ -152,17 +153,19 @@ const CodeInterfaceModal = (props: ModalType) => {
                                 },
                             }
                         );
-                        dispatch(
-                            setHistory(
-                                chatSaveResponse.task.code_chat[0].history
-                            )
-                        );
+                        if (chatSaveResponse.data.task.code_chat) {
+                            dispatch(
+                                setHistory(
+                                    chatSaveResponse.data.task.code_chat[0]
+                                        .history
+                                )
+                            );
+                        }
                     } catch (error) {
                         console.error(
                             "Error getting response from OpenAI API:",
                             error
                         );
-                        alert("Generating Code is failed, please retry!");
                     }
                 } else {
                     for (const chat of response.data.code_chat) {
