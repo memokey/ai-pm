@@ -115,77 +115,78 @@ const CodeInterfaceModal = (props: ModalType) => {
         Parent Task Description: ${parentTask[0].description}
         Task Description: ${props.task.description}        
       `;
-            if (
-                response.data.code_chat &&
-                response.data.code_chat.length == 0
-            ) {
-                dispatch(setHistory([]));
-                const firstMessage: TextMessageType[] = [
-                    {
-                        role: "system",
-                        content: GenerateProjectPrompt,
-                    },
-                    {
-                        role: "user",
-                        content: firstPrompt,
-                    },
-                ];
-                try {
-                    dispatch(setLoading(true));
-                    setSendingMessages([firstPrompt]);
-                    const response = await getOpenAIResponse(firstMessage);
-                    setAIResult(JSON.parse(response.content));
-
-                    const newMessages: TextMessageType[] = [
-                        ...firstMessage,
-                        { role: response.role, content: response.content },
-                    ];
-                    dispatch(setTextMessages(newMessages));
-                    const chatSaveResponse: any = await apiCaller.post(
-                        `/api/tasks/subtask/code_chat/${props.task.id}/`,
+            if (response.data.code_chat) {
+                if (response.data.code_chat.length == 0) {
+                    dispatch(setHistory([]));
+                    const firstMessage: TextMessageType[] = [
                         {
-                            message: firstPrompt,
-                            response: response.content,
-                            history: [...newMessages],
+                            role: "system",
+                            content: GenerateProjectPrompt,
                         },
                         {
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                        }
-                    );
-                    dispatch(
-                        setHistory(chatSaveResponse.task.code_chat[0].history)
-                    );
-                } catch (error) {
-                    console.error(
-                        "Error getting response from OpenAI API:",
-                        error
-                    );
-                    alert("Generating Code is failed, please retry!");
-                }
-            } else {
-                for (const chat of response.data.code_chat) {
-                    messages.push({
-                        role: "user",
-                        content: chat.message,
-                    });
-                    messages.push({
-                        role: "assistant",
-                        content: chat.response,
-                    });
-                    const userMessagesHistory = messages
-                        .filter((message) => message.role === "user")
-                        .map((message) => message.content);
+                            role: "user",
+                            content: firstPrompt,
+                        },
+                    ];
+                    try {
+                        dispatch(setLoading(true));
+                        setSendingMessages([firstPrompt]);
+                        const response = await getOpenAIResponse(firstMessage);
+                        setAIResult(JSON.parse(response.content));
 
-                    setSendingMessages(userMessagesHistory);
-                    dispatch(setHistory(chat.history));
+                        const newMessages: TextMessageType[] = [
+                            ...firstMessage,
+                            { role: response.role, content: response.content },
+                        ];
+                        dispatch(setTextMessages(newMessages));
+                        const chatSaveResponse: any = await apiCaller.post(
+                            `/api/tasks/subtask/code_chat/${props.task.id}/`,
+                            {
+                                message: firstPrompt,
+                                response: response.content,
+                                history: [...newMessages],
+                            },
+                            {
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                            }
+                        );
+                        dispatch(
+                            setHistory(
+                                chatSaveResponse.task.code_chat[0].history
+                            )
+                        );
+                    } catch (error) {
+                        console.error(
+                            "Error getting response from OpenAI API:",
+                            error
+                        );
+                        alert("Generating Code is failed, please retry!");
+                    }
+                } else {
+                    for (const chat of response.data.code_chat) {
+                        messages.push({
+                            role: "user",
+                            content: chat.message,
+                        });
+                        messages.push({
+                            role: "assistant",
+                            content: chat.response,
+                        });
+                        const userMessagesHistory = messages
+                            .filter((message) => message.role === "user")
+                            .map((message) => message.content);
+
+                        setSendingMessages(userMessagesHistory);
+                        dispatch(setHistory(chat.history));
+                    }
+                    // setPdfUrl(response.data.documentURl)
+                    dispatch(setTextMessages(messages));
+                    setAIResult(
+                        JSON.parse(messages[messages.length - 1]["content"])
+                    );
                 }
-                // setPdfUrl(response.data.documentURl)
-                dispatch(setTextMessages(messages));
-                setAIResult(
-                    JSON.parse(messages[messages.length - 1]["content"])
-                );
             }
 
             dispatch(setLoading(false));
