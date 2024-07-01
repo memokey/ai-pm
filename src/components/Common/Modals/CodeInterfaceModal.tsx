@@ -111,7 +111,7 @@ const CodeInterfaceModal = (props: ModalType) => {
         Parent Task Description: ${parentTask[0].description}
         Task Description: ${props.task.description}        
       `;
-      if (response.data.chat.length == 0) {
+      if (response.data.code_chat.length == 0) {
         dispatch(setHistory([]));
         const firstMessage: TextMessageType[] = [
           {
@@ -135,7 +135,7 @@ const CodeInterfaceModal = (props: ModalType) => {
           ];
           dispatch(setTextMessages(newMessages));
           const chatSaveResponse: any = await apiCaller.post(
-            `/api/tasks/subtask/chat/${props.task.id}/`,
+            `/api/tasks/subtask/code_chat/${props.task.id}/`,
             {
               message: firstPrompt,
               response: response.content,
@@ -147,12 +147,13 @@ const CodeInterfaceModal = (props: ModalType) => {
               },
             }
           );
-          dispatch(setHistory(chatSaveResponse.task.chat[0].history));
+          dispatch(setHistory(chatSaveResponse.task.code_chat[0].history));
         } catch (error) {
           console.error("Error getting response from OpenAI API:", error);
+          alert("Generating Code is failed, please retry!");
         }
       } else {
-        for (const chat of response.data.chat) {
+        for (const chat of response.data.code_chat) {
           messages.push({
             role: "user",
             content: chat.message,
@@ -224,7 +225,7 @@ const CodeInterfaceModal = (props: ModalType) => {
           },
         ];
         const chatSaveResponse = await apiCaller.post(
-          `/api/tasks/subtask/chat/${props.task.id}/`,
+          `/api/tasks/subtask/code_chat/${props.task.id}/`,
           {
             message: prompt,
             response: response.content,
@@ -275,9 +276,9 @@ const CodeInterfaceModal = (props: ModalType) => {
           </div>
         </div>
         <div className="text-[13px] text-base-300 py-4 px-5 grid grid-cols-10 gap-2">
-          <div className="col-span-2 border-2  h-[calc(84vh-46px)] rounded-[4px] border-[#343434]">
+          <div className="col-span-2 border-2  h-[calc(84vh-46px)] rounded-[4px] border-[#343434] overflow-hidden">
             <div className="h-8 text-xs bg-[#252525] p-2">Tree View</div>
-            <div className="text-xs p-2 h">
+            <div className="text-xs p-2 w-[calc(14vw-14px)]  h-[calc(84vh-78px)] overflow-x-auto overflow-y-auto">
               {aiResult && (
                 <TreeView
                   node={aiResult as TreeNode}
@@ -333,9 +334,9 @@ const CodeInterfaceModal = (props: ModalType) => {
                     {code}
                   </textarea>
                 ) : (
-                  <div className="p-2 text-[#bfbfbf] text-xs font-normal non-italic leading-5">
+                  <div className="pt-2 text-[#bfbfbf] text-xs font-normal non-italic leading-5 max-h-[calc(84vh-96px)] overflow-y-auto">
                     <ReactMarkdown
-                      className={`prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0`}
+                      className={`prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 `}
                       remarkPlugins={[remarkGfm, remarkMath]}
                       components={{
                         code({
