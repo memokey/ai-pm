@@ -1,7 +1,13 @@
 /* eslint-disable react/no-children-prop */
 "use client";
 
-import { PlussmIcon, SlashIcon, EditIcon, SaveIcon } from "@/components/Icons";
+import {
+  PlussmIcon,
+  SlashIcon,
+  EditIcon,
+  SaveIcon,
+  UploadIcon,
+} from "@/components/Icons";
 import React, { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
@@ -26,6 +32,8 @@ import GenerateProjectPrompt from "@/data/Prompts/GenerateProjectPrompt";
 import TreeView from "@/components/TaskBoard/TreeView";
 import { TreeNode } from "@/data/types/type";
 import { CodeBlock } from "../CodeBlock";
+import RingLoader from "react-spinners/RingLoader";
+import { createZipFromJson } from "@/utils/zipGenerator";
 export type ModalType = {
   title: string;
   task: TaskType;
@@ -33,6 +41,7 @@ export type ModalType = {
 };
 
 const CodeInterfaceModal = (props: ModalType) => {
+  console.log(props.task.id);
   const { auth, history, loading, textmessages } = useAppSelector((state) => ({
     auth: state.auth,
     history: state.chat.history,
@@ -71,6 +80,27 @@ const CodeInterfaceModal = (props: ModalType) => {
     setIsEdit(!isEdit);
   };
 
+  const handleSave = () => {
+    const updateCode = (items: TreeNode[]) => {
+      items.forEach((item) => {
+        if (item.id === selectedNode?.id) {
+          item.code = code;
+        }
+        if (item.children) {
+          updateCode(item.children);
+        }
+      });
+    };
+
+    if (aiResult) {
+      const updatedData: TreeNode = { ...aiResult };
+      if (updatedData.children) {
+        updateCode(updatedData.children);
+        setAIResult(updatedData as TreeNode); // Type assertion to TreeNode
+      }
+    }
+  };
+
   const fetchTask = async () => {
     try {
       dispatch(setLoading(true));
@@ -97,7 +127,6 @@ const CodeInterfaceModal = (props: ModalType) => {
           dispatch(setLoading(true));
           setSendingMessages([firstPrompt]);
           const response = await getOpenAIResponse(firstMessage);
-          console.log(response.content);
           setAIResult(JSON.parse(response.content));
 
           const newMessages: TextMessageType[] = [
@@ -218,6 +247,13 @@ const CodeInterfaceModal = (props: ModalType) => {
     }
   };
 
+  const handleMakingProjectfile = () => {
+    console.log(aiResult);
+    if (aiResult) {
+      createZipFromJson(aiResult);
+    }
+  };
+
   return (
     <div
       className="fixed top-[0px] left-[0px] right-[0px] bottom-[0px] backdrop-blur-[20px] z-[1002] justify-center items-center room_setting_dlg"
@@ -250,78 +286,109 @@ const CodeInterfaceModal = (props: ModalType) => {
               )}
             </div>
           </div>
+
           <div className="col-span-5 border-2  h-[calc(84vh-46px)] rounded-[4px] border-[#343434]">
             <div className="h-8 bg-[#252525] p-2 flex justify-between">
               <div className="text-xs">Code</div>
-              <div className="cursor-pointer" onClick={handleEdit}>
-                {!isEdit ? <EditIcon /> : <SaveIcon />}
+              <div>
+                <div className="flex gap-2">
+                  <div onClick={handleMakingProjectfile}>
+                    <UploadIcon />
+                  </div>
+                  <div
+                    className="cursor-pointer flex gap-2"
+                    onClick={handleEdit}
+                  >
+                    {!isEdit ? (
+                      <div>
+                        <EditIcon />
+                      </div>
+                    ) : (
+                      <div onClick={handleSave}>
+                        <SaveIcon />
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="h-[calc(84vh-88px)]">
-              {isEdit ? (
-                <textarea
-                  name="text_aiResult"
-                  value={code}
-                  onChange={(e) => {
-                    setCode(e.target.value);
-                  }}
-                  className="textarea w-full h-full"
-                >
-                  {code}
-                </textarea>
-              ) : (
-                <div className="p-2 text-[#bfbfbf] text-xs font-normal non-italic leading-5">
-                  <ReactMarkdown
-                    className={`prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0`}
-                    remarkPlugins={[remarkGfm, remarkMath]}
-                    components={{
-                      code({
-                        node,
-                        inline,
-                        className,
-                        children,
-                        ...props
-                      }: any) {
-                        try {
-                          if (children && children.length) {
-                            if (children[0] == "▍") {
-                              return (
-                                <span className="mt-1 cursor-default animate-pulse">
-                                  ▍
-                                </span>
-                              );
-                            }
-                          }
 
-                          const match = /language-(\w+)/.exec(className || "");
-
-                          if (inline) {
-                            return (
-                              <code className={className} {...props}>
-                                {children}
-                              </code>
-                            );
-                          }
-
-                          return (
-                            <CodeBlock
-                              key={Math.random()}
-                              language={(match && match[1]) || ""}
-                              value={String(children).replace(/\n$/, "")}
-                              {...props}
-                            />
-                          );
-                        } catch (error) {
-                          console.error("Error rendering code block", error);
-                        }
-                      },
+            {loading ? (
+              <div className="h-[calc(84vh-88px)] flex">
+                <div className="m-auto">
+                  <RingLoader color="#04cd76" size={30} />
+                </div>
+              </div>
+            ) : (
+              <div className="h-[calc(84vh-88px)]">
+                {isEdit ? (
+                  <textarea
+                    name="text_aiResult"
+                    value={code}
+                    onChange={(e) => {
+                      setCode(e.target.value);
                     }}
+                    className="textarea w-full h-full"
                   >
                     {code}
-                  </ReactMarkdown>
-                </div>
-              )}
-            </div>
+                  </textarea>
+                ) : (
+                  <div className="p-2 text-[#bfbfbf] text-xs font-normal non-italic leading-5">
+                    <ReactMarkdown
+                      className={`prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0`}
+                      remarkPlugins={[remarkGfm, remarkMath]}
+                      components={{
+                        code({
+                          node,
+                          inline,
+                          className,
+                          children,
+                          ...props
+                        }: any) {
+                          try {
+                            if (children && children.length) {
+                              if (children[0] == "▍") {
+                                return (
+                                  <span className="mt-1 cursor-default animate-pulse">
+                                    ▍
+                                  </span>
+                                );
+                              }
+                            }
+
+                            const match = /language-(\w+)/.exec(
+                              className || ""
+                            );
+
+                            if (inline) {
+                              return (
+                                <code className={className} {...props}>
+                                  {children}
+                                </code>
+                              );
+                            }
+
+                            return (
+                              <CodeBlock
+                                key={Math.random()}
+                                language={(match && match[1]) || ""}
+                                value={String(children).replace(/\n$/, "")}
+                                filename={selectedNode?.name}
+                                {...props}
+                              />
+                            );
+                          } catch (error) {
+                            console.error("Error rendering code block", error);
+                          }
+                        },
+                      }}
+                    >
+                      {code}
+                    </ReactMarkdown>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <div className="col-span-3 border-2  h-[calc(84vh-46px)] rounded-[4px] border-[#343434] relative">
             <div className="h-8 text-xs bg-[#252525] p-2">Activity</div>

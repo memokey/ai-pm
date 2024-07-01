@@ -25,7 +25,8 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": [
     "next-env.d.ts",
@@ -34,7 +35,8 @@
     ".next/types/**/*.ts",
     "src/components/TaskBoard/index.js",
     "src/components/Common/Cards/BaseCard",
-    "build/types/**/*.ts"
+    "build/types/**/*.ts",
+    "src/**/*"
   ],
   "exclude": [
     "node_modules"

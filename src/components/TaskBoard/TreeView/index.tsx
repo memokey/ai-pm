@@ -13,7 +13,7 @@ interface TreeViewProps {
 }
 
 const TreeView: React.FC<TreeViewProps> = ({ node, onNodeClick }) => {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
 
   const handleToggle = () => {
     setExpanded(!expanded);

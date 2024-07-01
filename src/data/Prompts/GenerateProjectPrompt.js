@@ -3,24 +3,29 @@ const generate_project_prompt_content = `You are a project and code generator. P
 {
     "id": 1,
     "name": "Core_Development",
+    "type": "folder",
     "children": [
         {
             "id": 2,
             "name": "UI_Components",
+            "type" : "folder",
             "children": [
                 {
                     "id": 3,
-                    "name": "ProductCard",
+                    "name": "ProductCard.js",
+                    "type": "file",
                     "code": "\`\`\`jsx\\nimport React from 'react';\\n\\nconst ProductCard = ({ product }) => (\\n    <div className='product-card'>\\n        <img src={product.image} alt={product.name} />\\n        <h3>{product.name}</h3>\\n        <p>{product.price}</p>\\n    </div>\\n);\\n\\nexport default ProductCard;\\n\`\`\`"
                 },
                 {
                     "id": 4,
-                    "name": "Navbar",
+                    "name": "Navbar.js",
+                    "type": "file",
                     "code": "\`\`\`jsx\\nimport React from 'react';\\n\\nconst Navbar = () => (\\n    <nav className='navbar'>\\n        <ul>\\n            <li>Home</li>\\n            <li>Products</li>\\n            <li>About Us</li>\\n        </ul>\\n    </nav>\\n);\\n\\nexport default Navbar;\\n\`\`\`"
                 },
                 {
                     "id": 5,
-                    "name": "Button",
+                    "name": "Button.js",
+                    "type": "file",
                     "code": "\`\`\`jsx\\nimport React from 'react';\\n\\nconst Button = ({ text, onClick }) => (\\n    <button onClick={onClick}>{text}</button>\\n);\\n\\nexport default Button;\\n\`\`\`"
                 }
             ]

@@ -87,6 +87,7 @@ export type TreeNode = {
     id: number;
     name: string;
     code?: string;
+    type?: string,
     children?: TreeNode[];
   }
 
@@ -97,4 +98,5 @@ export interface languageMap {
 export interface Props {
     language: string
     value: string
+    filename?:string
 }
