@@ -7,7 +7,7 @@ type TaskBoxType = {
     tasks: TaskType[];
     deleteTask: any;
     updateTask: any;
-}
+};
 
 const TaskBox = (props: TaskBoxType) => {
     const tasksIds = useMemo(() => {
@@ -20,6 +20,7 @@ const TaskBox = (props: TaskBoxType) => {
                     <TaskCard
                         key={task.id}
                         task={task}
+                        subTasks={[]}
                         deleteTask={props.deleteTask}
                         updateTask={props.updateTask}
                     />
@@ -27,6 +28,6 @@ const TaskBox = (props: TaskBoxType) => {
             </SortableContext>
         </div>
     );
-}
+};
 
 export default TaskBox;
