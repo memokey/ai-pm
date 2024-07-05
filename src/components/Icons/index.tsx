@@ -67,5 +67,6 @@ export { SubTaskIcon } from "./SubTaskIcon";
 export { SaveIcon } from "./SaveIcon";
 export { UploadIcon } from "./UploadIcon";
 export { CodeIcon } from "./CodeIcon";
+export { UpIcon } from "./UpIcon";
 export { DocumentIcon } from "./DocumentIcon";
 export { CopyIcon } from "./CopyIcon";

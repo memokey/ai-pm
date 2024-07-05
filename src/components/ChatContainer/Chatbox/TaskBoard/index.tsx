@@ -54,6 +54,7 @@ const fetchTasks = (tasks: TaskType[]): ReactNode => {
 };
 
 const TaskBoard = (props: TaskBoardType) => {
+  console.log("tasks", props.tasks);
   return (
     <ul className="w-full border border-base-200 rounded-[8px] overflow-hidden">
       {props.tasks && fetchTasks(props.tasks)}

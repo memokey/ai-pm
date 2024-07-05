@@ -1,5 +1,6 @@
 import { Avatar } from "@/components/Common/Avatars";
 import { Badge } from "@/components/Common/Badges";
+import Image from "next/image";
 import {
   PrimaryBorderButton,
   PrimaryButton,
@@ -165,7 +166,13 @@ const TaskDetailBox = (props: TaskDetailBoxType) => {
                       </div>
                     </div>
                   ) : (
-                    <div>Waiting for AI&apos;s assistance</div>
+                    <Image
+                      src={`/tmp/avatars/user.png`}
+                      alt="user"
+                      width={24}
+                      height={24}
+                      className="mr-[-10px]"
+                    />
                   )}
                 </div>
               </div>

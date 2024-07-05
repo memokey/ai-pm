@@ -67,6 +67,7 @@ const TaskBoardPage = ({ params }: any) => {
           taskProgress: 0,
           created: task.created_at || "Yesterday",
           lastUpdated: task.updated_at || "Just Now",
+          subtasks_created: task.sub_tasks_created || null,
           properties: {
             cost: task.cost,
             status: DEFAULT_COLS_BY_ID[task.status],
